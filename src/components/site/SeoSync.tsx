@@ -38,6 +38,10 @@ const SEO: Record<string, { title: string; description: string }> = {
     title: "Red Chilli Powder Supply Across India | SARKSH Foods",
     description: "SARKSH Foods accepts red chilli powder order and commercial supply enquiries across Indian states, union territories and major cities, subject to serviceability.",
   },
+  "/account": {
+    title: "My SARKSH | Customer Account",
+    description: "Private SARKSH Foods customer account for products, orders, saved addresses and order history.",
+  },
   "/admin": {
     title: "SARKSH Foods Admin",
     description: "Private SARKSH Foods production administration portal.",
@@ -54,7 +58,7 @@ export function SeoSync() {
     const description = document.querySelector<HTMLMetaElement>('meta[name="description"]');
     if (description) description.content = seo.description;
     const robots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
-    if (robots) robots.content = normalized.startsWith("/admin") ? "noindex,nofollow,noarchive" : "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1";
+    if (robots) robots.content = normalized.startsWith("/admin") || normalized.startsWith("/account") ? "noindex,nofollow,noarchive" : "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1";
   }, [pathname]);
 
   return null;

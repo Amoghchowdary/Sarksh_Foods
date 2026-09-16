@@ -32,6 +32,7 @@ export function Footer() {
           <Link to="/about">Our Story</Link>
           <Link to="/contact">Contact</Link>
           <Link to="/privacy">Privacy</Link>
+          <Link to="/account">Customer Account</Link>
         </div>
         <div className="footer-cta">
           <span>Need a commercial quantity?</span>

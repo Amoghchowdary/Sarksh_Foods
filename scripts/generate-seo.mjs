@@ -74,6 +74,14 @@ const pages = [
     type: "website",
   },
   {
+    path: "/account/",
+    title: "My SARKSH | Customer Account",
+    description: "Private SARKSH Foods customer account for products, saved addresses, order history and repeat ordering.",
+    image: "/assets/logos/sarksh-foods-logo.svg",
+    type: "website",
+    noindex: true,
+  },
+  {
     path: "/admin/",
     title: "SARKSH Foods Admin",
     description: "Private SARKSH Foods production administration portal.",
@@ -305,7 +313,7 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://w
 await writeFile(resolve(dist, "sitemap.xml"), sitemap, "utf8");
 
 const robots = production
-  ? `User-agent: *\nAllow: /\nDisallow: /admin/\n\nSitemap: ${siteUrl}/sitemap.xml\n`
+  ? `User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /account/\n\nSitemap: ${siteUrl}/sitemap.xml\n`
   : `User-agent: *\nDisallow: /\n`;
 await writeFile(resolve(dist, "robots.txt"), robots, "utf8");
 

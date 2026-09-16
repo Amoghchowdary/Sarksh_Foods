@@ -4,7 +4,7 @@ try {
   const response = await fetch(API_URL, {
     method: "GET",
     redirect: "follow",
-    headers: { "user-agent": "SARKSH-Foods-Production-Preflight/8.3" },
+    headers: { "user-agent": "SARKSH-Foods-Production-Preflight/8.4" },
   });
 
   const text = await response.text();
@@ -25,10 +25,22 @@ try {
     throw new Error("Backend is reachable, but Google Drive storage is not configured. Run setupProductionBackend() in Apps Script.");
   }
 
+  if (String(payload.version || "") !== "8.4") {
+    throw new Error(`Backend version ${payload.version || "unknown"} is active. Deploy the V8.4 Apps Script code before publishing the customer portal.`);
+  }
+  if (!payload.customerAccountsConfigured) {
+    throw new Error("Customer account database is not configured. Run setupProductionBackend() after updating Apps Script.");
+  }
+  if (!payload.adminPasswordConfigured) {
+    throw new Error("Admin password is not initialized. Run initializeAdminAccess() once in Apps Script.");
+  }
+
   console.log(`Backend healthy: ${payload.service || "SARKSH Foods API"}`);
   console.log(`Version: ${payload.version || "unknown"}`);
   console.log("Google Sheets database: configured");
   console.log("Google Drive storage: configured");
+  console.log("Customer accounts: configured");
+  console.log("Admin hashed-password access: configured");
 } catch (error) {
   console.error(`Backend health check failed: ${error instanceof Error ? error.message : String(error)}`);
   process.exit(1);

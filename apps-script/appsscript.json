@@ -10,7 +10,6 @@
     "https://www.googleapis.com/auth/script.send_mail"
   ],
   "urlFetchWhitelist": [
-    "https://oauth2.googleapis.com/",
     "https://sarkshfoods.in/",
     "https://www.sarkshfoods.in/"
   ]

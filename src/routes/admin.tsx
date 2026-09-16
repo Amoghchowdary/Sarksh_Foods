@@ -16,8 +16,9 @@ import {
   Save,
   ShieldCheck,
   Store,
+  Users,
 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   adminApi,
   type AdminBootstrap,
@@ -25,29 +26,15 @@ import {
   type AdminOrder,
   type AdminProduct,
   type AdminWebsite,
+  type AdminCustomer,
 } from "@/lib/adminApi";
 
 export const Route = createFileRoute("/admin")({ component: AdminPage });
 
-type Tab = "overview" | "products" | "orders" | "enquiries" | "websites";
+type Tab = "overview" | "products" | "orders" | "customers" | "enquiries" | "websites";
 type Notice = { type: "success" | "error" | "info"; text: string } | null;
 
-type GoogleCredentialResponse = { credential?: string };
-
-type GoogleIdentity = {
-  initialize: (config: { client_id: string; callback: (response: GoogleCredentialResponse) => void; auto_select?: boolean }) => void;
-  renderButton: (element: HTMLElement, options: Record<string, unknown>) => void;
-  disableAutoSelect: () => void;
-};
-
-declare global {
-  interface Window {
-    google?: { accounts?: { id?: GoogleIdentity } };
-  }
-}
-
-const TOKEN_KEY = "sarksh-foods-admin-id-token";
-const clientId = (import.meta.env.VITE_GOOGLE_CLIENT_ID || "").trim();
+const TOKEN_KEY = "sarksh-foods-admin-session";
 
 function AdminPage() {
   const [token, setToken] = useState(() => sessionStorage.getItem(TOKEN_KEY) || "");
@@ -56,13 +43,16 @@ function AdminPage() {
   const [loading, setLoading] = useState(Boolean(token));
   const [notice, setNotice] = useState<Notice>(null);
 
-  const signOut = useCallback(() => {
+  const signOut = useCallback(async () => {
+    const active = token;
     sessionStorage.removeItem(TOKEN_KEY);
     setToken("");
     setData(null);
     setNotice(null);
-    window.google?.accounts?.id?.disableAutoSelect?.();
-  }, []);
+    if (active) {
+      try { await adminApi.logout(active); } catch { /* local sign-out still completes */ }
+    }
+  }, [token]);
 
   const refresh = useCallback(async (activeToken = token, quiet = false) => {
     if (!activeToken) return;
@@ -73,29 +63,30 @@ function AdminPage() {
       if (!quiet) setNotice(null);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Admin data could not be loaded.";
-      if (/not authorized|invalid|expired|sign-in/i.test(message)) {
-        signOut();
-        setNotice({ type: "error", text: "Admin session expired. Sign in again with the authorized Google account." });
+      if (/session|invalid|expired|required/i.test(message)) {
+        sessionStorage.removeItem(TOKEN_KEY);
+        setToken("");
+        setData(null);
+        setNotice({ type: "error", text: "Admin session expired. Sign in again." });
       } else {
         setNotice({ type: "error", text: message });
       }
     } finally {
       setLoading(false);
     }
-  }, [signOut, token]);
+  }, [token]);
 
   useEffect(() => {
     if (token) void refresh(token);
   }, [token, refresh]);
 
-  const handleCredential = useCallback((credential: string) => {
-    sessionStorage.setItem(TOKEN_KEY, credential);
-    setToken(credential);
+  const acceptSession = useCallback((sessionToken: string) => {
+    sessionStorage.setItem(TOKEN_KEY, sessionToken);
+    setToken(sessionToken);
+    setNotice(null);
   }, []);
 
-  if (!token) {
-    return <AdminLogin onCredential={handleCredential} notice={notice} />;
-  }
+  if (!token) return <AdminLogin onSession={acceptSession} notice={notice} setNotice={setNotice} />;
 
   return (
     <div className="admin-shell">
@@ -108,13 +99,14 @@ function AdminPage() {
           <AdminNavButton active={tab === "overview"} onClick={() => setTab("overview")} icon={<Gauge size={18} />} label="Overview" />
           <AdminNavButton active={tab === "products"} onClick={() => setTab("products")} icon={<Boxes size={18} />} label="Products" />
           <AdminNavButton active={tab === "orders"} onClick={() => setTab("orders")} icon={<ClipboardList size={18} />} label="Orders" />
+          <AdminNavButton active={tab === "customers"} onClick={() => setTab("customers")} icon={<Users size={18} />} label="Customers" />
           <AdminNavButton active={tab === "enquiries"} onClick={() => setTab("enquiries")} icon={<Inbox size={18} />} label="Enquiries" />
           <AdminNavButton active={tab === "websites"} onClick={() => setTab("websites")} icon={<Activity size={18} />} label="Websites" />
         </nav>
         <div className="admin-sidebar-footer">
           <span>Authorized admin</span>
           <strong>{data?.admin.email || "amoghchowdaryamaraneni@gmail.com"}</strong>
-          <button type="button" onClick={signOut}><LogOut size={16} /> Sign out</button>
+          <button type="button" onClick={() => void signOut()}><LogOut size={16} /> Sign out</button>
         </div>
       </aside>
 
@@ -139,6 +131,7 @@ function AdminPage() {
             {tab === "overview" ? <Overview data={data} /> : null}
             {tab === "products" ? <ProductsPanel data={data} token={token} refresh={refresh} setNotice={setNotice} /> : null}
             {tab === "orders" ? <OrdersPanel rows={data.orders} token={token} refresh={refresh} setNotice={setNotice} /> : null}
+            {tab === "customers" ? <CustomersPanel rows={data.customers} /> : null}
             {tab === "enquiries" ? <EnquiriesPanel rows={data.enquiries} token={token} refresh={refresh} setNotice={setNotice} /> : null}
             {tab === "websites" ? <WebsitesPanel rows={data.websites} token={token} refresh={refresh} setNotice={setNotice} /> : null}
           </>
@@ -148,58 +141,21 @@ function AdminPage() {
   );
 }
 
-function AdminLogin({ onCredential, notice }: { onCredential: (credential: string) => void; notice: Notice }) {
-  const buttonRef = useRef<HTMLDivElement>(null);
-  const [scriptReady, setScriptReady] = useState(Boolean(window.google?.accounts?.id));
-  const [scriptError, setScriptError] = useState("");
-
-  useEffect(() => {
-    if (!clientId) return;
-    if (window.google?.accounts?.id) {
-      setScriptReady(true);
-      return;
-    }
-    const existing = document.querySelector<HTMLScriptElement>('script[data-sarksh-google-identity="true"]');
-    if (existing) {
-      const poll = window.setInterval(() => {
-        if (window.google?.accounts?.id) {
-          window.clearInterval(poll);
-          setScriptReady(true);
-        }
-      }, 120);
-      return () => window.clearInterval(poll);
-    }
-    const script = document.createElement("script");
-    script.src = "https://accounts.google.com/gsi/client";
-    script.async = true;
-    script.defer = true;
-    script.dataset.sarkshGoogleIdentity = "true";
-    script.onload = () => setScriptReady(true);
-    script.onerror = () => setScriptError("Google Sign-In could not be loaded. Check the network and OAuth configuration.");
-    document.head.appendChild(script);
-  }, []);
-
-  useEffect(() => {
-    if (!scriptReady || !clientId || !buttonRef.current || !window.google?.accounts?.id) return;
-    const identity = window.google.accounts.id;
-    identity.initialize({
-      client_id: clientId,
-      auto_select: false,
-      callback: (response) => {
-        if (response.credential) onCredential(response.credential);
-      },
-    });
-    buttonRef.current.innerHTML = "";
-    identity.renderButton(buttonRef.current, {
-      type: "standard",
-      theme: "outline",
-      size: "large",
-      shape: "pill",
-      text: "signin_with",
-      logo_alignment: "left",
-      width: Math.min(320, buttonRef.current.clientWidth || 280),
-    });
-  }, [onCredential, scriptReady]);
+function AdminLogin({ onSession, notice, setNotice }: { onSession: (token: string) => void; notice: Notice; setNotice: (notice: Notice) => void }) {
+  const [busy, setBusy] = useState(false);
+  async function login(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    setBusy(true);
+    setNotice(null);
+    try {
+      const result = await adminApi.login(String(form.get("email") || ""), String(form.get("password") || ""));
+      onSession(result.sessionToken);
+      if (result.mustChangePassword) setNotice({ type: "info", text: "This is a temporary admin password. Change it after login." });
+    } catch (error) {
+      setNotice({ type: "error", text: error instanceof Error ? error.message : "Admin sign-in failed." });
+    } finally { setBusy(false); }
+  }
 
   return (
     <main className="admin-login-page">
@@ -209,10 +165,13 @@ function AdminLogin({ onCredential, notice }: { onCredential: (credential: strin
         <h1>SARKSH Foods Admin</h1>
         <p>Products, orders, enquiries, website health, Google Sheets and Drive—one controlled workspace.</p>
         <div className="admin-login-trust"><ShieldCheck size={19} /><span>Access restricted to <strong>amoghchowdaryamaraneni@gmail.com</strong></span></div>
-        {!clientId ? <div className="admin-notice admin-notice--error">Google OAuth Client ID is not configured. Set VITE_GOOGLE_CLIENT_ID before deploying the admin portal.</div> : null}
-        {scriptError ? <div className="admin-notice admin-notice--error">{scriptError}</div> : null}
         {notice ? <div className={`admin-notice admin-notice--${notice.type}`}>{notice.text}</div> : null}
-        {clientId ? <div className="admin-google-button" ref={buttonRef}>{scriptReady ? null : <span>Loading Google Sign-In…</span>}</div> : null}
+        <form className="admin-form" onSubmit={login}>
+          <label className="admin-field"><span>Admin email</span><input name="email" type="email" autoComplete="username" defaultValue="amoghchowdaryamaraneni@gmail.com" required /></label>
+          <label className="admin-field"><span>Password</span><input name="password" type="password" autoComplete="current-password" required /></label>
+          <button className="admin-primary" type="submit" disabled={busy}>{busy ? <LoaderCircle size={16} className="admin-spin" /> : <ShieldCheck size={16} />} {busy ? "Signing in…" : "Sign in"}</button>
+        </form>
+        <p className="admin-login-note">Admin access is verified by the Apps Script backend. Raw passwords are never stored in GitHub or Google Sheets.</p>
         <a href="/" className="admin-back-link">Return to SARKSH Foods</a>
       </section>
     </main>
@@ -222,6 +181,7 @@ function AdminLogin({ onCredential, notice }: { onCredential: (credential: strin
 function Overview({ data }: { data: AdminBootstrap }) {
   const cards = [
     ["Products", data.stats.activeProducts, `${data.stats.products} total`, Boxes],
+    ["Customers", data.stats.customers, `${data.customers.length} registered`, Users],
     ["New orders", data.stats.newOrders, `${data.orders.length} loaded`, ClipboardList],
     ["New enquiries", data.stats.newEnquiries, `${data.enquiries.length} loaded`, Inbox],
     ["Websites online", data.stats.websitesOnline, `${data.stats.websites} monitored`, Activity],
@@ -282,7 +242,7 @@ function ProductsPanel({ data, token, refresh, setNotice }: { data: AdminBootstr
 
   return (
     <div className="admin-content-stack">
-      <AdminPanel title={editing.id ? "Edit product" : "Add product"} subtitle="Product master data is stored in Google Sheets; uploaded media is stored in Google Drive.">
+      <AdminPanel title={editing.id ? "Edit product" : "Add product"} subtitle="Product master data stays in private Google Sheets; uploaded source media stays in private Google Drive.">
         <form className="admin-form" onSubmit={save}>
           <div className="admin-form-grid">
             <AdminField label="Product name" value={editing.name || ""} onChange={(value) => setEditing((v) => ({ ...v, name: value }))} required />
@@ -294,7 +254,8 @@ function ProductsPanel({ data, token, refresh, setNotice }: { data: AdminBootstr
           </div>
           <label className="admin-field"><span>Short description</span><textarea rows={3} value={editing.shortDescription || ""} onChange={(e) => setEditing((v) => ({ ...v, shortDescription: e.target.value }))} /></label>
           <div className="admin-form-grid admin-form-grid--media">
-            <label className="admin-field"><span>Product image (JPG, PNG, WebP)</span><input type="file" accept="image/jpeg,image/png,image/webp" onChange={(e) => void onImage(e.target.files?.[0])} /></label>
+            <label className="admin-field"><span>Private Drive media (JPG, PNG, WebP)</span><input type="file" accept="image/jpeg,image/png,image/webp" onChange={(e) => void onImage(e.target.files?.[0])} /></label>
+            <AdminField label="Public storefront image URL (optional)" value={editing.imageUrl || ""} onChange={(value) => setEditing((v) => ({ ...v, imageUrl: value }))} placeholder="https://sarkshfoods.in/assets/..." />
             <label className="admin-check"><input type="checkbox" checked={Boolean(editing.featured)} onChange={(e) => setEditing((v) => ({ ...v, featured: e.target.checked }))} /><span>Featured product</span></label>
           </div>
           <div className="admin-form-actions">
@@ -319,7 +280,11 @@ function ProductsPanel({ data, token, refresh, setNotice }: { data: AdminBootstr
 }
 
 function OrdersPanel({ rows, token, refresh, setNotice }: { rows: AdminOrder[]; token: string; refresh: (token?: string, quiet?: boolean) => Promise<void>; setNotice: (notice: Notice) => void }) {
-  return <AdminPanel title="Order requests" subtitle="Customer and commercial product requirements recorded from the website."><ResponsiveTable headers={["Reference", "Customer", "Product", "Qty", "Buyer", "Contact", "Delivery", "Status"]}>{rows.map((row) => <tr key={row.reference}><td><strong>{row.reference}</strong><small>{formatDate(row.createdAt)}</small></td><td>{row.customer}</td><td>{row.productName}<small>{row.packSize}</small></td><td>{row.quantity}</td><td>{row.buyerType}</td><td>{row.phone}<small>{row.email || "—"}</small></td><td>{row.pincode}<small>{row.address}</small></td><td><StatusSelect value={row.status} options={["New", "Contacted", "Confirmed", "Closed", "Cancelled"]} onChange={async (status) => { try { await adminApi.updateOrderStatus(token, row.reference, status); await refresh(token, true); setNotice({ type: "success", text: `${row.reference} updated to ${status}.` }); } catch (error) { setNotice({ type: "error", text: error instanceof Error ? error.message : "Status update failed." }); } }} /></td></tr>)}</ResponsiveTable>{!rows.length ? <AdminEmpty text="No order requests yet." /> : null}</AdminPanel>;
+  return <AdminPanel title="Order requests" subtitle="Customer and commercial product requirements recorded from the website."><ResponsiveTable headers={["Reference", "Customer", "Product", "Qty", "Buyer", "Contact", "Delivery", "Status"]}>{rows.map((row) => <tr key={row.reference}><td><strong>{row.reference}</strong><small>{formatDate(row.createdAt)}</small></td><td>{row.customer}</td><td>{row.productName}<small>{row.packSize}</small></td><td>{row.quantity}</td><td>{row.buyerType}</td><td>{row.phone}<small>{row.email || "—"}</small></td><td>{row.pincode}<small>{row.address}</small></td><td><StatusSelect value={row.status} options={["New", "Contacted", "Confirmed", "Packed", "Out for delivery", "Delivered", "Closed", "Cancelled"]} onChange={async (status) => { try { await adminApi.updateOrderStatus(token, row.reference, status); await refresh(token, true); setNotice({ type: "success", text: `${row.reference} updated to ${status}.` }); } catch (error) { setNotice({ type: "error", text: error instanceof Error ? error.message : "Status update failed." }); } }} /></td></tr>)}</ResponsiveTable>{!rows.length ? <AdminEmpty text="No order requests yet." /> : null}</AdminPanel>;
+}
+
+function CustomersPanel({ rows }: { rows: AdminCustomer[] }) {
+  return <AdminPanel title="Customers" subtitle="Registered customer accounts. Password hashes and session tokens are never shown in the admin interface."><ResponsiveTable headers={["Customer", "Contact", "Status", "Created", "Last login"]}>{rows.map((row) => <tr key={row.id}><td><strong>{row.name}</strong><small>{row.id}</small></td><td>{row.phone}<small>{row.email}</small></td><td><StatusPill value={row.status || "Active"} /></td><td>{formatDate(row.createdAt)}</td><td>{row.lastLoginAt ? formatDate(row.lastLoginAt) : "—"}</td></tr>)}</ResponsiveTable>{!rows.length ? <AdminEmpty text="No registered customer accounts yet." /> : null}</AdminPanel>;
 }
 
 function EnquiriesPanel({ rows, token, refresh, setNotice }: { rows: AdminEnquiry[]; token: string; refresh: (token?: string, quiet?: boolean) => Promise<void>; setNotice: (notice: Notice) => void }) {
@@ -369,6 +334,6 @@ function WebsiteHealth({ site }: { site: AdminWebsite }) { return <div className
 function CompactOrders({ rows }: { rows: AdminOrder[] }) { return <div className="admin-compact-list">{rows.map((row) => <div key={row.reference}><div><strong>{row.customer}</strong><span>{row.productName} · {row.quantity}</span></div><div><StatusPill value={row.status} /><small>{formatDate(row.createdAt)}</small></div></div>)}{!rows.length ? <AdminEmpty text="No order requests yet." /> : null}</div>; }
 function AdminEmpty({ text }: { text: string }) { return <div className="admin-empty"><Store size={22} /><span>{text}</span></div>; }
 function AdminLoading() { return <div className="admin-loading"><LoaderCircle size={24} className="admin-spin" /><span>Loading production data…</span></div>; }
-function tabLabel(tab: Tab) { return ({ overview: "Overview", products: "Products", orders: "Orders", enquiries: "Enquiries", websites: "Websites" } as const)[tab]; }
+function tabLabel(tab: Tab) { return ({ overview: "Overview", products: "Products", orders: "Orders", customers: "Customers", enquiries: "Enquiries", websites: "Websites" } as const)[tab]; }
 function formatDate(value: string) { if (!value) return "—"; const date = new Date(value); return Number.isNaN(date.getTime()) ? value : date.toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }); }
 function fileToBase64(file: File) { return new Promise<string>((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(String(reader.result || "").split(",")[1] || ""); reader.onerror = () => reject(new Error("Image could not be read.")); reader.readAsDataURL(file); }); }

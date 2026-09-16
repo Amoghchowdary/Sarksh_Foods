@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, ShoppingBag, X } from "lucide-react";
+import { Menu, ShoppingBag, UserRound, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { BookProductButton } from "@/components/site/ProductBookingModal";
 import { PRODUCTS } from "@/lib/products";
@@ -52,6 +52,7 @@ export function Header() {
         </nav>
 
         <div className="header-actions">
+          <Link to="/account" className="header-account-link" aria-label="Customer account"><UserRound size={18} /><span>Account</span></Link>
           <BookProductButton product={PRODUCTS[0]} className="header-book-button" label="Order now" />
           <button
             type="button"
@@ -73,6 +74,7 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
+            <Link to="/account" className="mobile-nav-link"><UserRound size={17} /> Customer account</Link>
             <BookProductButton product={PRODUCTS[0]} className="button-primary mobile-book-button" label="Order Chilli Powder" />
             <span className="mobile-menu-note"><ShoppingBag size={15} /> 1 kg carton · Home & business orders</span>
           </nav>

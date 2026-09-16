@@ -75,7 +75,7 @@ In Search Console monitor:
 
 Do not judge ranking from the first few days. Build authority and update content using actual Search Console query data.
 
-## Admin privacy / crawl control (V8.2)
+## Private portal crawl control (V8.4)
 
 The production administration portal is intentionally excluded from public search discovery:
 
@@ -85,3 +85,8 @@ The production administration portal is intentionally excluded from public searc
 - the public SEO strategy never links the admin route as a product/content destination
 
 This protects the crawl budget and keeps administrative surfaces out of search results while leaving the customer-facing domain fully crawlable.
+
+
+### Customer account privacy
+
+`/account/` is a transactional customer portal, not an SEO landing page. It is generated with `noindex,nofollow,noarchive`, excluded from `sitemap.xml`, and disallowed in `robots.txt`. Public product/category pages remain the SEO surfaces.

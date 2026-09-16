@@ -44,15 +44,9 @@ jobs:
           fi
 
       - name: Validate production configuration
-        env:
-          VITE_GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_OAUTH_CLIENT_ID }}
         shell: bash
         run: |
           set -euo pipefail
-          if [ -z "${VITE_GOOGLE_CLIENT_ID:-}" ]; then
-            echo "::error::Repository variable GOOGLE_OAUTH_CLIENT_ID is not configured. Add the Google OAuth 2.0 Web Client ID under Settings > Secrets and variables > Actions > Variables."
-            exit 1
-          fi
           node scripts/require-site-url.mjs
 
       - name: TypeScript check
@@ -63,7 +57,6 @@ jobs:
 
       - name: Build production site for sarkshfoods.in
         env:
-          VITE_GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_OAUTH_CLIENT_ID }}
           GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
         run: npm run build:prod
 

@@ -1,6 +1,6 @@
 const APP = {
   name: "SARKSH Foods Production API",
-  version: "8.2",
+  version: "8.4",
   adminEmail: "amoghchowdaryamaraneni@gmail.com",
 };
 
@@ -10,14 +10,24 @@ const SHEETS = {
   products: "Products",
   websites: "Websites",
   audit: "Audit Log",
+  customers: "Customers",
+  addresses: "Customer Addresses",
+  customerSessions: "Customer Sessions",
+  passwordResets: "Password Resets",
+  adminSessions: "Admin Sessions",
 };
 
 const HEADERS = {
-  booking: ["Reference", "Created At", "Product Slug", "Product Name", "Pack Size", "Customer", "Phone", "Email", "Buyer Type", "Quantity", "PIN Code", "Address", "Notes", "Status", "Updated At"],
+  booking: ["Reference", "Created At", "Product Slug", "Product Name", "Pack Size", "Customer", "Phone", "Email", "Buyer Type", "Quantity", "PIN Code", "Address", "Notes", "Status", "Updated At", "Customer ID", "Address ID", "Payment Method", "Payment Status"],
   enquiry: ["Reference", "Created At", "Name", "Phone", "Email", "Requirement Type", "Requirement Details", "Status", "Updated At"],
   products: ["ID", "Slug", "Name", "Category", "Pack Size", "Status", "Featured", "Stock Label", "Short Description", "Image URL", "Drive File ID", "Created At", "Updated At"],
   websites: ["ID", "Name", "URL", "Environment", "Status", "HTTP Status", "Response ms", "Last Checked", "Notes", "Updated At"],
   audit: ["Timestamp", "Admin Email", "Action", "Entity", "Entity ID", "Details"],
+  customers: ["Customer ID", "Created At", "Full Name", "Phone", "Email", "Password Hash", "Password Salt", "Password Iterations", "Status", "Last Login At", "Updated At"],
+  addresses: ["Address ID", "Customer ID", "Label", "Recipient Name", "Phone", "Line 1", "Line 2", "Landmark", "City", "District", "State", "PIN Code", "Country", "Is Default", "Created At", "Updated At"],
+  customerSessions: ["Session Hash", "Customer ID", "Created At", "Expires At", "Last Used At", "Revoked"],
+  passwordResets: ["Reset Hash", "Customer ID", "Created At", "Expires At", "Used"],
+  adminSessions: ["Session Hash", "Admin Email", "Created At", "Expires At", "Last Used At", "Revoked"],
 };
 
 function doGet(e) {
@@ -30,6 +40,8 @@ function doGet(e) {
     version: APP.version,
     databaseConfigured: Boolean(props.getProperty("SPREADSHEET_ID")),
     driveConfigured: Boolean(props.getProperty("DRIVE_ROOT_FOLDER_ID")),
+    customerAccountsConfigured: Boolean(props.getProperty("SPREADSHEET_ID")),
+    adminPasswordConfigured: Boolean(props.getProperty("ADMIN_PASSWORD_HASH")),
     timestamp: new Date().toISOString(),
   });
 }
@@ -42,9 +54,22 @@ function doPost(e) {
     if (action === "booking") return saveBooking_(body);
     if (action === "enquiry") return saveEnquiry_(body);
 
+    if (action === "admin.login") return json_(adminLogin_(body));
+    if (action === "admin.logout") return json_(adminLogout_(body));
+    if (action === "admin.password.change") return json_(adminPasswordChange_(body));
     if (action.indexOf("admin.") === 0) {
-      const admin = requireAdmin_(body.idToken);
+      const admin = requireAdminSession_(body.sessionToken);
       return handleAdmin_(action, body, admin);
+    }
+
+    if (action === "customer.register") return json_(customerRegister_(body));
+    if (action === "customer.login") return json_(customerLogin_(body));
+    if (action === "customer.logout") return json_(customerLogout_(body));
+    if (action === "customer.password.request") return json_(customerPasswordResetRequest_(body));
+    if (action === "customer.password.reset") return json_(customerPasswordReset_(body));
+    if (action.indexOf("customer.") === 0) {
+      const customer = requireCustomerSession_(body.sessionToken);
+      return json_(handleCustomer_(action, body, customer));
     }
 
     return json_({ ok: false, message: "Unsupported action" });
@@ -63,6 +88,8 @@ function doPost(e) {
 function setupProductionBackend() {
   const props = PropertiesService.getScriptProperties();
   if (!props.getProperty("ADMIN_EMAIL")) props.setProperty("ADMIN_EMAIL", APP.adminEmail);
+  if (!props.getProperty("AUTH_PEPPER")) props.setProperty("AUTH_PEPPER", randomToken_());
+  if (!props.getProperty("SESSION_PEPPER")) props.setProperty("SESSION_PEPPER", randomToken_());
 
   let rootFolder;
   const existingRoot = props.getProperty("DRIVE_ROOT_FOLDER_ID");
@@ -92,6 +119,11 @@ function setupProductionBackend() {
   ensureSheet_(spreadsheet, SHEETS.products, HEADERS.products);
   ensureSheet_(spreadsheet, SHEETS.websites, HEADERS.websites);
   ensureSheet_(spreadsheet, SHEETS.audit, HEADERS.audit);
+  ensureSheet_(spreadsheet, SHEETS.customers, HEADERS.customers);
+  ensureSheet_(spreadsheet, SHEETS.addresses, HEADERS.addresses);
+  ensureSheet_(spreadsheet, SHEETS.customerSessions, HEADERS.customerSessions);
+  ensureSheet_(spreadsheet, SHEETS.passwordResets, HEADERS.passwordResets);
+  ensureSheet_(spreadsheet, SHEETS.adminSessions, HEADERS.adminSessions);
 
   seedProduct_(spreadsheet);
   seedWebsite_(spreadsheet);
@@ -104,6 +136,8 @@ function setupProductionBackend() {
     driveRootFolderUrl: rootFolder.getUrl(),
     productMediaFolderId: productMedia.getId(),
     adminEmail: props.getProperty("ADMIN_EMAIL"),
+    adminPasswordConfigured: Boolean(props.getProperty("ADMIN_PASSWORD_HASH")),
+    customerAccountsConfigured: true,
   };
   console.log(JSON.stringify(result, null, 2));
   return result;
@@ -131,37 +165,11 @@ function handleAdmin_(action, body, admin) {
 }
 
 function saveBooking_(body) {
-  const name = clean_(body.name, 80);
-  const phone = clean_(body.phone, 24);
-  const email = clean_(body.email, 120);
-  const buyerType = clean_(body.buyerType, 60);
-  const quantity = Math.max(1, Math.floor(Number(body.quantity) || 0));
-  const pincode = clean_(body.pincode, 12);
-  const address = clean_(body.address, 500);
-  const notes = clean_(body.notes, 600);
-  const productSlug = clean_(body.productSlug, 100);
-  const productName = clean_(body.productName, 120);
-  const packSize = clean_(body.packSize, 40);
-
-  if (!productSlug || !productName || name.length < 2 || phone.length < 8 || !buyerType || quantity < 1 || pincode.length < 4 || address.length < 6) {
-    return json_({ ok: false, message: "Please complete the required order details." });
+  try {
+    return json_(saveBookingObject_(body));
+  } catch (error) {
+    return json_({ ok: false, message: error && error.message ? String(error.message) : "Please complete the required order details." });
   }
-
-  const id = "SF-B-" + Utilities.getUuid().replace(/-/g, "").slice(0, 10).toUpperCase();
-  const now = new Date();
-  append_(SHEETS.booking, HEADERS.booking,
-    [id, now, productSlug, productName, packSize, name, phone, email, buyerType, quantity, pincode, address, notes, "New", now]
-  );
-
-  sendAdminNotification_(
-    "New SARKSH Foods order request · " + id,
-    "A new order request was received.",
-    [
-      ["Reference", id], ["Product", productName + " " + packSize], ["Customer", name], ["Phone", phone],
-      ["Buyer type", buyerType], ["Quantity", String(quantity)], ["PIN code", pincode], ["Address", address], ["Notes", notes || "—"]
-    ]
-  );
-  return json_({ ok: true, id: id });
 }
 
 function saveEnquiry_(body) {
@@ -195,12 +203,14 @@ function adminBootstrap_(admin) {
   const orders = readBookings_(spreadsheet, 250);
   const enquiries = readEnquiries_(spreadsheet, 250);
   const websites = readWebsites_(spreadsheet);
+  const customers = readCustomers_(spreadsheet);
   const props = PropertiesService.getScriptProperties();
   return {
     ok: true,
     admin: { email: admin.email, name: admin.name || "Administrator" },
     stats: {
       products: products.length,
+      customers: customers.length,
       activeProducts: products.filter(function (item) { return item.status.toLowerCase() === "active"; }).length,
       newOrders: orders.filter(function (item) { return item.status === "New"; }).length,
       newEnquiries: enquiries.filter(function (item) { return item.status === "New"; }).length,
@@ -211,6 +221,7 @@ function adminBootstrap_(admin) {
     orders: orders,
     enquiries: enquiries,
     websites: websites,
+    customers: customers,
     resources: {
       spreadsheetUrl: spreadsheet.getUrl(),
       driveFolderUrl: DriveApp.getFolderById(props.getProperty("DRIVE_ROOT_FOLDER_ID")).getUrl(),
@@ -240,7 +251,6 @@ function adminProductUpsert_(body, admin) {
 
   if (incoming.image && incoming.image.base64) {
     const upload = saveProductImage_(incoming.image, slug, driveFileId);
-    imageUrl = upload.url;
     driveFileId = upload.id;
   } else if (clean_(incoming.imageUrl, 500)) {
     imageUrl = clean_(incoming.imageUrl, 500);
@@ -256,7 +266,7 @@ function adminProductUpsert_(body, admin) {
 
 function adminStatusUpdate_(sheetName, keyHeader, keyValue, statusValue, admin, entity) {
   const allowed = entity === "order"
-    ? ["New", "Contacted", "Confirmed", "Closed", "Cancelled"]
+    ? ["New", "Contacted", "Confirmed", "Packed", "Out for delivery", "Delivered", "Closed", "Cancelled"]
     : ["New", "Contacted", "Resolved", "Closed"];
   const status = allow_(clean_(statusValue, 30), allowed, "");
   if (!status) throw new Error("Invalid status.");
@@ -337,7 +347,7 @@ function checkWebsite_(url) {
       method: "get",
       followRedirects: true,
       muteHttpExceptions: true,
-      headers: { "User-Agent": "SARKSH-Foods-Site-Monitor/8.2" },
+      headers: { "User-Agent": "SARKSH-Foods-Site-Monitor/8.4" },
     });
     const responseMs = Date.now() - start;
     const code = response.getResponseCode();
@@ -365,6 +375,7 @@ function readBookings_(spreadsheet, limit) {
       reference: row[0], createdAt: dateString_(row[1]), productSlug: row[2], productName: row[3], packSize: row[4],
       customer: row[5], phone: row[6], email: row[7], buyerType: row[8], quantity: Number(row[9] || 0), pincode: row[10],
       address: row[11], notes: row[12], status: row[13] || "New", updatedAt: dateString_(row[14]),
+      customerId: row[15] || "", addressId: row[16] || "", paymentMethod: row[17] || "", paymentStatus: row[18] || "",
     };
   });
 }
@@ -379,6 +390,13 @@ function readEnquiries_(spreadsheet, limit) {
   });
 }
 
+function readCustomers_(spreadsheet) {
+  const sheet = ensureSheet_(spreadsheet, SHEETS.customers, HEADERS.customers);
+  return readRows_(sheet).map(function (row) {
+    return { id: String(row[0] || ""), createdAt: dateString_(row[1]), name: String(row[2] || ""), phone: String(row[3] || ""), email: String(row[4] || ""), status: String(row[8] || ""), lastLoginAt: dateString_(row[9]), updatedAt: dateString_(row[10]) };
+  }).reverse();
+}
+
 function readWebsites_(spreadsheet) {
   const sheet = ensureSheet_(spreadsheet, SHEETS.websites, HEADERS.websites);
   return readRows_(sheet).map(function (row) {
@@ -390,39 +408,430 @@ function readWebsites_(spreadsheet) {
   });
 }
 
-function requireAdmin_(idToken) {
-  const token = clean_(idToken, 5000);
-  if (!token) throw new Error("Admin sign-in is required.");
-
-  const cache = CacheService.getScriptCache();
-  const cacheKey = "admin-token-" + digest_(token);
-  const cached = cache.get(cacheKey);
-  if (cached) return JSON.parse(cached);
-
-  const props = PropertiesService.getScriptProperties();
-  const clientId = props.getProperty("GOOGLE_CLIENT_ID");
-  const adminEmail = (props.getProperty("ADMIN_EMAIL") || APP.adminEmail).toLowerCase();
-  if (!clientId) throw new Error("GOOGLE_CLIENT_ID is not configured in Apps Script properties.");
-
-  const response = UrlFetchApp.fetch("https://oauth2.googleapis.com/tokeninfo?id_token=" + encodeURIComponent(token), {
-    muteHttpExceptions: true,
+function initializeAdminAccess() {
+  const password = generateTemporaryPassword_();
+  setAdminPassword_(password, false);
+  MailApp.sendEmail({
+    to: PropertiesService.getScriptProperties().getProperty("ADMIN_EMAIL") || APP.adminEmail,
+    subject: "SARKSH Foods admin access initialized",
+    body: "Your initial SARKSH Foods admin password is:\n\n" + password + "\n\nSign in at https://sarkshfoods.in/admin/. This password is shown only in this email; only its salted hash is stored by the backend.",
+    name: "SARKSH Foods",
   });
-  if (response.getResponseCode() !== 200) throw new Error("Google admin session is invalid or expired.");
-  const profile = JSON.parse(response.getContentText());
-  const email = String(profile.email || "").toLowerCase();
-  const verified = String(profile.email_verified || "").toLowerCase() === "true";
-  const audience = String(profile.aud || "");
-  const subject = String(profile.sub || "");
+  return { ok: true, message: "A temporary admin password was generated and emailed to the configured admin address." };
+}
 
-  if (!verified || audience !== clientId || email !== adminEmail || !subject) throw new Error("This Google account is not authorized for the SARKSH Foods admin portal.");
+function resetAdminAccess() {
+  return initializeAdminAccess();
+}
 
-  const lockedSub = props.getProperty("ADMIN_GOOGLE_SUB");
-  if (lockedSub && lockedSub !== subject) throw new Error("This Google account is not authorized for the SARKSH Foods admin portal.");
-  if (!lockedSub) props.setProperty("ADMIN_GOOGLE_SUB", subject);
+function setAdminPassword_(password, mustChange) {
+  const value = String(password || "");
+  validatePassword_(value);
+  const props = PropertiesService.getScriptProperties();
+  const salt = randomToken_().slice(0, 48);
+  const iterations = 12000;
+  const hash = derivePassword_(value, salt, iterations);
+  props.setProperties({
+    ADMIN_PASSWORD_HASH: hash,
+    ADMIN_PASSWORD_SALT: salt,
+    ADMIN_PASSWORD_ITERATIONS: String(iterations),
+    ADMIN_PASSWORD_MUST_CHANGE: mustChange ? "true" : "false",
+  }, false);
+}
 
-  const admin = { email: email, sub: subject, name: String(profile.name || "") };
-  cache.put(cacheKey, JSON.stringify(admin), 300);
-  return admin;
+function adminLogin_(body) {
+  const email = normalizeEmail_(body.email);
+  const password = String(body.password || "");
+  const props = PropertiesService.getScriptProperties();
+  const adminEmail = normalizeEmail_(props.getProperty("ADMIN_EMAIL") || APP.adminEmail);
+  rateLimit_("admin-login-" + email, 8, 600);
+  if (!props.getProperty("ADMIN_PASSWORD_HASH")) throw new Error("Admin password is not initialized. Run initializeAdminAccess() once in Apps Script.");
+  if (!email || email !== adminEmail || !verifyPassword_(password, props.getProperty("ADMIN_PASSWORD_HASH"), props.getProperty("ADMIN_PASSWORD_SALT"), Number(props.getProperty("ADMIN_PASSWORD_ITERATIONS") || 12000))) {
+    throw new Error("Invalid admin email or password.");
+  }
+  const token = createSession_(SHEETS.adminSessions, adminEmail, 8 * 60 * 60 * 1000);
+  return { ok: true, sessionToken: token, admin: { email: adminEmail, name: "Administrator" }, mustChangePassword: props.getProperty("ADMIN_PASSWORD_MUST_CHANGE") === "true" };
+}
+
+function adminLogout_(body) {
+  revokeSession_(SHEETS.adminSessions, body.sessionToken);
+  return { ok: true };
+}
+
+function adminPasswordChange_(body) {
+  const admin = requireAdminSession_(body.sessionToken);
+  const current = String(body.currentPassword || "");
+  const next = String(body.newPassword || "");
+  const props = PropertiesService.getScriptProperties();
+  if (!verifyPassword_(current, props.getProperty("ADMIN_PASSWORD_HASH"), props.getProperty("ADMIN_PASSWORD_SALT"), Number(props.getProperty("ADMIN_PASSWORD_ITERATIONS") || 12000))) throw new Error("Current password is incorrect.");
+  setAdminPassword_(next, false);
+  revokeAllSessionsForSubject_(SHEETS.adminSessions, admin.email);
+  const token = createSession_(SHEETS.adminSessions, admin.email, 8 * 60 * 60 * 1000);
+  logAudit_(admin, "admin.password.change", "Admin", admin.email, "Admin password changed");
+  return { ok: true, sessionToken: token, mustChangePassword: false };
+}
+
+function requireAdminSession_(token) {
+  const subject = requireSession_(SHEETS.adminSessions, token);
+  const email = normalizeEmail_(subject);
+  const adminEmail = normalizeEmail_(PropertiesService.getScriptProperties().getProperty("ADMIN_EMAIL") || APP.adminEmail);
+  if (!email || email !== adminEmail) throw new Error("Admin session is invalid or expired.");
+  return { email: email, name: "Administrator" };
+}
+
+function handleCustomer_(action, body, customer) {
+  switch (action) {
+    case "customer.bootstrap": return customerBootstrap_(customer);
+    case "customer.address.upsert": return customerAddressUpsert_(body, customer);
+    case "customer.address.delete": return customerAddressDelete_(body, customer);
+    case "customer.order.create": return customerOrderCreate_(body, customer);
+    case "customer.order.reorder": return customerReorder_(body, customer);
+    case "customer.password.change": return customerPasswordChange_(body, customer);
+    default: throw new Error("Unsupported customer action.");
+  }
+}
+
+function customerRegister_(body) {
+  const fullName = clean_(body.fullName, 80);
+  const phone = normalizePhone_(body.phone);
+  const email = normalizeEmail_(body.email);
+  const password = String(body.password || "");
+  if (fullName.length < 2 || phone.length < 8 || !isEmail_(email)) throw new Error("Enter a valid name, mobile number and email address.");
+  validatePassword_(password);
+  rateLimit_("customer-register-" + email, 5, 900);
+
+  const spreadsheet = getSpreadsheet_();
+  const sheet = ensureSheet_(spreadsheet, SHEETS.customers, HEADERS.customers);
+  if (findCustomerByEmail_(sheet, email)) throw new Error("An account already exists for this email. Sign in instead.");
+
+  const id = "SF-C-" + Utilities.getUuid().replace(/-/g, "").slice(0, 10).toUpperCase();
+  const salt = randomToken_().slice(0, 48);
+  const iterations = 12000;
+  const hash = derivePassword_(password, salt, iterations);
+  const now = new Date();
+  sheet.getRange(sheet.getLastRow() + 1, 1, 1, HEADERS.customers.length).setValues([[
+    id, now, fullName, phone, email, hash, salt, iterations, "Active", now, now,
+  ]]);
+  const token = createSession_(SHEETS.customerSessions, id, 30 * 24 * 60 * 60 * 1000);
+  return { ok: true, sessionToken: token, customer: customerProfileById_(id) };
+}
+
+function customerLogin_(body) {
+  const email = normalizeEmail_(body.email);
+  const password = String(body.password || "");
+  rateLimit_("customer-login-" + email, 10, 600);
+  const sheet = ensureSheet_(getSpreadsheet_(), SHEETS.customers, HEADERS.customers);
+  const found = findCustomerByEmail_(sheet, email);
+  if (!found || String(found.values[8] || "") !== "Active" || !verifyPassword_(password, found.values[5], found.values[6], Number(found.values[7] || 12000))) throw new Error("Invalid email or password.");
+  const now = new Date();
+  sheet.getRange(found.rowNumber, 10).setValue(now);
+  sheet.getRange(found.rowNumber, 11).setValue(now);
+  const id = String(found.values[0]);
+  const token = createSession_(SHEETS.customerSessions, id, 30 * 24 * 60 * 60 * 1000);
+  return { ok: true, sessionToken: token, customer: customerProfileById_(id) };
+}
+
+function customerLogout_(body) {
+  revokeSession_(SHEETS.customerSessions, body.sessionToken);
+  return { ok: true };
+}
+
+function customerBootstrap_(customer) {
+  const spreadsheet = getSpreadsheet_();
+  const profile = customerProfileById_(customer.id);
+  const addresses = readCustomerAddresses_(spreadsheet, customer.id);
+  const allOrders = readBookings_(spreadsheet, 1000);
+  const orders = allOrders.filter(function (order) {
+    return String(order.customerId || "") === customer.id || (!order.customerId && ((normalizeEmail_(order.email) && normalizeEmail_(order.email) === profile.email) || normalizePhone_(order.phone) === profile.phone));
+  });
+  const products = readProducts_(spreadsheet).filter(function (product) { return String(product.status || "").toLowerCase() === "active"; });
+  return {
+    ok: true,
+    customer: profile,
+    addresses: addresses,
+    orders: orders,
+    products: products,
+    payments: { onlineEnabled: false, provider: "Razorpay", message: "Online payments are not enabled in this release. Payment will be connected after the ordering flow is approved." },
+  };
+}
+
+function customerAddressUpsert_(body, customer) {
+  const incoming = body.address || {};
+  const id = clean_(incoming.id, 80) || ("SF-A-" + Utilities.getUuid().replace(/-/g, "").slice(0, 10).toUpperCase());
+  const label = clean_(incoming.label, 40) || "Home";
+  const recipientName = clean_(incoming.recipientName, 80) || customer.name;
+  const phone = normalizePhone_(incoming.phone) || customer.phone;
+  const line1 = clean_(incoming.line1, 160);
+  const line2 = clean_(incoming.line2, 160);
+  const landmark = clean_(incoming.landmark, 120);
+  const city = clean_(incoming.city, 80);
+  const district = clean_(incoming.district, 80);
+  const state = clean_(incoming.state, 80);
+  const pincode = clean_(incoming.pincode, 12);
+  const country = clean_(incoming.country, 60) || "India";
+  if (recipientName.length < 2 || phone.length < 8 || line1.length < 4 || city.length < 2 || state.length < 2 || pincode.length < 4) throw new Error("Complete the required delivery-address fields.");
+
+  const spreadsheet = getSpreadsheet_();
+  const sheet = ensureSheet_(spreadsheet, SHEETS.addresses, HEADERS.addresses);
+  const existing = findRowByValue_(sheet, "Address ID", id);
+  if (existing && String(existing.values[1]) !== customer.id) throw new Error("Address not found.");
+  const current = readCustomerAddresses_(spreadsheet, customer.id);
+  const isDefault = Boolean(incoming.isDefault) || current.length === 0;
+  if (isDefault) clearDefaultAddresses_(sheet, customer.id);
+  const now = new Date();
+  const createdAt = existing ? existing.values[14] : now;
+  upsertRow_(sheet, "Address ID", id, [id, customer.id, label, recipientName, phone, line1, line2, landmark, city, district, state, pincode, country, isDefault, createdAt, now]);
+  return { ok: true, id: id, addresses: readCustomerAddresses_(spreadsheet, customer.id) };
+}
+
+function customerAddressDelete_(body, customer) {
+  const id = clean_(body.addressId, 80);
+  const spreadsheet = getSpreadsheet_();
+  const sheet = ensureSheet_(spreadsheet, SHEETS.addresses, HEADERS.addresses);
+  const found = findRowByValue_(sheet, "Address ID", id);
+  if (!found || String(found.values[1]) !== customer.id) throw new Error("Address not found.");
+  const wasDefault = Boolean(found.values[13]);
+  sheet.deleteRow(found.rowNumber);
+  if (wasDefault) {
+    const remaining = readCustomerAddresses_(spreadsheet, customer.id);
+    if (remaining.length) {
+      const next = findRowByValue_(sheet, "Address ID", remaining[0].id);
+      if (next) sheet.getRange(next.rowNumber, 14).setValue(true);
+    }
+  }
+  return { ok: true, addresses: readCustomerAddresses_(spreadsheet, customer.id) };
+}
+
+function customerOrderCreate_(body, customer) {
+  const productSlug = clean_(body.productSlug, 100);
+  const quantity = Math.max(1, Math.min(1000, Math.floor(Number(body.quantity) || 1)));
+  const addressId = clean_(body.addressId, 80);
+  const spreadsheet = getSpreadsheet_();
+  const product = readProducts_(spreadsheet).filter(function (item) { return item.slug === productSlug && String(item.status).toLowerCase() === "active"; })[0];
+  if (!product) throw new Error("This product is not currently available for ordering.");
+  const address = readCustomerAddresses_(spreadsheet, customer.id).filter(function (item) { return item.id === addressId; })[0];
+  if (!address) throw new Error("Choose a saved delivery address.");
+  const formatted = formatAddress_(address);
+  const result = saveBookingObject_({
+    productSlug: product.slug, productName: product.name, packSize: product.packSize,
+    name: address.recipientName || customer.name, phone: address.phone || customer.phone, email: customer.email,
+    buyerType: "Household customer", quantity: quantity, pincode: address.pincode, address: formatted,
+    notes: clean_(body.notes, 600), customerId: customer.id, addressId: address.id,
+    paymentMethod: "To be confirmed", paymentStatus: "Not initiated",
+  });
+  return { ok: true, id: result.id };
+}
+
+function customerReorder_(body, customer) {
+  const reference = clean_(body.reference, 100);
+  const addressId = clean_(body.addressId, 80);
+  const orders = readBookings_(getSpreadsheet_(), 1000).filter(function (item) { return item.reference === reference; });
+  const previous = orders[0];
+  if (!previous || (String(previous.customerId || "") !== customer.id && normalizeEmail_(previous.email) !== customer.email && normalizePhone_(previous.phone) !== customer.phone)) throw new Error("Order not found.");
+  return customerOrderCreate_({ productSlug: previous.productSlug, quantity: previous.quantity || 1, addressId: addressId, notes: "Reorder of " + reference }, customer);
+}
+
+function customerPasswordChange_(body, customer) {
+  const currentPassword = String(body.currentPassword || "");
+  const newPassword = String(body.newPassword || "");
+  validatePassword_(newPassword);
+  const spreadsheet = getSpreadsheet_();
+  const sheet = ensureSheet_(spreadsheet, SHEETS.customers, HEADERS.customers);
+  const found = findRowByValue_(sheet, "Customer ID", customer.id);
+  if (!found || !verifyPassword_(currentPassword, found.values[5], found.values[6], Number(found.values[7] || 12000))) throw new Error("Current password is incorrect.");
+  const salt = randomToken_().slice(0, 48);
+  const iterations = 12000;
+  const hash = derivePassword_(newPassword, salt, iterations);
+  sheet.getRange(found.rowNumber, 6, 1, 3).setValues([[hash, salt, iterations]]);
+  sheet.getRange(found.rowNumber, 11).setValue(new Date());
+  revokeAllSessionsForSubject_(SHEETS.customerSessions, customer.id);
+  const token = createSession_(SHEETS.customerSessions, customer.id, 30 * 24 * 60 * 60 * 1000);
+  return { ok: true, sessionToken: token };
+}
+
+function customerPasswordResetRequest_(body) {
+  const email = normalizeEmail_(body.email);
+  rateLimit_("reset-request-" + email, 4, 3600);
+  const spreadsheet = getSpreadsheet_();
+  const customerSheet = ensureSheet_(spreadsheet, SHEETS.customers, HEADERS.customers);
+  const found = findCustomerByEmail_(customerSheet, email);
+  if (!found) return { ok: true, message: "If an account exists for that email, a reset code has been sent." };
+  const code = randomToken_().slice(0, 8).toUpperCase();
+  const resetSheet = ensureSheet_(spreadsheet, SHEETS.passwordResets, HEADERS.passwordResets);
+  const now = new Date();
+  const hash = sessionHash_(code + "|" + String(found.values[0]));
+  resetSheet.getRange(resetSheet.getLastRow() + 1, 1, 1, HEADERS.passwordResets.length).setValues([[hash, found.values[0], now, new Date(now.getTime() + 15 * 60 * 1000), false]]);
+  MailApp.sendEmail({ to: email, subject: "SARKSH Foods password reset code", body: "Your SARKSH Foods reset code is " + code + ". It expires in 15 minutes. If you did not request this, you can ignore this email.", name: "SARKSH Foods" });
+  return { ok: true, message: "If an account exists for that email, a reset code has been sent." };
+}
+
+function customerPasswordReset_(body) {
+  const email = normalizeEmail_(body.email);
+  const code = clean_(body.code, 12);
+  const password = String(body.newPassword || "");
+  validatePassword_(password);
+  rateLimit_("reset-confirm-" + email, 8, 900);
+  const spreadsheet = getSpreadsheet_();
+  const customerSheet = ensureSheet_(spreadsheet, SHEETS.customers, HEADERS.customers);
+  const customerFound = findCustomerByEmail_(customerSheet, email);
+  if (!customerFound) throw new Error("Reset code is invalid or expired.");
+  const customerId = String(customerFound.values[0]);
+  const hash = sessionHash_(code + "|" + customerId);
+  const resetSheet = ensureSheet_(spreadsheet, SHEETS.passwordResets, HEADERS.passwordResets);
+  const rows = readRows_(resetSheet);
+  let rowNumber = 0;
+  for (let i = rows.length - 1; i >= 0; i--) {
+    if (safeEqual_(String(rows[i][0] || ""), hash) && String(rows[i][1] || "") === customerId && !Boolean(rows[i][4]) && new Date(rows[i][3]).getTime() > Date.now()) { rowNumber = i + 2; break; }
+  }
+  if (!rowNumber) throw new Error("Reset code is invalid or expired.");
+  const salt = randomToken_().slice(0, 48);
+  const iterations = 12000;
+  const passwordHash = derivePassword_(password, salt, iterations);
+  customerSheet.getRange(customerFound.rowNumber, 6, 1, 3).setValues([[passwordHash, salt, iterations]]);
+  customerSheet.getRange(customerFound.rowNumber, 11).setValue(new Date());
+  resetSheet.getRange(rowNumber, 5).setValue(true);
+  revokeAllSessionsForSubject_(SHEETS.customerSessions, customerId);
+  return { ok: true, message: "Password updated. You can sign in now." };
+}
+
+function customerProfileById_(id) {
+  const sheet = ensureSheet_(getSpreadsheet_(), SHEETS.customers, HEADERS.customers);
+  const found = findRowByValue_(sheet, "Customer ID", id);
+  if (!found) throw new Error("Customer account not found.");
+  return { id: String(found.values[0]), name: String(found.values[2] || ""), phone: String(found.values[3] || ""), email: String(found.values[4] || ""), status: String(found.values[8] || ""), createdAt: dateString_(found.values[1]), lastLoginAt: dateString_(found.values[9]) };
+}
+
+function readCustomerAddresses_(spreadsheet, customerId) {
+  const sheet = ensureSheet_(spreadsheet, SHEETS.addresses, HEADERS.addresses);
+  return readRows_(sheet).filter(function (row) { return String(row[1]) === customerId; }).map(function (row) {
+    return { id: String(row[0]), customerId: String(row[1]), label: String(row[2] || "Home"), recipientName: String(row[3] || ""), phone: String(row[4] || ""), line1: String(row[5] || ""), line2: String(row[6] || ""), landmark: String(row[7] || ""), city: String(row[8] || ""), district: String(row[9] || ""), state: String(row[10] || ""), pincode: String(row[11] || ""), country: String(row[12] || "India"), isDefault: Boolean(row[13]), createdAt: dateString_(row[14]), updatedAt: dateString_(row[15]) };
+  }).sort(function (a, b) { return a.isDefault === b.isDefault ? a.label.localeCompare(b.label) : (a.isDefault ? -1 : 1); });
+}
+
+function clearDefaultAddresses_(sheet, customerId) {
+  if (sheet.getLastRow() < 2) return;
+  const values = sheet.getRange(2, 1, sheet.getLastRow() - 1, sheet.getLastColumn()).getValues();
+  values.forEach(function (row, index) { if (String(row[1]) === customerId && Boolean(row[13])) sheet.getRange(index + 2, 14).setValue(false); });
+}
+
+function formatAddress_(address) {
+  return [address.line1, address.line2, address.landmark, address.city, address.district, address.state, address.pincode, address.country].filter(Boolean).join(", ");
+}
+
+function findCustomerByEmail_(sheet, email) {
+  if (!email || sheet.getLastRow() < 2) return null;
+  const rows = sheet.getRange(2, 1, sheet.getLastRow() - 1, sheet.getLastColumn()).getValues();
+  for (let i = 0; i < rows.length; i++) if (normalizeEmail_(rows[i][4]) === email) return { rowNumber: i + 2, values: rows[i] };
+  return null;
+}
+
+function createSession_(sheetName, subject, durationMs) {
+  const spreadsheet = getSpreadsheet_();
+  const headers = sheetName === SHEETS.adminSessions ? HEADERS.adminSessions : HEADERS.customerSessions;
+  const sheet = ensureSheet_(spreadsheet, sheetName, headers);
+  const token = randomToken_();
+  const now = new Date();
+  const expires = new Date(now.getTime() + durationMs);
+  sheet.getRange(sheet.getLastRow() + 1, 1, 1, headers.length).setValues([[sessionHash_(token), subject, now, expires, now, false]]);
+  return token;
+}
+
+function requireSession_(sheetName, token) {
+  const raw = clean_(token, 500);
+  if (!raw) throw new Error("Session is required.");
+  const sheet = ensureSheet_(getSpreadsheet_(), sheetName, sheetName === SHEETS.adminSessions ? HEADERS.adminSessions : HEADERS.customerSessions);
+  const hash = sessionHash_(raw);
+  const rows = readRows_(sheet);
+  for (let i = rows.length - 1; i >= 0; i--) {
+    if (safeEqual_(String(rows[i][0] || ""), hash)) {
+      if (Boolean(rows[i][5]) || new Date(rows[i][3]).getTime() <= Date.now()) throw new Error("Session is invalid or expired.");
+      sheet.getRange(i + 2, 5).setValue(new Date());
+      return String(rows[i][1] || "");
+    }
+  }
+  throw new Error("Session is invalid or expired.");
+}
+
+function requireCustomerSession_(token) {
+  const id = requireSession_(SHEETS.customerSessions, token);
+  const profile = customerProfileById_(id);
+  if (profile.status !== "Active") throw new Error("Customer account is not active.");
+  return profile;
+}
+
+function revokeSession_(sheetName, token) {
+  const raw = clean_(token, 500);
+  if (!raw) return;
+  const sheet = ensureSheet_(getSpreadsheet_(), sheetName, sheetName === SHEETS.adminSessions ? HEADERS.adminSessions : HEADERS.customerSessions);
+  const hash = sessionHash_(raw);
+  const rows = readRows_(sheet);
+  for (let i = rows.length - 1; i >= 0; i--) if (safeEqual_(String(rows[i][0] || ""), hash)) { sheet.getRange(i + 2, 6).setValue(true); return; }
+}
+
+function revokeAllSessionsForSubject_(sheetName, subject) {
+  const sheet = ensureSheet_(getSpreadsheet_(), sheetName, sheetName === SHEETS.adminSessions ? HEADERS.adminSessions : HEADERS.customerSessions);
+  const rows = readRows_(sheet);
+  rows.forEach(function (row, index) { if (String(row[1] || "") === String(subject)) sheet.getRange(index + 2, 6).setValue(true); });
+}
+
+function saveBookingObject_(body) {
+  const name = clean_(body.name, 80);
+  const phone = clean_(body.phone, 24);
+  const email = clean_(body.email, 120);
+  const buyerType = clean_(body.buyerType, 60);
+  const quantity = Math.max(1, Math.floor(Number(body.quantity) || 0));
+  const pincode = clean_(body.pincode, 12);
+  const address = clean_(body.address, 500);
+  const notes = clean_(body.notes, 600);
+  const productSlug = clean_(body.productSlug, 100);
+  const productName = clean_(body.productName, 120);
+  const packSize = clean_(body.packSize, 40);
+  if (!productSlug || !productName || name.length < 2 || phone.length < 8 || !buyerType || quantity < 1 || pincode.length < 4 || address.length < 6) throw new Error("Please complete the required order details.");
+  const id = "SF-B-" + Utilities.getUuid().replace(/-/g, "").slice(0, 10).toUpperCase();
+  const now = new Date();
+  append_(SHEETS.booking, HEADERS.booking, [id, now, productSlug, productName, packSize, name, phone, email, buyerType, quantity, pincode, address, notes, "New", now, clean_(body.customerId, 80), clean_(body.addressId, 80), clean_(body.paymentMethod, 60) || "To be confirmed", clean_(body.paymentStatus, 40) || "Not initiated"]);
+  sendAdminNotification_("New SARKSH Foods order request · " + id, "A new order request was received.", [["Reference", id], ["Product", productName + " " + packSize], ["Customer", name], ["Phone", phone], ["Buyer type", buyerType], ["Quantity", String(quantity)], ["PIN code", pincode], ["Address", address], ["Notes", notes || "—"]]);
+  return { ok: true, id: id };
+}
+
+function normalizeEmail_(value) { return clean_(value, 160).toLowerCase(); }
+function normalizePhone_(value) { return clean_(value, 32).replace(/[^0-9+]/g, ""); }
+function isEmail_(value) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "")); }
+function validatePassword_(value) { const p = String(value || ""); if (p.length < 10 || !/[A-Za-z]/.test(p) || !/[0-9]/.test(p)) throw new Error("Password must be at least 10 characters and include a letter and a number."); }
+
+function derivePassword_(password, salt, iterations) {
+  const pepper = PropertiesService.getScriptProperties().getProperty("AUTH_PEPPER") || "";
+  let state = salt + "|" + password + "|" + pepper;
+  const rounds = Math.max(4000, Math.min(20000, Number(iterations) || 12000));
+  for (let i = 0; i < rounds; i++) {
+    const digest = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, state, Utilities.Charset.UTF_8);
+    state = Utilities.base64EncodeWebSafe(digest).replace(/=+$/g, "") + "|" + salt + "|" + pepper;
+  }
+  return state.split("|")[0];
+}
+
+function verifyPassword_(password, expectedHash, salt, iterations) {
+  if (!expectedHash || !salt) return false;
+  return safeEqual_(derivePassword_(String(password || ""), String(salt), Number(iterations) || 12000), String(expectedHash));
+}
+
+function safeEqual_(a, b) {
+  const left = String(a || ""); const right = String(b || "");
+  let diff = left.length ^ right.length; const max = Math.max(left.length, right.length);
+  for (let i = 0; i < max; i++) diff |= (left.charCodeAt(i % Math.max(1, left.length)) || 0) ^ (right.charCodeAt(i % Math.max(1, right.length)) || 0);
+  return diff === 0;
+}
+
+function randomToken_() { return [Utilities.getUuid(), Utilities.getUuid(), Utilities.getUuid()].join("").replace(/-/g, ""); }
+function sessionHash_(token) { return digest_(String(token || "") + "|" + (PropertiesService.getScriptProperties().getProperty("SESSION_PEPPER") || "")); }
+function generateTemporaryPassword_() { return "Sf!" + randomToken_().slice(0, 14) + "9"; }
+
+function rateLimit_(key, maxAttempts, seconds) {
+  const cache = CacheService.getScriptCache();
+  const cacheKey = "rate-" + digest_(key);
+  const count = Number(cache.get(cacheKey) || 0) + 1;
+  cache.put(cacheKey, String(count), seconds);
+  if (count > maxAttempts) throw new Error("Too many attempts. Please try again later.");
 }
 
 function saveProductImage_(image, slug, existingFileId) {
@@ -441,13 +850,14 @@ function saveProductImage_(image, slug, existingFileId) {
   if (!folderId) throw new Error("Product Media Drive folder is not configured. Run setupProductionBackend().");
   const folder = DriveApp.getFolderById(folderId);
   const file = folder.createFile(blob);
-  file.setDescription("SARKSH Foods product media uploaded from the admin portal");
-  file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+  file.setDescription("SARKSH Foods private product media uploaded from the admin portal");
+  // Drive remains private. Public website/customer images must use an approved public URL
+  // (for example a versioned GitHub Pages asset), never a shared Google Drive link.
 
   if (existingFileId) {
     try { DriveApp.getFileById(existingFileId).setTrashed(true); } catch (error) { console.warn(error); }
   }
-  return { id: file.getId(), url: "https://drive.google.com/uc?export=view&id=" + file.getId() };
+  return { id: file.getId() };
 }
 
 function sendAdminNotification_(subject, heading, rows) {
@@ -495,7 +905,17 @@ function ensureSheet_(spreadsheet, sheetName, headers) {
     sheet.setFrozenRows(1);
     sheet.getRange(1, 1, 1, headers.length).setFontWeight("bold").setBackground("#681D17").setFontColor("#FFF7ED");
     sheet.autoResizeColumns(1, headers.length);
+    return sheet;
   }
+  const current = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0].map(String);
+  const missing = headers.filter(function (header) { return current.indexOf(header) < 0; });
+  if (missing.length) {
+    const start = sheet.getLastColumn() + 1;
+    sheet.getRange(1, start, 1, missing.length).setValues([missing]);
+    sheet.getRange(1, start, 1, missing.length).setFontWeight("bold").setBackground("#681D17").setFontColor("#FFF7ED");
+    sheet.autoResizeColumns(start, missing.length);
+  }
+  sheet.setFrozenRows(1);
   return sheet;
 }
 

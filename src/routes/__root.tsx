@@ -22,8 +22,9 @@ export const Route = createRootRoute({ component: RootLayout, notFoundComponent:
 function RootLayout() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const adminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
+  const accountRoute = pathname === "/account" || pathname.startsWith("/account/");
 
-  if (adminRoute) {
+  if (adminRoute || accountRoute) {
     return (
       <>
         <SeoSync />

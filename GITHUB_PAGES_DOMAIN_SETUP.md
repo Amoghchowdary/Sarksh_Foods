@@ -1,46 +1,26 @@
-# sarkshfoods.in + GitHub Pages + V8.3 Admin Setup
-
-## GitHub Pages
+# sarkshfoods.in + GitHub Pages — V8.4
 
 Repository → Settings → Pages:
 
-- Source: **GitHub Actions**
-- Custom domain: **sarkshfoods.in**
-- Enable **Enforce HTTPS** after GitHub provisions the certificate
+- Source: GitHub Actions
+- Custom domain: `sarkshfoods.in`
+- Enforce HTTPS after certificate provisioning
 
-The workflow is `.github/workflows/deploy-pages.yml`.
+Workflow:
 
-## Required GitHub Actions configuration
+`.github/workflows/deploy-pages.yml`
 
-Repository → Settings → Secrets and variables → Actions.
+No Google OAuth / Cloud Console variable is required in V8.4.
 
-### Backend endpoint
-
-No GitHub secret is required for the Apps Script URL. The production `/exec` endpoint is already wired into `.github/workflows/deploy-pages.yml` because a deployed Apps Script Web App URL is a public frontend endpoint, not a credential.
-
-### Variables
-
-`GOOGLE_OAUTH_CLIENT_ID`
-
-Use the Google Identity Services OAuth 2.0 Web Client ID for the Admin portal.
-
-Optional:
+Optional GitHub Actions variable:
 
 `GOOGLE_SITE_VERIFICATION`
 
-## OAuth JavaScript origins
+The production Apps Script `/exec` URL is already wired into the workflow.
 
-In Google Cloud Console, the OAuth Web Client should authorize:
+## DNS
 
-- `https://sarkshfoods.in`
-- `https://www.sarkshfoods.in` if used
-- `http://localhost:5173` for local admin testing
-
-The same OAuth Client ID must be configured in Apps Script as Script Property `GOOGLE_CLIENT_ID`.
-
-## DNS for apex domain
-
-GitHub Pages apex A records:
+Apex A records:
 
 - `185.199.108.153`
 - `185.199.109.153`
@@ -51,21 +31,17 @@ Optional `www` CNAME:
 
 `YOUR-GITHUB-USERNAME.github.io`
 
-## Deployment behavior
+## Deployment gate
 
-A push to `main` triggers:
+A push to `main` performs:
 
 1. dependency installation
-2. validation of domain, Apps Script URL and Google OAuth Client ID
+2. domain/backend validation
 3. TypeScript check
-4. production build
-5. SEO/static-route generation
-6. admin noindex verification
+4. V8.4 backend health check
+5. production build
+6. SEO/private-route generation
 7. production artifact verification
 8. GitHub Pages deployment
 
-The Admin portal is available at:
-
-`https://sarkshfoods.in/admin/`
-
-It is excluded from the sitemap and from search-engine indexing.
+The workflow will not publish if the live backend is still on the older Apps Script code.

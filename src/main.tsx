@@ -12,6 +12,7 @@ import "./commercial-v75-contact-trust.css";
 import "./commercial-v76-form-clarity.css";
 import "./commercial-v77-clean-contact.css";
 import "./admin-v82.css";
+import "./customer-v84.css";
 
 const rootElement = document.getElementById("app");
 

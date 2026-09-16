@@ -1,42 +1,31 @@
-# SARKSH Foods Production Endpoints
+# SARKSH Foods V8.4 Production Endpoints
 
-## Website
+## Public website
 
-- Canonical domain: `https://sarkshfoods.in`
-- GitHub Pages deployment: GitHub Actions
+`https://sarkshfoods.in`
 
-## Backend
+## Customer portal
 
-- Google Apps Script Web App:
-  `https://script.google.com/macros/s/AKfycbw_nR3t5gJfE5BOB4F1NduKDL1Mm10ad73BbnXRygL9pWDm-EwqmcegcVyswZimIYTtgA/exec`
+`https://sarkshfoods.in/account/`
 
-This URL is a public web-app endpoint and is intentionally compiled into the production frontend. It is not treated as a password or API secret. Admin operations remain protected by Google Identity token verification in Apps Script.
+Private customer page; excluded from search indexing.
 
-## Remaining production value
+## Admin portal
 
-The admin portal still requires the Google OAuth Web Client ID:
+`https://sarkshfoods.in/admin/`
 
-- GitHub Actions variable: `GOOGLE_OAUTH_CLIENT_ID`
-- Apps Script Script Property: `GOOGLE_CLIENT_ID`
+Private administration page; excluded from search indexing.
 
-Both values must be the same OAuth Web Client ID.
+## Google Apps Script backend
 
-## Local backend health test
+`https://script.google.com/macros/s/AKfycbw_nR3t5gJfE5BOB4F1NduKDL1Mm10ad73BbnXRygL9pWDm-EwqmcegcVyswZimIYTtgA/exec`
 
-From PowerShell:
+The URL is a public API endpoint, not a database credential. Sensitive customer/admin operations require backend-issued session tokens. Google Sheets and Drive remain private.
 
-```powershell
-Invoke-RestMethod -Uri "https://script.google.com/macros/s/AKfycbw_nR3t5gJfE5BOB4F1NduKDL1Mm10ad73BbnXRygL9pWDm-EwqmcegcVyswZimIYTtgA/exec" -Method Get
-```
-
-Expected response should include `ok = true`, service/version information, and backend configuration flags.
-
-Or run the project preflight command:
+## Health check
 
 ```powershell
 npm run backend:health
 ```
 
-## Deployment-code check
-
-This package is configured to call the URL above. Ensure that deployment is pointing to the included Apps Script backend (`apps-script/Code.gs`). If the Apps Script code was updated after the deployment was created, update the existing Web App deployment to the latest version so the `/exec` URL can stay unchanged.
+V8.4 production expects backend version `8.4`, database/Drive configuration, customer-account storage and initialized admin hashed-password access.

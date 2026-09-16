@@ -16,6 +16,7 @@ const expectedRoutes = [
 ];
 
 const adminRoute = "/admin/";
+const accountRoute = "/account/";
 const failures = [];
 const read = (path) => readFile(resolve(dist, path), "utf8");
 
@@ -43,6 +44,15 @@ try {
   failures.push("admin/index.html: missing generated admin route");
 }
 
+
+try {
+  const accountHtml = await read("account/index.html");
+  if (!/noindex,nofollow,noarchive/i.test(accountHtml)) failures.push("account/index.html: customer account page must be noindex");
+  if (!accountHtml.includes(`rel="canonical" href="${DOMAIN}${accountRoute}"`)) failures.push("account/index.html: canonical is incorrect");
+} catch {
+  failures.push("account/index.html: missing generated account route");
+}
+
 const chilli = await read("chilli-powder/index.html");
 for (const marker of [
   "Premium Red Chilli Powder 1 kg in India",
@@ -56,6 +66,7 @@ for (const marker of [
 const robots = await read("robots.txt");
 if (!robots.includes("User-agent: *\nAllow: /")) failures.push("robots.txt: production crawling is not enabled");
 if (!robots.includes("Disallow: /admin/")) failures.push("robots.txt: admin route is not excluded from crawling");
+if (!robots.includes("Disallow: /account/")) failures.push("robots.txt: customer account route is not excluded from crawling");
 if (!robots.includes(`Sitemap: ${DOMAIN}/sitemap.xml`)) failures.push("robots.txt: sitemap URL is incorrect");
 
 const sitemap = await read("sitemap.xml");
@@ -64,6 +75,7 @@ for (const route of expectedRoutes) {
   if (!sitemap.includes(`<loc>${DOMAIN}${route}</loc>`)) failures.push(`sitemap.xml: missing ${route}`);
 }
 if (sitemap.includes(`${DOMAIN}/admin/`)) failures.push("sitemap.xml: admin route must not be listed");
+if (sitemap.includes(`${DOMAIN}/account/`)) failures.push("sitemap.xml: customer account route must not be listed");
 
 const llms = await read("llms.txt");
 if (!llms.includes(DOMAIN)) failures.push("llms.txt: production domain missing");
