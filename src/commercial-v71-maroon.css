@@ -1,0 +1,338 @@
+/* =========================================================
+   SARKSH FOODS V7.1 — MAROON CONTINUUM
+   Purpose: carry the exact V7 Business/market maroon palette
+   across the complete commercial website without touching the
+   approved 3D BrandIntro animation or product assets.
+   ========================================================= */
+
+.sarksh-site-shell {
+  --v71-deep: #3b0908;
+  --v71-mid: #681d17;
+  --v71-red: #7c1e1a;
+  --v71-cream: #fff7ed;
+  --v71-gold: #f0c96f;
+  --v71-line: rgba(255, 247, 237, .16);
+  --v71-muted: rgba(255, 247, 237, .72);
+  background: var(--v71-deep);
+}
+
+.sarksh-site-shell main {
+  color: var(--v71-cream);
+  background: var(--v71-deep);
+}
+
+/* Keep the approved cream navigation bar exactly as the reference screenshots. */
+.sarksh-site-shell .site-header,
+.sarksh-site-shell .mobile-menu {
+  background: rgba(255,248,238,.97);
+}
+
+/* One continuous maroon world across every customer-facing section. */
+.sarksh-site-shell .home-hero,
+.sarksh-site-shell .promise-section,
+.sarksh-site-shell .product-focus,
+.sarksh-site-shell .buyer-section,
+.sarksh-site-shell .brand-band,
+.sarksh-site-shell .home-cta,
+.sarksh-site-shell .catalog-hero,
+.sarksh-site-shell .catalog-product,
+.sarksh-site-shell .order-options,
+.sarksh-site-shell .product-detail-hero,
+.sarksh-site-shell .product-story,
+.sarksh-site-shell .enterprise-hero,
+.sarksh-site-shell .enterprise-buyers,
+.sarksh-site-shell .enterprise-flow,
+.sarksh-site-shell .enterprise-bottom-cta,
+.sarksh-site-shell .about-hero,
+.sarksh-site-shell .about-story,
+.sarksh-site-shell .brand-principles,
+.sarksh-site-shell .contact-hero,
+.sarksh-site-shell .contact-section,
+.sarksh-site-shell .not-found {
+  color: var(--v71-cream);
+  background: linear-gradient(110deg, var(--v71-deep) 0%, var(--v71-mid) 56%, var(--v71-red) 100%);
+}
+
+/* Subtle section separation without introducing a new colour. */
+.sarksh-site-shell .promise-section,
+.sarksh-site-shell .buyer-section,
+.sarksh-site-shell .catalog-product,
+.sarksh-site-shell .enterprise-buyers,
+.sarksh-site-shell .about-story,
+.sarksh-site-shell .contact-section {
+  border-top: 1px solid var(--v71-line);
+  border-bottom: 1px solid var(--v71-line);
+}
+
+/* Shared typography on dark surfaces. */
+.sarksh-site-shell main h1,
+.sarksh-site-shell main h2,
+.sarksh-site-shell main h3,
+.sarksh-site-shell main h4,
+.sarksh-site-shell main .section-lead {
+  color: var(--v71-cream) !important;
+}
+
+.sarksh-site-shell main p,
+.sarksh-site-shell main .hero-lead,
+.sarksh-site-shell main .section-heading-row > p,
+.sarksh-site-shell main .section-intro > p,
+.sarksh-site-shell main .promise-features p,
+.sarksh-site-shell main .product-focus-copy > p:not(.section-lead),
+.sarksh-site-shell main .buyer-cards p,
+.sarksh-site-shell main .brand-band-copy p,
+.sarksh-site-shell main .catalog-hero-copy p,
+.sarksh-site-shell main .catalog-copy > p:not(.section-lead),
+.sarksh-site-shell main .order-option-grid p,
+.sarksh-site-shell main .product-detail-copy > p:not(.product-detail-tagline),
+.sarksh-site-shell main .product-story p,
+.sarksh-site-shell main .enterprise-hero-copy > p,
+.sarksh-site-shell main .enterprise-buyer-grid p,
+.sarksh-site-shell main .enterprise-flow-grid > div p,
+.sarksh-site-shell main .enterprise-flow p,
+.sarksh-site-shell main .about-hero-copy p,
+.sarksh-site-shell main .about-story-copy p,
+.sarksh-site-shell main .principle-grid p,
+.sarksh-site-shell main .contact-hero p,
+.sarksh-site-shell main .contact-context > p,
+.sarksh-site-shell main .contact-route span {
+  color: var(--v71-muted) !important;
+}
+
+.sarksh-site-shell main .eyebrow,
+.sarksh-site-shell main .eyebrow--gold,
+.sarksh-site-shell main .hero-facts strong,
+.sarksh-site-shell main .promise-features article > span,
+.sarksh-site-shell main .buyer-cards article > span,
+.sarksh-site-shell main .buyer-cards article > svg,
+.sarksh-site-shell main .enterprise-assurance svg,
+.sarksh-site-shell main .enterprise-flow li > span,
+.sarksh-site-shell main .principle-grid article > span,
+.sarksh-site-shell main .order-option-grid svg,
+.sarksh-site-shell main .check-list svg,
+.sarksh-site-shell main .product-points svg,
+.sarksh-site-shell main .contact-route svg,
+.sarksh-site-shell main .contact-hero-card svg {
+  color: var(--v71-gold) !important;
+}
+
+.sarksh-site-shell main h1 em,
+.sarksh-site-shell main .catalog-hero-copy h1 em,
+.sarksh-site-shell main .about-hero-copy h1 em,
+.sarksh-site-shell main .product-detail-tagline {
+  color: var(--v71-gold) !important;
+}
+
+/* Buttons match the Business hero treatment. */
+.sarksh-site-shell main .button-primary,
+.sarksh-site-shell main .button-light {
+  background: var(--v71-cream);
+  color: var(--v71-deep);
+  border-color: var(--v71-cream);
+  box-shadow: none;
+}
+.sarksh-site-shell main .button-primary:hover,
+.sarksh-site-shell main .button-light:hover {
+  background: var(--v71-gold);
+  color: var(--v71-deep);
+}
+.sarksh-site-shell main .button-secondary {
+  background: transparent;
+  color: var(--v71-cream);
+  border-color: rgba(255,247,237,.55);
+}
+.sarksh-site-shell main .button-secondary:hover {
+  background: rgba(255,247,237,.08);
+  color: var(--v71-cream);
+  border-color: var(--v71-cream);
+}
+.sarksh-site-shell main .button-gold {
+  background: var(--v71-gold);
+  color: var(--v71-deep);
+}
+.sarksh-site-shell main .text-link,
+.sarksh-site-shell main .text-button,
+.sarksh-site-shell main .back-link {
+  color: var(--v71-cream);
+}
+
+/* Home hero — same maroon environment from edge to edge. */
+.sarksh-site-shell .home-hero {
+  background: linear-gradient(110deg, var(--v71-deep) 0%, var(--v71-mid) 56%, var(--v71-red) 100%);
+}
+.sarksh-site-shell .home-hero-visual {
+  background: transparent;
+}
+.sarksh-site-shell .hero-visual-glow {
+  background: rgba(240,201,111,.12);
+}
+.sarksh-site-shell .hero-facts {
+  border-color: var(--v71-line);
+}
+.sarksh-site-shell .hero-facts div + div {
+  border-left-color: var(--v71-line);
+}
+.sarksh-site-shell .hero-facts span {
+  color: var(--v71-muted);
+}
+.sarksh-site-shell .market-strip {
+  background: var(--v71-deep);
+  border-top: 1px solid var(--v71-line);
+  border-bottom: 1px solid var(--v71-line);
+}
+
+/* Promise / product / buyer cards use transparent premium surfaces. */
+.sarksh-site-shell .promise-features,
+.sarksh-site-shell .promise-features article,
+.sarksh-site-shell .buyer-cards,
+.sarksh-site-shell .buyer-cards article,
+.sarksh-site-shell .order-option-grid,
+.sarksh-site-shell .order-option-grid article,
+.sarksh-site-shell .enterprise-buyer-grid,
+.sarksh-site-shell .enterprise-buyer-grid article,
+.sarksh-site-shell .principle-grid,
+.sarksh-site-shell .principle-grid article,
+.sarksh-site-shell .detail-specs,
+.sarksh-site-shell .detail-specs div,
+.sarksh-site-shell .enterprise-flow ol,
+.sarksh-site-shell .enterprise-flow li {
+  background: transparent;
+  border-color: var(--v71-line) !important;
+}
+.sarksh-site-shell .product-points span,
+.sarksh-site-shell .check-list li,
+.sarksh-site-shell .enterprise-assurance {
+  color: var(--v71-muted);
+}
+
+/* Product stages stay dark so packaging remains the focal point. */
+.sarksh-site-shell .product-focus-media,
+.sarksh-site-shell .catalog-pack,
+.sarksh-site-shell .product-detail-media,
+.sarksh-site-shell .about-logo-stage,
+.sarksh-site-shell .about-story-image,
+.sarksh-site-shell .brand-band-logo,
+.sarksh-site-shell .contact-hero-card {
+  background: var(--v71-deep);
+  border: 1px solid var(--v71-line);
+}
+.sarksh-site-shell .product-focus-backdrop {
+  background: radial-gradient(circle, var(--v71-gold) 0 22%, rgba(240,201,111,.16) 23%, transparent 65%);
+}
+.sarksh-site-shell .catalog-hero-media,
+.sarksh-site-shell .enterprise-hero,
+.sarksh-site-shell .product-detail-media {
+  background: radial-gradient(circle at 60% 38%, var(--v71-red) 0%, var(--v71-mid) 45%, var(--v71-deep) 100%);
+}
+
+/* Brand band and closing CTA remain in the same exact maroon family. */
+.sarksh-site-shell .brand-band,
+.sarksh-site-shell .home-cta,
+.sarksh-site-shell .enterprise-bottom-cta {
+  background: var(--v71-red);
+}
+.sarksh-site-shell .brand-band-logo {
+  background: var(--v71-deep);
+}
+
+/* Product / enterprise information lines. */
+.sarksh-site-shell .detail-specs span {
+  color: var(--v71-gold);
+}
+.sarksh-site-shell .detail-specs strong,
+.sarksh-site-shell .enterprise-flow h3,
+.sarksh-site-shell .enterprise-buyer-grid h3,
+.sarksh-site-shell .principle-grid h3,
+.sarksh-site-shell .order-option-grid h3,
+.sarksh-site-shell .catalog-copy h2 {
+  color: var(--v71-cream);
+}
+
+/* Contact keeps the page dark; only input surfaces remain light for usability. */
+.sarksh-site-shell .contact-form-wrap {
+  background: rgba(59,9,8,.44);
+  border: 1px solid var(--v71-line);
+}
+.sarksh-site-shell .contact-context img {
+  filter: drop-shadow(0 18px 38px rgba(0,0,0,.18));
+}
+.sarksh-site-shell .contact-route {
+  border-top-color: var(--v71-line);
+}
+.sarksh-site-shell .contact-form-actions p {
+  color: var(--v71-muted);
+}
+.sarksh-site-shell main .form-label {
+  color: var(--v71-gold);
+}
+.sarksh-site-shell main .form-control {
+  border-color: rgba(255,247,237,.35);
+  background: var(--v71-cream);
+  color: #32120f;
+}
+
+/* Preserve the bright order modal as a focused transaction surface. */
+.sarksh-site-shell .booking-panel,
+.sarksh-site-shell .booking-panel h2,
+.sarksh-site-shell .booking-panel h3,
+.sarksh-site-shell .booking-panel p,
+.sarksh-site-shell .booking-panel .form-label {
+  color: #32120f;
+}
+.sarksh-site-shell .booking-panel .button-primary {
+  background: #962821;
+  color: #fff9ef;
+  border-color: #962821;
+}
+.sarksh-site-shell .booking-panel .form-label,
+.sarksh-site-shell .booking-kicker {
+  color: #962821;
+}
+
+/* Footer now visually continues the same background rather than switching worlds. */
+.sarksh-site-shell .site-footer {
+  background: var(--v71-deep);
+  border-top: 1px solid var(--v71-line);
+}
+
+/* Responsive: keep the dark maroon canvas continuous on mobile/tablet too. */
+@media (max-width: 980px) {
+  .sarksh-site-shell .home-hero,
+  .sarksh-site-shell .catalog-hero,
+  .sarksh-site-shell .product-detail-hero,
+  .sarksh-site-shell .enterprise-hero,
+  .sarksh-site-shell .about-hero,
+  .sarksh-site-shell .contact-hero {
+    background: linear-gradient(180deg, var(--v71-deep) 0%, var(--v71-mid) 62%, var(--v71-red) 100%);
+  }
+
+  .sarksh-site-shell .home-hero-visual,
+  .sarksh-site-shell .catalog-hero-media,
+  .sarksh-site-shell .enterprise-pack,
+  .sarksh-site-shell .product-detail-media {
+    background: transparent;
+  }
+}
+
+@media (max-width: 640px) {
+  .sarksh-site-shell .promise-section,
+  .sarksh-site-shell .product-focus,
+  .sarksh-site-shell .buyer-section,
+  .sarksh-site-shell .brand-band,
+  .sarksh-site-shell .catalog-product,
+  .sarksh-site-shell .order-options,
+  .sarksh-site-shell .enterprise-buyers,
+  .sarksh-site-shell .enterprise-flow,
+  .sarksh-site-shell .about-story,
+  .sarksh-site-shell .brand-principles,
+  .sarksh-site-shell .contact-section {
+    background: var(--v71-deep);
+  }
+
+  .sarksh-site-shell .buyer-cards article,
+  .sarksh-site-shell .order-option-grid article,
+  .sarksh-site-shell .enterprise-buyer-grid article,
+  .sarksh-site-shell .principle-grid article {
+    background: transparent;
+  }
+}

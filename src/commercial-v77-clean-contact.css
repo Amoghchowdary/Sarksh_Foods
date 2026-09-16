@@ -1,0 +1,66 @@
+/* SARKSH Foods V7.7 — Contact clarity
+   Premium means clarity: only essential compliance information, required contact
+   number, no helper notices, no instructional callouts. */
+
+.sarksh-site-shell .contact-v75-trust {
+  align-items: center;
+  padding: 20px 22px;
+}
+
+.sarksh-site-shell .contact-v75-trust-copy > strong {
+  margin-top: 4px;
+}
+
+.sarksh-site-shell .contact-v75-trust-copy > p,
+.sarksh-site-shell .contact-v75-trust small {
+  display: none !important;
+}
+
+.sarksh-site-shell .contact-v75-trust dl {
+  margin-top: 14px;
+}
+
+.sarksh-site-shell .contact-v75-trust dl div {
+  padding-top: 10px;
+}
+
+.sarksh-site-shell .contact-v75-form-card {
+  overflow: hidden;
+}
+
+.sarksh-site-shell .contact-v75-form-head {
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+}
+
+.sarksh-site-shell .contact-v75-form-head h2 {
+  margin-bottom: 0;
+}
+
+.sarksh-site-shell .contact-v75-form-guide,
+.sarksh-site-shell .contact-v75-note,
+.sarksh-site-shell .contact-v75-submit-row > p {
+  display: none !important;
+}
+
+.sarksh-site-shell .contact-v77-submit-row {
+  justify-content: flex-end;
+}
+
+.sarksh-site-shell .contact-v75-form .field-invalid {
+  border-color: #9a211d !important;
+  box-shadow: 0 0 0 2px rgba(154,33,29,.10) !important;
+}
+
+.sarksh-site-shell .contact-v75-form .field-error {
+  display: none !important;
+}
+
+@media (max-width: 640px) {
+  .sarksh-site-shell .contact-v75-trust {
+    padding: 16px 18px;
+  }
+  .sarksh-site-shell .contact-v77-submit-row {
+    align-items: stretch;
+  }
+}

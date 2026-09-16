@@ -1,0 +1,361 @@
+/* =========================================================
+   SARKSH FOODS V7.5 — CONTACT / TRUST REBUILD
+   - One compact commercial contact composition
+   - Form visible immediately on desktop
+   - FSSAI registration trust signal from supplied certificate
+   - Existing maroon / cream / gold palette only
+   - Other pages and BrandIntro are untouched
+   ========================================================= */
+
+.sarksh-site-shell .contact-v75 {
+  position: relative;
+  padding: clamp(34px, 4.8vw, 72px) 0 clamp(48px, 6vw, 90px);
+  background:
+    radial-gradient(circle at 80% 10%, rgba(240,201,111,.09), transparent 24%),
+    radial-gradient(circle at 8% 88%, rgba(124,30,26,.42), transparent 28%),
+    linear-gradient(118deg, var(--v71-deep) 0%, var(--v71-mid) 58%, var(--v71-red) 100%);
+  color: var(--v71-cream);
+}
+
+.sarksh-site-shell .contact-v75-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, .82fr) minmax(0, 1.18fr);
+  gap: clamp(24px, 4vw, 58px);
+  align-items: start;
+}
+
+.sarksh-site-shell .contact-v75-intro {
+  min-width: 0;
+  display: grid;
+  gap: 22px;
+}
+
+.sarksh-site-shell .contact-v75-heading {
+  padding: clamp(8px, 1vw, 14px) 0 4px;
+}
+
+.sarksh-site-shell .contact-v75-heading h1 {
+  max-width: 680px;
+  margin: 14px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.35rem, 5vw, 5.65rem);
+  line-height: .93;
+  letter-spacing: -.045em;
+  color: var(--v71-cream);
+}
+
+.sarksh-site-shell .contact-v75-heading p {
+  max-width: 620px;
+  margin: 20px 0 0;
+  font-size: clamp(1rem, 1.2vw, 1.12rem);
+  line-height: 1.7;
+  color: var(--v71-muted);
+}
+
+.sarksh-site-shell .contact-v75-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sarksh-site-shell .contact-v75-action {
+  min-height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 20px;
+  border: 1px solid rgba(255,247,237,.28);
+  border-radius: 16px;
+  background: rgba(59,9,8,.46);
+  color: var(--v71-cream);
+  font-family: var(--font-ui);
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+
+.sarksh-site-shell .contact-v75-action--primary {
+  border-color: var(--v71-gold);
+  background: var(--v71-gold);
+  color: var(--v71-deep);
+}
+
+.sarksh-site-shell .contact-v75-trust {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 18px;
+  padding: 22px;
+  border: 1px solid rgba(240,201,111,.28);
+  border-radius: 22px;
+  background:
+    linear-gradient(145deg, rgba(124,30,26,.76), rgba(59,9,8,.86));
+  box-shadow: inset 0 1px 0 rgba(255,247,237,.05);
+}
+
+.sarksh-site-shell .contact-v75-trust-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: rgba(240,201,111,.11);
+  border: 1px solid rgba(240,201,111,.26);
+  color: var(--v71-gold);
+}
+
+.sarksh-site-shell .contact-v75-trust-copy > span {
+  display: block;
+  color: var(--v71-gold);
+  font-family: var(--font-ui);
+  font-weight: 900;
+  font-size: .72rem;
+  letter-spacing: .16em;
+}
+
+.sarksh-site-shell .contact-v75-trust-copy > strong {
+  display: block;
+  margin-top: 5px;
+  color: var(--v71-cream);
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  line-height: 1.05;
+}
+
+.sarksh-site-shell .contact-v75-trust-copy > p {
+  margin: 8px 0 0;
+  color: var(--v71-muted);
+  line-height: 1.5;
+}
+
+.sarksh-site-shell .contact-v75-trust dl {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0 0;
+}
+
+.sarksh-site-shell .contact-v75-trust dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,247,237,.11);
+}
+
+.sarksh-site-shell .contact-v75-trust dt,
+.sarksh-site-shell .contact-v75-trust dd {
+  margin: 0;
+  font-size: .88rem;
+}
+
+.sarksh-site-shell .contact-v75-trust dt { color: var(--v71-muted); }
+.sarksh-site-shell .contact-v75-trust dd { color: var(--v71-cream); font-weight: 800; text-align: right; }
+.sarksh-site-shell .contact-v75-trust small {
+  display: block;
+  margin-top: 12px;
+  color: rgba(255,247,237,.6);
+  line-height: 1.45;
+}
+
+.sarksh-site-shell .contact-v75-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 0 2px;
+  color: var(--v71-muted);
+}
+
+.sarksh-site-shell .contact-v75-note svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: var(--v71-gold);
+}
+
+.sarksh-site-shell .contact-v75-note p {
+  margin: 0;
+  max-width: 600px;
+  line-height: 1.55;
+}
+
+.sarksh-site-shell .contact-v75-form-card {
+  min-width: 0;
+  padding: clamp(24px, 3vw, 38px);
+  border: 1px solid rgba(255,247,237,.20);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 95% 0%, rgba(240,201,111,.12), transparent 28%),
+    linear-gradient(145deg, rgba(124,30,26,.95), rgba(59,9,8,.96));
+  box-shadow: inset 0 1px 0 rgba(255,247,237,.06), 0 26px 64px rgba(25,2,2,.20);
+}
+
+.sarksh-site-shell .contact-v75-form-head {
+  padding-bottom: 22px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid rgba(255,247,237,.14);
+}
+
+.sarksh-site-shell .contact-v75-form-head h2 {
+  margin: 8px 0 0;
+  color: var(--v71-cream);
+  font-family: var(--font-display);
+  font-size: clamp(2.35rem, 3.4vw, 4rem);
+  line-height: .98;
+}
+
+.sarksh-site-shell .contact-v75-form-head p {
+  margin: 10px 0 0;
+  color: var(--v71-muted);
+  line-height: 1.55;
+}
+
+.sarksh-site-shell .contact-v75-form {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.sarksh-site-shell .contact-v75-form-grid {
+  gap: 16px 18px;
+}
+
+.sarksh-site-shell .contact-v75-form .form-label {
+  color: var(--v71-cream);
+  font-family: var(--font-ui);
+  font-size: .82rem;
+  font-weight: 800;
+}
+
+.sarksh-site-shell .contact-v75-form .form-control {
+  min-height: 50px;
+  width: 100%;
+  border-radius: 13px;
+  border: 1px solid rgba(59,9,8,.20) !important;
+  background: var(--v71-cream) !important;
+  color: #32120f !important;
+}
+
+.sarksh-site-shell .contact-v75-form .form-control:focus {
+  outline: 3px solid rgba(240,201,111,.22);
+  border-color: var(--v71-gold) !important;
+}
+
+.sarksh-site-shell .contact-v75-message {
+  margin-top: 18px;
+}
+
+.sarksh-site-shell .contact-v75-message textarea {
+  min-height: 132px;
+}
+
+.sarksh-site-shell .contact-v75-submit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.sarksh-site-shell .contact-v75-submit-row p {
+  max-width: 390px;
+  margin: 0;
+  color: var(--v71-muted);
+  font-size: .9rem;
+  line-height: 1.5;
+}
+
+.sarksh-site-shell .contact-v75-success {
+  min-height: 420px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  text-align: center;
+  color: var(--v71-cream);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sarksh-site-shell .contact-v75-action:hover {
+    transform: translateY(-2px);
+    border-color: var(--v71-gold);
+    background: rgba(124,30,26,.68);
+  }
+  .sarksh-site-shell .contact-v75-action--primary:hover {
+    background: #f4d27f;
+    color: var(--v71-deep);
+  }
+}
+
+@media (max-width: 980px) {
+  .sarksh-site-shell .contact-v75 {
+    padding-top: 28px;
+  }
+  .sarksh-site-shell .contact-v75-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .sarksh-site-shell .contact-v75-heading h1 {
+    max-width: 760px;
+    font-size: clamp(3rem, 8vw, 5rem);
+  }
+  .sarksh-site-shell .contact-v75-trust {
+    max-width: 760px;
+  }
+}
+
+@media (max-width: 640px) {
+  .sarksh-site-shell .contact-v75 {
+    padding: 20px 0 54px;
+  }
+  .sarksh-site-shell .contact-v75-grid {
+    gap: 18px;
+  }
+  .sarksh-site-shell .contact-v75-heading h1 {
+    margin-top: 10px;
+    font-size: clamp(2.65rem, 13vw, 3.75rem);
+    line-height: .95;
+  }
+  .sarksh-site-shell .contact-v75-heading p {
+    margin-top: 14px;
+    font-size: .98rem;
+    line-height: 1.58;
+  }
+  .sarksh-site-shell .contact-v75-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .sarksh-site-shell .contact-v75-action {
+    width: 100%;
+  }
+  .sarksh-site-shell .contact-v75-trust {
+    grid-template-columns: 40px minmax(0,1fr);
+    padding: 18px;
+    border-radius: 20px;
+  }
+  .sarksh-site-shell .contact-v75-trust-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
+  .sarksh-site-shell .contact-v75-trust dl div {
+    display: grid;
+    gap: 3px;
+  }
+  .sarksh-site-shell .contact-v75-trust dd { text-align: left; }
+  .sarksh-site-shell .contact-v75-form-card {
+    padding: 20px 16px;
+    border-radius: 22px;
+  }
+  .sarksh-site-shell .contact-v75-form-head h2 {
+    font-size: clamp(2.2rem, 10vw, 3rem);
+  }
+  .sarksh-site-shell .contact-v75-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .sarksh-site-shell .contact-v75-submit-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .sarksh-site-shell .contact-v75-submit-row .button-primary {
+    width: 100%;
+    justify-content: center;
+  }
+}

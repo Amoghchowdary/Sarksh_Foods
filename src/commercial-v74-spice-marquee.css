@@ -1,0 +1,202 @@
+/* SARKSH Foods V7.4 — Guntur chilli varieties + processing auto-scroll strip */
+.sarksh-site-shell .spice-marquee {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.25fr) minmax(0, 1fr);
+  align-items: stretch;
+  overflow: hidden;
+  background: #3b0908;
+  border-top: 1px solid rgba(240, 201, 111, 0.22);
+  border-bottom: 1px solid rgba(240, 201, 111, 0.22);
+  color: #fff7e9;
+}
+
+.sarksh-site-shell .spice-marquee-label {
+  position: relative;
+  z-index: 2;
+  min-height: 76px;
+  padding: 16px clamp(24px, 4vw, 68px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  background: linear-gradient(115deg, #4a0b09 0%, #681d17 100%);
+  border-right: 1px solid rgba(240, 201, 111, 0.22);
+  white-space: nowrap;
+}
+
+.sarksh-site-shell .spice-marquee-label span {
+  color: #f0c96f;
+  font-size: 0.59rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+}
+
+.sarksh-site-shell .spice-marquee-label strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(0.9rem, 1.05vw, 1.1rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.sarksh-site-shell .spice-marquee-window {
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, #430a08 0%, #5a1511 48%, #430a08 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%);
+}
+
+.sarksh-site-shell .spice-marquee-track {
+  display: flex;
+  width: max-content;
+  flex: 0 0 auto;
+  will-change: transform;
+  animation: sarksh-spice-marquee 34s linear infinite;
+}
+
+.sarksh-site-shell .spice-marquee-group {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: clamp(18px, 2vw, 34px);
+  padding: 10px clamp(18px, 2vw, 30px);
+}
+
+.sarksh-site-shell .spice-marquee-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 9px;
+  white-space: nowrap;
+}
+
+.sarksh-site-shell .spice-marquee-item b {
+  font-family: Georgia, "Times New Roman", serif;
+  color: #fff7e9;
+  font-size: clamp(0.94rem, 1vw, 1.08rem);
+  font-weight: 700;
+}
+
+.sarksh-site-shell .spice-marquee-item small {
+  color: rgba(255, 247, 233, 0.58);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.sarksh-site-shell .spice-marquee-item.spice-process b {
+  color: #f0c96f;
+}
+
+.sarksh-site-shell .spice-marquee-group > i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  background: #f0c96f;
+  box-shadow: 0 0 0 4px rgba(240, 201, 111, 0.08);
+}
+
+.sarksh-site-shell .spice-arrow {
+  color: rgba(240, 201, 111, 0.72);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+@keyframes sarksh-spice-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sarksh-site-shell .spice-marquee:hover .spice-marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+@media (max-width: 760px) {
+  .sarksh-site-shell .spice-marquee {
+    display: block;
+  }
+
+  .sarksh-site-shell .spice-marquee-label {
+    min-height: 48px;
+    padding: 9px 18px 8px;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 9px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(240, 201, 111, 0.18);
+  }
+
+  .sarksh-site-shell .spice-marquee-label span {
+    font-size: 0.52rem;
+  }
+
+  .sarksh-site-shell .spice-marquee-label strong {
+    font-size: 0.82rem;
+  }
+
+  .sarksh-site-shell .spice-marquee-window {
+    min-height: 58px;
+  }
+
+  .sarksh-site-shell .spice-marquee-group {
+    gap: 18px;
+    padding: 9px 18px;
+  }
+
+  .sarksh-site-shell .spice-marquee-item {
+    gap: 7px;
+  }
+
+  .sarksh-site-shell .spice-marquee-item b {
+    font-size: 0.92rem;
+  }
+
+  .sarksh-site-shell .spice-marquee-item small {
+    font-size: 0.5rem;
+  }
+
+  .sarksh-site-shell .spice-marquee-track {
+    animation-duration: 28s;
+  }
+}
+
+@media (max-width: 430px) {
+  .sarksh-site-shell .spice-marquee {
+    display: block !important;
+  }
+
+  .sarksh-site-shell .spice-marquee-label {
+    white-space: normal;
+  }
+
+  .sarksh-site-shell .spice-marquee-item small {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sarksh-site-shell .spice-marquee-window {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+    scrollbar-width: none;
+  }
+
+  .sarksh-site-shell .spice-marquee-window::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sarksh-site-shell .spice-marquee-track {
+    animation: none;
+  }
+
+  .sarksh-site-shell .spice-marquee-group:nth-child(2) {
+    display: none;
+  }
+}

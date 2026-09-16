@@ -1,0 +1,135 @@
+/* SARKSH Foods V7.6 — Contact form clarity
+   Fixes the V7.5 cream-on-cream label contrast while preserving the approved
+   maroon/gold visual system and contact-page structure. */
+
+.sarksh-site-shell .contact-v75-form {
+  padding: clamp(22px, 2.7vw, 34px) !important;
+  border: 1px solid rgba(100, 39, 31, .18) !important;
+  border-radius: 20px !important;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(240, 201, 111, .12), transparent 34%),
+    linear-gradient(180deg, #fffaf2 0%, #f8eadb 100%) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.86);
+}
+
+.sarksh-site-shell .contact-v75-form-guide {
+  margin: 0 0 20px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(124, 30, 26, .16);
+  background: rgba(124, 30, 26, .055);
+  color: #5c3d35;
+  font-family: var(--font-ui);
+  font-size: .86rem;
+  line-height: 1.5;
+}
+
+.sarksh-site-shell .contact-v75-form .form-label {
+  color: #5a1714 !important;
+  font-family: var(--font-ui) !important;
+  font-size: .76rem !important;
+  font-weight: 850 !important;
+  letter-spacing: .075em !important;
+  line-height: 1.25 !important;
+  text-transform: uppercase;
+  opacity: 1 !important;
+}
+
+.sarksh-site-shell .contact-v75-form .form-control {
+  min-height: 52px;
+  border: 1px solid rgba(90, 23, 20, .34) !important;
+  border-radius: 13px !important;
+  background: #fffdf9 !important;
+  color: #32120f !important;
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  line-height: 1.4;
+  caret-color: #7c1e1a;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.92);
+}
+
+.sarksh-site-shell .contact-v75-form input.form-control,
+.sarksh-site-shell .contact-v75-form select.form-control {
+  padding: 13px 14px !important;
+}
+
+.sarksh-site-shell .contact-v75-form textarea.form-control {
+  padding: 14px !important;
+  min-height: 146px !important;
+}
+
+.sarksh-site-shell .contact-v75-form .form-control::placeholder {
+  color: #806a61 !important;
+  opacity: 1 !important;
+}
+
+.sarksh-site-shell .contact-v75-form select.form-control {
+  color: #32120f !important;
+  cursor: pointer;
+}
+
+.sarksh-site-shell .contact-v75-form select.form-control option {
+  background: #fffdf9;
+  color: #32120f;
+}
+
+.sarksh-site-shell .contact-v75-form .form-control:hover {
+  border-color: rgba(124, 30, 26, .52) !important;
+}
+
+.sarksh-site-shell .contact-v75-form .form-control:focus {
+  border-color: #962821 !important;
+  outline: 3px solid rgba(240, 201, 111, .30) !important;
+  box-shadow: 0 0 0 1px rgba(150, 40, 33, .06), inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+.sarksh-site-shell .contact-v75-form .field-invalid {
+  border-color: #a3231d !important;
+  outline: 2px solid rgba(163,35,29,.10);
+}
+
+.sarksh-site-shell .contact-v75-form .field-error {
+  margin: 7px 0 0;
+  color: #9d211c !important;
+  font-family: var(--font-ui);
+  font-size: .78rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.sarksh-site-shell .contact-v75-submit-row {
+  padding-top: 20px;
+  border-top: 1px solid rgba(90,23,20,.13);
+}
+
+.sarksh-site-shell .contact-v75-submit-row p {
+  color: #654a41 !important;
+  font-family: var(--font-ui);
+  font-size: .82rem;
+  line-height: 1.5;
+}
+
+.sarksh-site-shell .contact-v75-submit-row .button-primary {
+  min-width: 158px;
+  background: #7c1e1a !important;
+  color: #fff9ef !important;
+  border-color: #7c1e1a !important;
+}
+
+.sarksh-site-shell .contact-v75-submit-row .button-primary:hover {
+  background: #5d1512 !important;
+  border-color: #5d1512 !important;
+}
+
+@media (max-width: 720px) {
+  .sarksh-site-shell .contact-v75-form {
+    padding: 18px !important;
+    border-radius: 18px !important;
+  }
+  .sarksh-site-shell .contact-v75-form-guide {
+    font-size: .82rem;
+  }
+  .sarksh-site-shell .contact-v75-submit-row .button-primary {
+    width: 100%;
+  }
+}

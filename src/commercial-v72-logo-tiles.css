@@ -1,0 +1,144 @@
+/* SARKSH Foods V7.2
+   Focused refinement requested by the founder:
+   1) Preserve and use the exact official master-logo background everywhere.
+   2) Use the official logo, not a product photograph, in the Home hero.
+   3) Give Business buyer tiles a 20px radius and a distinct surface using the existing SARKSH palette only.
+   The approved brand-intro animation is intentionally untouched. */
+
+/* --------------------------------------------------------------------------
+   OFFICIAL LOGO TREATMENT
+   The master SVG contains its own white background. Do not recolour, mask,
+   invert, blend, or place a synthetic colour behind the artwork.
+   -------------------------------------------------------------------------- */
+.sarksh-site-shell .header-brand img,
+.sarksh-site-shell .footer-brand-block img,
+.sarksh-site-shell .brand-band-logo img,
+.sarksh-site-shell .about-logo-stage img,
+.sarksh-site-shell .contact-context img,
+.sarksh-site-shell .hero-brand-logo {
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  background: transparent !important;
+}
+
+/* Remove the artificial dark logo stages used in V7.1. The logo file itself
+   carries the approved white background, so the website must not replace it. */
+.sarksh-site-shell .brand-band-logo,
+.sarksh-site-shell .about-logo-stage {
+  background: transparent !important;
+  border: 0 !important;
+}
+
+/* --------------------------------------------------------------------------
+   HOME HERO — OFFICIAL BRAND LOGO INSTEAD OF PRODUCT IMAGE
+   -------------------------------------------------------------------------- */
+.sarksh-site-shell .home-hero-logo-visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: transparent !important;
+  padding: clamp(24px, 4vw, 72px);
+}
+
+.sarksh-site-shell .hero-brand-logo {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: min(82%, 660px);
+  height: min(70vh, 680px);
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+  box-shadow: 0 32px 74px rgba(30, 3, 3, 0.24);
+}
+
+/* The V7 image-label and glow are no longer part of the Home hero. */
+.sarksh-site-shell .home-hero-logo-visual .hero-visual-label,
+.sarksh-site-shell .home-hero-logo-visual .hero-visual-glow {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   BUSINESS PAGE BUYER TILES
+   Curved, separated cards rather than a spreadsheet-like boxed grid.
+   Colours remain strictly inside the existing SARKSH V7.1 palette.
+   -------------------------------------------------------------------------- */
+.sarksh-site-shell .enterprise-buyer-grid {
+  border: 0 !important;
+  gap: 20px !important;
+}
+
+.sarksh-site-shell .enterprise-buyer-grid article {
+  min-height: 220px;
+  border: 1px solid rgba(255, 247, 237, 0.16) !important;
+  border-radius: 20px !important;
+  background: linear-gradient(145deg, var(--v71-deep) 0%, var(--v71-mid) 100%) !important;
+  overflow: hidden;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.sarksh-site-shell .enterprise-buyer-grid article h3 {
+  color: var(--v71-cream) !important;
+}
+
+.sarksh-site-shell .enterprise-buyer-grid article p {
+  color: var(--v71-muted) !important;
+}
+
+.sarksh-site-shell .enterprise-buyer-grid article svg {
+  color: var(--v71-gold) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sarksh-site-shell .enterprise-buyer-grid article:hover {
+    transform: translateY(-3px);
+    border-color: rgba(240, 201, 111, 0.42) !important;
+    background: linear-gradient(145deg, var(--v71-mid) 0%, var(--v71-red) 100%) !important;
+  }
+}
+
+/* Tablet — keep the entire logo visible and cards comfortably separated. */
+@media (max-width: 980px) {
+  .sarksh-site-shell .home-hero-logo-visual {
+    padding: clamp(20px, 5vw, 44px);
+  }
+
+  .sarksh-site-shell .hero-brand-logo {
+    width: min(72%, 520px);
+    height: min(44svh, 500px);
+  }
+
+  .sarksh-site-shell .enterprise-buyer-grid {
+    gap: 16px !important;
+  }
+}
+
+/* Mobile — full logo remains visible without crop; buyer tiles become one
+   comfortable rounded-card column. */
+@media (max-width: 640px) {
+  .sarksh-site-shell .home-hero-logo-visual {
+    padding: 18px 20px 12px;
+  }
+
+  .sarksh-site-shell .hero-brand-logo {
+    width: min(84vw, 390px);
+    height: min(38svh, 390px);
+    box-shadow: 0 22px 46px rgba(30, 3, 3, 0.22);
+  }
+
+  .sarksh-site-shell .enterprise-buyer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .sarksh-site-shell .enterprise-buyer-grid article {
+    min-height: 0;
+    padding: 24px;
+    border-radius: 20px !important;
+  }
+
+  .sarksh-site-shell .enterprise-buyer-grid article h3 {
+    margin-top: 24px;
+  }
+}
