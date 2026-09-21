@@ -4,8 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#3b0908" />
+    <script>
+      // Keep one production origin. This prevents duplicate SEO signals and keeps
+      // browser-scoped customer/admin sessions on the same hostname.
+      if (location.protocol === "https:" && location.hostname === "sarkshfoods.in") {
+        location.replace("https://www.sarkshfoods.in" + location.pathname + location.search + location.hash);
+      }
+    </script>
     <meta name="color-scheme" content="light dark" />
-    <meta name="description" content="SARKSH Foods premium red chilli powder for home and business requirements across India." />
+    <meta name="description" content="SARKSH Foods premium red chilli powder (chili powder) in a 1 kg carton for home and business requirements across India." />
     <link rel="icon" type="image/png" href="/sarksh-foods-favicon.png" />
     <link rel="apple-touch-icon" href="/sarksh-foods-favicon.png" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -13,7 +20,7 @@
     <link rel="preload" as="image" href="/assets/chilli-box-front-v3.png" fetchpriority="high" />
     <link rel="preload" as="image" href="/assets/chilli-box-side.png" fetchpriority="high" />
     <link rel="preload" as="image" href="/assets/chilli-box-top.png" fetchpriority="high" />
-    <title>SARKSH Foods | Premium Red Chilli Powder in India</title>
+    <title>SARKSH Foods | Red Chilli Powder & Premium Chilli Powder India</title>
   </head>
   <body>
     <div id="app"></div>

@@ -1,18 +1,24 @@
-# SARKSH Foods V8.4 Production Endpoints
+# SARKSH Foods V8.5 Production Endpoints
 
-## Public website
+## Primary public website
 
-`https://sarkshfoods.in`
+`https://www.sarkshfoods.in/`
+
+Legacy/apex requests should redirect to the primary `www` origin.
+
+## Product SEO page
+
+`https://www.sarkshfoods.in/chilli-powder/`
 
 ## Customer portal
 
-`https://sarkshfoods.in/account/`
+`https://www.sarkshfoods.in/account/`
 
 Private customer page; excluded from search indexing.
 
 ## Admin portal
 
-`https://sarkshfoods.in/admin/`
+`https://www.sarkshfoods.in/admin/`
 
 Private administration page; excluded from search indexing.
 
@@ -20,7 +26,7 @@ Private administration page; excluded from search indexing.
 
 `https://script.google.com/macros/s/AKfycbw_nR3t5gJfE5BOB4F1NduKDL1Mm10ad73BbnXRygL9pWDm-EwqmcegcVyswZimIYTtgA/exec`
 
-The URL is a public API endpoint, not a database credential. Sensitive customer/admin operations require backend-issued session tokens. Google Sheets and Drive remain private.
+The endpoint is an application gateway, not a database credential. Sensitive customer/admin operations require backend-issued session tokens. Google Sheets and Google Drive remain private.
 
 ## Health check
 
@@ -28,4 +34,4 @@ The URL is a public API endpoint, not a database credential. Sensitive customer/
 npm run backend:health
 ```
 
-V8.4 production expects backend version `8.4`, database/Drive configuration, customer-account storage and initialized admin hashed-password access.
+V8.5 intentionally expects backend version `8.4`, with database/Drive configuration, customer-account storage and initialized admin hashed-password access.

@@ -1,6 +1,10 @@
 Options -Indexes
 RewriteEngine On
 
+# Canonical production hostname.
+RewriteCond %{HTTP_HOST} ^sarkshfoods\.in$ [NC]
+RewriteRule ^ https://www.sarkshfoods.in%{REQUEST_URI} [R=301,L]
+
 # Serve generated route index files when present, otherwise fall back to the SPA.
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d

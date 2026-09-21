@@ -12,9 +12,9 @@ function Home() {
       <section className="home-hero">
         <div className="site-frame home-hero-grid">
           <div className="home-hero-copy">
-            <span className="eyebrow">SARKSH FOODS · CHILLI POWDER</span>
+            <span className="eyebrow">SARKSH FOODS · PREMIUM RED CHILLI POWDER</span>
             <h1>Bold colour.<br />Full flavour.<br /><em>Distinctly SARKSH.</em></h1>
-            <p className="hero-lead">Premium chilli powder for homes, retail shelves and professional kitchens, available in a 1 kg carton with pan-India order and business-enquiry routes.</p>
+            <p className="hero-lead">SARKSH Foods premium red chilli powder—also searched as chili powder—is available in a 1 kg carton for homes, retail shelves and professional kitchens, with pan-India order and business-enquiry routes.</p>
             <div className="hero-actions">
               <BookProductButton product={product} label="Order Chilli Powder" />
               <Link to="/enterprise" className="button-secondary">Business orders <ArrowUpRight size={17} /></Link>
@@ -98,7 +98,7 @@ function Home() {
           </div>
           <div className="product-focus-copy">
             <span className="eyebrow">OUR PRODUCT</span>
-            <h2>Chilli Powder</h2>
+            <h2>SARKSH Foods Chilli Powder</h2>
             <p className="section-lead">One pack. One clear identity. Ready for home and business orders.</p>
             <p>The current SARKSH Foods range begins with a 1 kg chilli powder carton. Order for household use or share a larger requirement through the business route.</p>
             <div className="product-points">

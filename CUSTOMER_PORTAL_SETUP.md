@@ -2,7 +2,7 @@
 
 ## Architecture
 
-The storefront and customer portal run on GitHub Pages at `https://sarkshfoods.in`. All structured customer/order data remains in the private SARKSH Foods Google Sheet, and uploaded source media remains in private Google Drive. The Apps Script web app is the only application gateway. Customers are never granted Google Sheet or Drive permissions.
+The storefront and customer portal run on GitHub Pages at `https://www.sarkshfoods.in`. All structured customer/order data remains in the private SARKSH Foods Google Sheet, and uploaded source media remains in private Google Drive. The Apps Script web app is the only application gateway. Customers are never granted Google Sheet or Drive permissions.
 
 ## V8.4 customer features
 

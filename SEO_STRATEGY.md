@@ -1,92 +1,140 @@
-# SARKSH Foods V8.1 SEO / AEO / GEO strategy
+# SARKSH Foods V8.5 SEO / Indexing / AEO / GEO Strategy
 
-Canonical domain: **https://sarkshfoods.in**
+Canonical production origin: **https://www.sarkshfoods.in**
+
+## Indexing objective
+
+V8.5 is designed to make the public SARKSH Foods storefront unambiguous to crawlers. It does not attempt to manipulate rankings with hidden keywords or doorway pages. The technical goal is to provide one canonical host, crawlable initial HTML, consistent brand/product entities, descriptive internal links, structured data and dedicated sitemap files.
+
+Search Console can take time to populate a new property's Page indexing report. The operational check is therefore the live URL, response/canonical metadata, robots rules, sitemap discovery and URL Inspection—not whether the aggregate report is already populated.
 
 ## Primary search themes
-The site is organized around useful pages rather than repeating keyword lists:
+
+Public copy and metadata naturally cover:
+
+- SARKSH Foods
 - SARKSH Foods Chilli Powder
 - chilli powder / chili powder
 - red chilli powder
-- premium chilli powder in India
-- 1 kg chilli powder
-- chilli powder for home
-- bulk red chilli powder supplier India
-- retail / wholesale / HoReCa / distribution / institutional chilli powder enquiries
+- premium chilli powder India
+- red chilli powder 1 kg
+- chilli powder for household use
+- bulk/commercial chilli powder enquiries
+- retail, wholesale, HoReCa, distribution and institutional buying
 
-## Product SEO
+The product and brand are always connected. Generic product keywords are not presented independently from the actual SARKSH Foods offering.
+
+## Canonical URLs
+
+Primary home:
+
+`https://www.sarkshfoods.in/`
+
 Preferred product URL:
-`https://sarkshfoods.in/chilli-powder/`
 
-It contains:
-- clear product name and pack size;
-- home and commercial buyer routes;
-- pan-India supply positioning;
-- visible common questions;
-- Product and FAQ structured data based on visible page content;
-- descriptive product imagery and alt text.
+`https://www.sarkshfoods.in/chilli-powder/`
 
-`/products/chilli-powder/` remains functional but points its canonical metadata to `/chilli-powder/` to consolidate duplicate signals.
+`/products/chilli-powder/` remains usable but its canonical URL is `/chilli-powder/` so duplicate product URLs do not compete with each other.
 
-Do not add fake ratings, reviews, price or availability to structured data. If a public price and stock system are introduced later, add a verified `Offer` to the Product markup for stronger merchant-search eligibility.
+The legacy apex hostname `https://sarkshfoods.in` is not used as a canonical URL. GitHub Pages/DNS should redirect it to the `www` custom domain. The frontend also contains an early production-host guard as a fallback.
 
-## Geographic SEO
-`/pan-india/` is the national coverage page. It covers all states/union territories at the entity level and names representative major-city demand areas in visible content.
+## Crawl-first HTML
 
-Do not generate hundreds of substantially similar city pages merely to rank for `chilli powder in <city>`. Create a local page only when it has genuine local value such as a distributor, stockist, delivery SLA, service boundary, local contact point or locally unique content.
+The SEO generator writes meaningful initial HTML into `#app` before React hydrates/replaces the content. Search engines therefore receive real page headings, summaries and internal links even before client-side navigation executes.
 
-The `.in` domain, `en-IN` language metadata, India `areaServed`, pan-India visible content, internal links and Search Console targeting all reinforce the India market without doorway pages.
+Every indexable public route receives:
 
-## AI / answer-engine discoverability
-- Consistent entity name: `SARKSH Foods`.
-- Consistent product entity: `SARKSH Foods Chilli Powder 1 kg`.
-- Organization, WebSite, WebPage, Product, FAQPage and Service structured data.
-- Concise, visible question-and-answer content on the product page.
-- `llms.txt` provides a compact machine-readable map of canonical facts and URLs.
-- No crawler-blocking production robots directives.
-- Brand facts and the FSSAI registration number are represented consistently.
+- unique `<title>` and meta description;
+- one canonical URL on the `www` origin;
+- `index,follow` robots metadata;
+- Open Graph and Twitter metadata;
+- crawlable H1/summary/internal links;
+- route-specific structured data.
 
-`llms.txt` is supplementary, not a substitute for crawlable HTML, structured data, authoritative mentions and links.
+`/account/` and `/admin/` remain private transactional routes and are marked `noindex,nofollow,noarchive`.
 
-## Image SEO
-- Main product asset: `sarksh-foods-chilli-powder-1kg-india.webp`.
-- Dedicated social-sharing image.
-- Product-specific alt text.
-- Production robots metadata allows large image previews.
+## Structured data
 
-## Authority growth after launch
-Technical SEO creates eligibility, not authority. Prioritize:
-1. verified Google Business / brand profiles where appropriate;
-2. retailer, distributor and partner links to `sarkshfoods.in`;
-3. genuine product reviews and mentions;
-4. useful chilli/spice storage, use and sourcing content backed by real information;
-5. recipe content where the product is genuinely relevant;
-6. real stockist/distributor pages with unique local information;
-7. brand searches, repeat visitors and direct demand.
+Generated JSON-LD includes, where appropriate:
 
-## Measurement
-In Search Console monitor:
-- indexing and canonical selection;
-- impressions/CTR for `SARKSH Foods`;
-- `chilli powder`, `red chilli powder` and `chili powder` query groups;
-- state/city query growth;
-- product-page Core Web Vitals;
-- rich-result / structured-data warnings;
-- backlinks and referring domains.
+- `Brand` — SARKSH Foods;
+- `OnlineStore` / Organization identity;
+- `WebSite`;
+- `WebPage`;
+- `BreadcrumbList`;
+- `Product` — SARKSH Foods Chilli Powder 1 kg;
+- `FAQPage` on the chilli-powder landing page;
+- `Service` on enterprise/pan-India commercial pages.
 
-Do not judge ranking from the first few days. Build authority and update content using actual Search Console query data.
+The Product markup does **not** invent price, ratings, reviews or availability. Those fields should be added only when they exist as genuine visible product data.
 
-## Private portal crawl control (V8.4)
+## Crawler and machine-readable files
 
-The production administration portal is intentionally excluded from public search discovery:
+Production build creates:
 
-- `/admin/` receives `noindex,nofollow,noarchive`
-- `/admin/` is excluded from `sitemap.xml`
-- `robots.txt` includes `Disallow: /admin/`
-- the public SEO strategy never links the admin route as a product/content destination
+- `robots.txt`
+- `sitemap.xml` — master public URL set
+- `sitemap-index.xml` — sitemap index
+- `sitemap-pages.xml` — public pages
+- `sitemap-products.xml` — product landing pages
+- `sitemap-images.xml` — logo/product imagery
+- `llms.txt`
+- `llms-full.txt`
+- `brand.json`
+- `product-catalog.json`
+- `.well-known/site-info.json`
 
-This protects the crawl budget and keeps administrative surfaces out of search results while leaving the customer-facing domain fully crawlable.
+`llms.txt` and JSON entity files are supplementary discovery aids; they are not substitutes for HTML, sitemaps, links or authority.
 
+### IndexNow for non-Google engines
 
-### Customer account privacy
+The deployment workflow hosts a public IndexNow ownership key and, after a successful Pages deployment, submits the changed public URLs to the IndexNow endpoint. This accelerates discovery for Bing and other participating engines. It is deliberately non-blocking and is **not** treated as a Google indexing mechanism or a ranking guarantee.
 
-`/account/` is a transactional customer portal, not an SEO landing page. It is generated with `noindex,nofollow,noarchive`, excluded from `sitemap.xml`, and disallowed in `robots.txt`. Public product/category pages remain the SEO surfaces.
+## Image and brand discovery
+
+- official SARKSH Foods logo remains unchanged and crawlable;
+- 512×512 favicon remains available;
+- main product image uses a descriptive file name and alt text;
+- image sitemap ties the product and brand image URLs to public pages;
+- `Googlebot-Image` is explicitly allowed for public assets.
+
+## Search Console launch sequence
+
+After V8.5 is deployed and HTTPS/canonical redirects are stable:
+
+1. Open the `sarkshfoods.in` Search Console property.
+2. Submit `https://www.sarkshfoods.in/sitemap.xml`.
+3. Submit `https://www.sarkshfoods.in/sitemap-index.xml` if you want the split page/product/image sitemaps surfaced explicitly.
+4. Use URL Inspection → Test live URL → Request indexing for:
+   - `https://www.sarkshfoods.in/`
+   - `https://www.sarkshfoods.in/chilli-powder/`
+   - `https://www.sarkshfoods.in/products/`
+   - `https://www.sarkshfoods.in/about/`
+5. Confirm Google's inspected canonical is the `www` URL.
+6. Validate `/chilli-powder/` in Google's Rich Results Test after deployment.
+
+Do not submit `/account/` or `/admin/` for indexing.
+
+## Ranking expectations
+
+Technical SEO makes pages crawlable and gives search engines clear brand/product meaning; it cannot guarantee first position for the highly competitive generic query `chilli powder`. Brand searches should become substantially clearer once pages are crawled and indexed. Generic product ranking additionally depends on relevance, authority, links/mentions, engagement, competition and accumulated search signals.
+
+## Authority growth after indexing
+
+Prioritize genuine signals:
+
+1. consistent SARKSH Foods name/logo/product references across owned profiles;
+2. retailer, distributor and partner links to the canonical domain;
+3. real product reviews/mentions where available;
+4. useful spice/chilli storage, usage, sourcing or recipe content based on real information;
+5. unique distributor/stockist pages only when local operational information exists;
+6. Search Console query data to guide future content—not guessed keyword stuffing.
+
+## Private portal crawl control
+
+`/account/` and `/admin/`:
+
+- receive `noindex,nofollow,noarchive`;
+- are excluded from all public sitemaps;
+- remain crawlable so search engines can read the page-level `noindex`;
+- are not used as product/content destinations.

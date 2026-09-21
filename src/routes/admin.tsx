@@ -19,6 +19,7 @@ import {
   Users,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { readSession, removeSession, writeSession } from "@/lib/browserStorage";
 import {
   adminApi,
   type AdminBootstrap,
@@ -37,7 +38,7 @@ type Notice = { type: "success" | "error" | "info"; text: string } | null;
 const TOKEN_KEY = "sarksh-foods-admin-session";
 
 function AdminPage() {
-  const [token, setToken] = useState(() => sessionStorage.getItem(TOKEN_KEY) || "");
+  const [token, setToken] = useState(() => readSession(TOKEN_KEY));
   const [data, setData] = useState<AdminBootstrap | null>(null);
   const [tab, setTab] = useState<Tab>("overview");
   const [loading, setLoading] = useState(Boolean(token));
@@ -45,7 +46,7 @@ function AdminPage() {
 
   const signOut = useCallback(async () => {
     const active = token;
-    sessionStorage.removeItem(TOKEN_KEY);
+    removeSession(TOKEN_KEY);
     setToken("");
     setData(null);
     setNotice(null);
@@ -64,7 +65,7 @@ function AdminPage() {
     } catch (error) {
       const message = error instanceof Error ? error.message : "Admin data could not be loaded.";
       if (/session|invalid|expired|required/i.test(message)) {
-        sessionStorage.removeItem(TOKEN_KEY);
+        removeSession(TOKEN_KEY);
         setToken("");
         setData(null);
         setNotice({ type: "error", text: "Admin session expired. Sign in again." });
@@ -81,7 +82,10 @@ function AdminPage() {
   }, [token, refresh]);
 
   const acceptSession = useCallback((sessionToken: string) => {
-    sessionStorage.setItem(TOKEN_KEY, sessionToken);
+    if (!writeSession(TOKEN_KEY, sessionToken)) {
+      setNotice({ type: "error", text: "Your browser is blocking session storage. Enable site storage and sign in again." });
+      return;
+    }
     setToken(sessionToken);
     setNotice(null);
   }, []);
@@ -255,7 +259,7 @@ function ProductsPanel({ data, token, refresh, setNotice }: { data: AdminBootstr
           <label className="admin-field"><span>Short description</span><textarea rows={3} value={editing.shortDescription || ""} onChange={(e) => setEditing((v) => ({ ...v, shortDescription: e.target.value }))} /></label>
           <div className="admin-form-grid admin-form-grid--media">
             <label className="admin-field"><span>Private Drive media (JPG, PNG, WebP)</span><input type="file" accept="image/jpeg,image/png,image/webp" onChange={(e) => void onImage(e.target.files?.[0])} /></label>
-            <AdminField label="Public storefront image URL (optional)" value={editing.imageUrl || ""} onChange={(value) => setEditing((v) => ({ ...v, imageUrl: value }))} placeholder="https://sarkshfoods.in/assets/..." />
+            <AdminField label="Public storefront image URL (optional)" value={editing.imageUrl || ""} onChange={(value) => setEditing((v) => ({ ...v, imageUrl: value }))} placeholder="https://www.sarkshfoods.in/assets/..." />
             <label className="admin-check"><input type="checkbox" checked={Boolean(editing.featured)} onChange={(e) => setEditing((v) => ({ ...v, featured: e.target.checked }))} /><span>Featured product</span></label>
           </div>
           <div className="admin-form-actions">
@@ -317,7 +321,7 @@ function WebsitesPanel({ rows, token, refresh, setNotice }: { rows: AdminWebsite
         </div>
       </AdminPanel>
       <AdminPanel title={form.id ? "Edit website" : "Add website"} subtitle="Use an HTTPS URL. The production monitor checks availability and response time from Apps Script.">
-        <form className="admin-form" onSubmit={save}><div className="admin-form-grid"><AdminField label="Website name" value={form.name || ""} onChange={(value) => setForm((v) => ({ ...v, name: value }))} required /><AdminField label="HTTPS URL" value={form.url || ""} onChange={(value) => setForm((v) => ({ ...v, url: value }))} placeholder="https://sarkshfoods.in" required /><AdminField label="Environment" value={form.environment || ""} onChange={(value) => setForm((v) => ({ ...v, environment: value }))} /><AdminField label="Notes" value={form.notes || ""} onChange={(value) => setForm((v) => ({ ...v, notes: value }))} /></div><div className="admin-form-actions">{form.id ? <button type="button" className="admin-secondary" onClick={() => setForm({ environment: "Production" })}>Cancel edit</button> : null}<button type="submit" className="admin-primary" disabled={busy === "save"}><Save size={16} /> {busy === "save" ? "Saving…" : "Save website"}</button></div></form>
+        <form className="admin-form" onSubmit={save}><div className="admin-form-grid"><AdminField label="Website name" value={form.name || ""} onChange={(value) => setForm((v) => ({ ...v, name: value }))} required /><AdminField label="HTTPS URL" value={form.url || ""} onChange={(value) => setForm((v) => ({ ...v, url: value }))} placeholder="https://www.sarkshfoods.in" required /><AdminField label="Environment" value={form.environment || ""} onChange={(value) => setForm((v) => ({ ...v, environment: value }))} /><AdminField label="Notes" value={form.notes || ""} onChange={(value) => setForm((v) => ({ ...v, notes: value }))} /></div><div className="admin-form-actions">{form.id ? <button type="button" className="admin-secondary" onClick={() => setForm({ environment: "Production" })}>Cancel edit</button> : null}<button type="submit" className="admin-primary" disabled={busy === "save"}><Save size={16} /> {busy === "save" ? "Saving…" : "Save website"}</button></div></form>
       </AdminPanel>
     </div>
   );

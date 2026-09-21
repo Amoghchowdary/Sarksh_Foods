@@ -1,62 +1,93 @@
-# SARKSH Foods V8.4 Production Checklist
+# SARKSH Foods V8.5 Production Checklist
 
-## Upgrade Apps Script
+## Existing backend — keep intact
 
-- [ ] Replace Apps Script `Code.gs` with V8.4 `apps-script/Code.gs`
-- [ ] Replace/update `appsscript.json`
-- [ ] Run `setupProductionBackend()` once
-- [ ] Confirm new Sheets exist: Customers, Customer Addresses, Customer Sessions, Password Resets, Admin Sessions
-- [ ] Run `initializeAdminAccess()` once
-- [ ] Confirm admin-password email arrives
-- [ ] Deploy a new version of the existing Apps Script Web App
-- [ ] Keep the same production `/exec` URL
-- [ ] Run `npm run backend:health` and confirm backend version 8.4
+- [x] Apps Script production endpoint is live
+- [x] Backend health reports version `8.4`
+- [x] Google Sheets database configured
+- [x] Google Drive storage configured
+- [x] Customer accounts configured
+- [x] Admin hashed-password access configured
+- [ ] Do **not** create a second database for this patch
+- [ ] Do **not** redeploy Apps Script merely for V8.5 SEO/login-origin changes
 
-## Customer-account QA
+## Login/session regression QA
 
-- [ ] Create a test customer account
-- [ ] Confirm Customers sheet stores hash/salt, never raw password
-- [ ] Sign out and sign in again
-- [ ] Save Home address
-- [ ] Save a second address and change default
-- [ ] Place an order from `/account/`
-- [ ] Confirm Bookings row contains Customer ID and Address ID
-- [ ] Change order status in Admin to Delivered
-- [ ] Confirm it appears under Past deliveries
-- [ ] Reorder from customer history
-- [ ] Request password reset and confirm email code works
-- [ ] Confirm reset code is not stored raw in Sheets
+- [ ] Open `https://www.sarkshfoods.in/account/`
+- [ ] Create/sign in to a test customer
+- [ ] Refresh the page and confirm the session remains active
+- [ ] Navigate storefront → account and confirm the same session remains active
+- [ ] Confirm `https://sarkshfoods.in/account/` redirects to the `www` origin
+- [ ] Sign out and sign back in
+- [ ] Test forgot-password flow
+- [ ] Open `/admin/`, sign in, refresh and confirm the admin session remains active
+- [ ] Confirm blocked browser storage returns a readable error rather than a blank/broken portal
 
-## Admin QA
+## Production build
 
-- [ ] `/admin/` accepts the generated admin password
-- [ ] Products load
-- [ ] Orders load and statuses include Packed / Out for delivery / Delivered
-- [ ] Customers view loads without password/hash fields
-- [ ] Enquiries load
-- [ ] Website monitoring works
-- [ ] Sheets and Drive shortcuts open only for the signed-in Google owner account
+```powershell
+$env:SITE_URL="https://www.sarkshfoods.in"
+$env:VITE_API_BASE_URL="https://script.google.com/macros/s/AKfycbw_nR3t5gJfE5BOB4F1NduKDL1Mm10ad73BbnXRygL9pWDm-EwqmcegcVyswZimIYTtgA/exec"
+
+npm install
+npm run typecheck
+npm run backend:health
+npm run build:prod
+npm run verify:prod
+```
+
+Expected backend remains `8.4`; frontend package is V8.5 (`0.8.6`).
+
+## GitHub Pages / DNS
+
+- [ ] Pages source = GitHub Actions
+- [ ] Primary custom domain = `www.sarkshfoods.in`
+- [ ] `www` CNAME points to `AmoghChowdary.github.io`
+- [ ] Apex has only GitHub Pages A records (`185.199.108.153`, `.109.153`, `.110.153`, `.111.153`)
+- [ ] No legacy apex A record such as `2.57.91.91`
+- [ ] `https://sarkshfoods.in/...` redirects to `https://www.sarkshfoods.in/...`
+- [ ] HTTPS enforced after GitHub certificate provisioning
+
+## SEO/indexing artifact QA
+
+- [ ] `/robots.txt` loads
+- [ ] `/sitemap.xml` loads and uses only `https://www.sarkshfoods.in/...`
+- [ ] `/sitemap-index.xml` loads
+- [ ] `/sitemap-pages.xml` loads
+- [ ] `/sitemap-products.xml` loads
+- [ ] `/sitemap-images.xml` loads
+- [ ] `/brand.json` loads
+- [ ] `/product-catalog.json` loads
+- [ ] `/llms.txt` and `/llms-full.txt` load
+- [ ] `/.well-known/site-info.json` loads
+- [ ] IndexNow key file loads from the site root
+- [ ] post-deploy `Notify participating search engines` workflow job completes or reports only a non-blocking IndexNow error
+- [ ] `/chilli-powder/` canonical is `https://www.sarkshfoods.in/chilli-powder/`
+- [ ] public pages do not contain an apex canonical
+- [ ] `/account/` and `/admin/` remain `noindex,nofollow,noarchive`
+- [ ] `robots.txt` does not block those noindex pages, so crawlers can read the directive
+
+## Search Console
+
+- [ ] Submit `https://www.sarkshfoods.in/sitemap.xml`
+- [ ] Optionally submit `https://www.sarkshfoods.in/sitemap-index.xml`
+- [ ] Inspect/test/request indexing for `/`
+- [ ] Inspect/test/request indexing for `/chilli-powder/`
+- [ ] Inspect/test/request indexing for `/products/`
+- [ ] Inspect/test/request indexing for `/about/`
+- [ ] Confirm inspected canonical is the `www` URL
+- [ ] Do not request indexing for `/account/` or `/admin/`
+
+## Product/brand presentation
+
+- [ ] homepage H1/lead binds SARKSH Foods to red chilli powder/chili powder
+- [ ] chilli product page H1 is `SARKSH Foods Chilli Powder`
+- [ ] official logo remains unchanged
+- [ ] 3D intro remains unchanged
+- [ ] no fabricated rating, review, price or stock schema
 
 ## Payments
 
-- [ ] Razorpay remains disabled in V8.4
-- [ ] No card number/CVV fields exist
-- [ ] Payment panel clearly states online payments are not active
-
-## GitHub Pages
-
-- [ ] GitHub Pages source = GitHub Actions
-- [ ] Custom domain = `sarkshfoods.in`
-- [ ] Optional variable `GOOGLE_SITE_VERIFICATION` configured
-- [ ] Push to `main`
-- [ ] GitHub Actions build passes
-- [ ] HTTPS enforced after certificate issuance
-
-## SEO/privacy
-
-- [ ] `/account/` is `noindex,nofollow,noarchive`
-- [ ] `/admin/` is `noindex,nofollow,noarchive`
-- [ ] robots.txt disallows `/account/` and `/admin/`
-- [ ] neither private route is present in sitemap.xml
-- [ ] public product SEO remains unchanged
-- [ ] Privacy page describes customer accounts, hashed passwords, private Sheets/Drive and payment policy
+- [ ] Razorpay remains deferred
+- [ ] no card/CVV fields exist
+- [ ] no payment credentials are stored in Sheets/Drive

@@ -414,7 +414,7 @@ function initializeAdminAccess() {
   MailApp.sendEmail({
     to: PropertiesService.getScriptProperties().getProperty("ADMIN_EMAIL") || APP.adminEmail,
     subject: "SARKSH Foods admin access initialized",
-    body: "Your initial SARKSH Foods admin password is:\n\n" + password + "\n\nSign in at https://sarkshfoods.in/admin/. This password is shown only in this email; only its salted hash is stored by the backend.",
+    body: "Your initial SARKSH Foods admin password is:\n\n" + password + "\n\nSign in at https://www.sarkshfoods.in/admin/. This password is shown only in this email; only its salted hash is stored by the backend.",
     name: "SARKSH Foods",
   });
   return { ok: true, message: "A temporary admin password was generated and emailed to the configured admin address." };
@@ -935,7 +935,7 @@ function seedProduct_(spreadsheet) {
   sheet.getRange(2, 1, 1, HEADERS.products.length).setValues([[
     "SF-P-CHILLI-1KG", "chilli-powder", "Chilli Powder", "Ground Spice", "1 kg", "Active", true,
     "Order enquiries open", "SARKSH Foods Chilli Powder in a 1 kg carton for household and commercial requirements.",
-    "https://sarkshfoods.in/assets/sarksh-foods-chilli-powder-1kg-india.webp", "", now, now,
+    "https://www.sarkshfoods.in/assets/sarksh-foods-chilli-powder-1kg-india.webp", "", now, now,
   ]]);
 }
 
@@ -944,7 +944,7 @@ function seedWebsite_(spreadsheet) {
   if (sheet.getLastRow() > 1) return;
   const now = new Date();
   sheet.getRange(2, 1, 1, HEADERS.websites.length).setValues([[
-    "SF-W-MAIN", "SARKSH Foods", "https://sarkshfoods.in/", "Production", "Not checked", "", "", "", "Primary production website", now,
+    "SF-W-MAIN", "SARKSH Foods", "https://www.sarkshfoods.in/", "Production", "Not checked", "", "", "", "Primary production website", now,
   ]]);
 }
 

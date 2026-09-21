@@ -1,4 +1,4 @@
-const SITE_URL = "https://sarkshfoods.in";
+const SITE_URL = "https://www.sarkshfoods.in";
 const PRODUCTION_API_URL = "https://script.google.com/macros/s/AKfycbw_nR3t5gJfE5BOB4F1NduKDL1Mm10ad73BbnXRygL9pWDm-EwqmcegcVyswZimIYTtgA/exec";
 const siteUrl = (process.env.SITE_URL || "").trim().replace(/\/$/, "");
 const apiUrl = (process.env.VITE_API_BASE_URL || "").trim();

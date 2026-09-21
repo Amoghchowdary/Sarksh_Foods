@@ -1,6 +1,6 @@
 {
-  "name": "sarksh-foods-brand-commerce-v8-4-customer-portal",
-  "version": "0.8.5",
+  "name": "sarksh-foods-brand-commerce-v8-5-indexing-auth-fix",
+  "version": "0.8.6",
   "private": true,
   "type": "module",
   "scripts": {

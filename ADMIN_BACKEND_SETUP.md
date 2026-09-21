@@ -36,7 +36,7 @@ The backend:
 
 Admin login URL:
 
-`https://sarkshfoods.in/admin/`
+`https://www.sarkshfoods.in/admin/`
 
 Admin sessions expire after 8 hours and only a hash of each session token is stored in the `Admin Sessions` sheet.
 
@@ -52,7 +52,7 @@ Password-reset codes are emailed to the customer, expire after 15 minutes and ar
 
 ## Customer portal
 
-`https://sarkshfoods.in/account/`
+`https://www.sarkshfoods.in/account/`
 
 Modules:
 

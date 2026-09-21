@@ -16,9 +16,9 @@ function ChilliPowderPage() {
           </div>
           <div className="product-detail-copy">
             <span className="eyebrow">SARKSH FOODS · PREMIUM CHILLI POWDER</span>
-            <h1>Chilli Powder</h1>
+            <h1>SARKSH Foods Chilli Powder</h1>
             <p className="product-detail-tagline">Bold colour. Full flavour. Distinctly SARKSH.</p>
-            <p>SARKSH Foods Chilli Powder is available in a 1 kg carton for household, retail, wholesale, HoReCa, distribution and institutional requirements across India.</p>
+            <p>SARKSH Foods Chilli Powder is a premium red chilli powder, also commonly searched as chili powder, available in a 1 kg carton for household, retail, wholesale, HoReCa, distribution and institutional requirements across India.</p>
             <div className="detail-specs">
               <div><span>Pack size</span><strong>1 kg</strong></div>
               <div><span>Category</span><strong>Ground Spice</strong></div>
