@@ -13,14 +13,11 @@ function Home() {
         <div className="v86-hero-ambient" aria-hidden="true" />
         <div className="site-frame v86-hero-grid">
           <div className="v86-hero-copy">
-            <div className="v86-brand-lockup" aria-label="SARKSH Foods — Legacy of Elegance">
-              <span className="v86-brand-mark"><img src="/assets/logos/sarksh-foods-logo.svg" alt="SARKSH Foods — Legacy of Elegance" fetchPriority="high" /></span>
-              <span className="v86-brand-wordmark"><strong>SARKSH FOODS</strong><small>LEGACY OF ELEGANCE</small></span>
-            </div>
-
-            <div className="v86-hero-kicker"><span>PREMIUM INDIAN SPICE</span><i /></div>
+            <div className="v86-hero-kicker"><span>PURE SPICE · DISTINCTIVE CHARACTER</span><i /></div>
             <h1><span>SARKSH Foods</span><em>Premium Red Chilli<br />Powder in India</em></h1>
-            <p className="v86-hero-lead">A premium 1 kg red chilli powder carton created for homes and professional kitchens—presented with the colour, flavour and distinctive identity of SARKSH Foods.</p>
+            <p className="v86-hero-lead">A premium 1 kg red chilli powder carton made for homes and professional kitchens across India—distinctive on the shelf, confident in the kitchen and unmistakably SARKSH Foods.</p>
+
+            <blockquote className="v87-hero-quote">“A richer red. A bolder presence. Made to be remembered.”</blockquote>
 
             <div className="v86-hero-actions">
               <Link to="/products" className="v86-button v86-button--gold"><ShoppingBag size={18} /> Shop Products <ArrowRight size={17} /></Link>

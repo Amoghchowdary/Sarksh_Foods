@@ -14,6 +14,7 @@ import "./commercial-v77-clean-contact.css";
 import "./admin-v82.css";
 import "./customer-v84.css";
 import "./home-v86-luxury.css";
+import "./theme-v87-red-white.css";
 
 const rootElement = document.getElementById("app");
 
