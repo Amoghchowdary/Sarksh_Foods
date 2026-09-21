@@ -1,12 +1,17 @@
 {
   "name": "SARKSH Foods",
   "short_name": "SARKSH Foods",
-  "description": "SARKSH Foods — Legacy of Elegance. Premium red chilli powder (chili powder) for home and business requirements across India.",
+  "description": "SARKSH Foods \u2014 Legacy of Elegance. Premium red chilli powder (chili powder) for home and business requirements across India.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#3b0908",
-  "theme_color": "#3b0908",
+  "background_color": "#0f0c0a",
+  "theme_color": "#0f0c0a",
   "icons": [
-    { "src": "/sarksh-foods-favicon.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    {
+      "src": "/sarksh-foods-favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }

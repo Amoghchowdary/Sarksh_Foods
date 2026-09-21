@@ -13,6 +13,7 @@ import "./commercial-v76-form-clarity.css";
 import "./commercial-v77-clean-contact.css";
 import "./admin-v82.css";
 import "./customer-v84.css";
+import "./home-v86-luxury.css";
 
 const rootElement = document.getElementById("app");
 
@@ -20,11 +21,16 @@ if (!rootElement) {
   throw new Error("Application root element was not found");
 }
 
-if (!rootElement.innerHTML) {
-  ReactDOM.createRoot(rootElement).render(
-    <React.StrictMode>
-      <RouterProvider router={router} />
-    </React.StrictMode>,
-  );
+// Production SEO pages contain a crawl-first HTML shell inside #app. Search engines
+// can parse that static content immediately, while real browsers replace it with
+// the interactive React application as soon as JavaScript starts.
+if (rootElement.querySelector("[data-seo-prerender='true']")) {
+  rootElement.replaceChildren();
 }
+
+ReactDOM.createRoot(rootElement).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>,
+);
 

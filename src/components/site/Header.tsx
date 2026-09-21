@@ -6,9 +6,9 @@ import { PRODUCTS } from "@/lib/products";
 
 const NAV = [
   { to: "/", label: "Home" },
-  { to: "/chilli-powder", label: "Chilli Powder" },
-  { to: "/enterprise", label: "Business" },
-  { to: "/about", label: "Our Story" },
+  { to: "/products", label: "Products" },
+  { to: "/enterprise", label: "Business Orders" },
+  { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;
 

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, ArrowUpRight, Check, PackageCheck, ShoppingBag, Store, Truck, UtensilsCrossed } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Building2, Check, Leaf, ShieldCheck, ShoppingBag, Store, Truck, UtensilsCrossed } from "lucide-react";
 import { BookProductButton } from "@/components/site/ProductBookingModal";
 import { PRODUCTS } from "@/lib/products";
 
@@ -9,31 +9,54 @@ const product = PRODUCTS[0];
 function Home() {
   return (
     <>
-      <section className="home-hero">
-        <div className="site-frame home-hero-grid">
-          <div className="home-hero-copy">
-            <span className="eyebrow">SARKSH FOODS · PREMIUM RED CHILLI POWDER</span>
-            <h1>Bold colour.<br />Full flavour.<br /><em>Distinctly SARKSH.</em></h1>
-            <p className="hero-lead">SARKSH Foods premium red chilli powder—also searched as chili powder—is available in a 1 kg carton for homes, retail shelves and professional kitchens, with pan-India order and business-enquiry routes.</p>
-            <div className="hero-actions">
-              <BookProductButton product={product} label="Order Chilli Powder" />
-              <Link to="/enterprise" className="button-secondary">Business orders <ArrowUpRight size={17} /></Link>
+      <section className="home-hero home-hero--v86">
+        <div className="v86-hero-ambient" aria-hidden="true" />
+        <div className="site-frame v86-hero-grid">
+          <div className="v86-hero-copy">
+            <div className="v86-brand-lockup" aria-label="SARKSH Foods — Legacy of Elegance">
+              <span className="v86-brand-mark"><img src="/assets/logos/sarksh-foods-logo.svg" alt="SARKSH Foods — Legacy of Elegance" fetchPriority="high" /></span>
+              <span className="v86-brand-wordmark"><strong>SARKSH FOODS</strong><small>LEGACY OF ELEGANCE</small></span>
             </div>
-            <div className="hero-facts" aria-label="Product facts">
-              <div><strong>1 kg</strong><span>Carton</span></div>
-              <div><strong>Home</strong><span>Order route</span></div>
-              <div><strong>Business</strong><span>Bulk enquiries</span></div>
+
+            <div className="v86-hero-kicker"><span>PREMIUM INDIAN SPICE</span><i /></div>
+            <h1><span>SARKSH Foods</span><em>Premium Red Chilli<br />Powder in India</em></h1>
+            <p className="v86-hero-lead">A premium 1 kg red chilli powder carton created for homes and professional kitchens—presented with the colour, flavour and distinctive identity of SARKSH Foods.</p>
+
+            <div className="v86-hero-actions">
+              <Link to="/products" className="v86-button v86-button--gold"><ShoppingBag size={18} /> Shop Products <ArrowRight size={17} /></Link>
+              <Link to="/enterprise" className="v86-button v86-button--outline"><Building2 size={18} /> Business Orders <ArrowUpRight size={17} /></Link>
+            </div>
+
+            <div className="v86-hero-trust" aria-label="SARKSH Foods product and service highlights">
+              <span><Leaf size={17} /><strong>100% Pure &amp; Natural</strong></span>
+              <span><ShieldCheck size={17} /><strong>FSSAI Registered</strong></span>
+              <span><Truck size={17} /><strong>Pan-India Enquiries</strong></span>
             </div>
           </div>
 
-          <div className="home-hero-visual home-hero-logo-visual" aria-label="SARKSH Foods official logo — Legacy of Elegance">
-            <img
-              className="hero-brand-logo"
-              src="/assets/logos/sarksh-foods-logo.svg"
-              alt="SARKSH Foods — Legacy of Elegance"
-              fetchPriority="high"
-              decoding="async"
-            />
+          <div className="v86-hero-visual">
+            <div className="v86-photo-frame">
+              <img
+                src="/assets/sarksh-foods-chilli-powder-og.jpg"
+                alt="SARKSH Foods premium red chilli powder 1 kg carton with dried red chillies and ground chilli powder"
+                fetchPriority="high"
+                decoding="async"
+              />
+              <div className="v86-photo-shade" aria-hidden="true" />
+              <div className="v86-photo-note"><span>1 KG</span><strong>RED CHILLI POWDER</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div className="v86-hero-rail">
+          <div className="site-frame v86-hero-rail-inner">
+            <span><Leaf size={21} /><b>AUTHENTIC</b><small>Indian flavours</small></span>
+            <i />
+            <span><ShieldCheck size={21} /><b>PREMIUM</b><small>Product identity</small></span>
+            <i />
+            <span><UtensilsCrossed size={21} /><b>BUILT FOR</b><small>Homes &amp; businesses</small></span>
+            <i />
+            <span><Truck size={21} /><b>DELIVERING</b><small>Across India</small></span>
           </div>
         </div>
       </section>

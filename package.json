@@ -1,6 +1,6 @@
 {
-  "name": "sarksh-foods-brand-commerce-v8-5-indexing-auth-fix",
-  "version": "0.8.6",
+  "name": "sarksh-foods-brand-commerce-v8-6-luxury-homepage",
+  "version": "0.8.7",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,7 +11,9 @@
     "typecheck": "tsc --noEmit",
     "seo:generate": "node scripts/generate-seo.mjs",
     "verify:prod": "node scripts/verify-production.mjs",
-    "backend:health": "node scripts/check-backend.mjs"
+    "backend:health": "node scripts/check-backend.mjs",
+    "validate": "npm run typecheck && npm run build",
+    "validate:prod": "npm run typecheck && npm run backend:health && npm run build:prod && npm run verify:prod"
   },
   "dependencies": {
     "@tanstack/react-router": "^1.170.16",
