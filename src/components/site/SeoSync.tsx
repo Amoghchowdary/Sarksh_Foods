@@ -23,7 +23,7 @@ const SEO: Record<string, SeoEntry> = {
   },
   "/products/chilli-powder": {
     title: "SARKSH Foods Chilli Powder 1 kg | Product Details",
-    description: "View SARKSH Foods red chilli powder 1 kg carton details, product highlights and ordering routes for home and business buyers.",
+    description: "View SARKSH Foods red chilli powder 1 kg carton details, product highlights and ordering options for home and business buyers.",
     image: "/assets/sarksh-foods-chilli-powder-og.jpg",
     canonicalPath: "/chilli-powder/",
   },

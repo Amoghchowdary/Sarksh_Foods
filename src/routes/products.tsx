@@ -40,11 +40,11 @@ function ProductsPage() {
 
       <section className="order-options section-pad">
         <div className="site-frame">
-          <div className="section-heading-row"><div><span className="eyebrow">HOW TO BUY</span><h2>Choose the route that fits your order.</h2></div><p>Keep household orders simple. Use the business route when the requirement is for resale, food service, distribution or institutions.</p></div>
+          <div className="section-heading-row"><div><span className="eyebrow">HOW TO BUY</span><h2>Choose the ordering option that fits your need.</h2></div><p>Order for home use, or choose Business Orders for retail, food service, distribution and institutional requirements.</p></div>
           <div className="order-option-grid">
-            <article><ShoppingBag size={25} /><h3>Home orders</h3><p>Submit a request for the current 1 kg carton and receive an order reference.</p><BookProductButton product={product} className="text-button" label="Order for home" /></article>
+            <article><ShoppingBag size={25} /><h3>Home orders</h3><p>Order the current 1 kg carton for household use.</p><BookProductButton product={product} className="text-button" label="Order for home" /></article>
             <article><Store size={25} /><h3>Retail &amp; wholesale</h3><p>Share quantity and delivery location for store or trade requirements.</p><Link to="/enterprise" className="text-button">Open business orders <ArrowRight size={15} /></Link></article>
-            <article><PackageCheck size={25} /><h3>HoReCa &amp; institutions</h3><p>Send professional-kitchen requirements through the business order flow.</p><Link to="/enterprise" className="text-button">Share requirement <ArrowRight size={15} /></Link></article>
+            <article><PackageCheck size={25} /><h3>HoReCa &amp; institutions</h3><p>Share requirements for professional kitchens and institutions.</p><Link to="/enterprise" className="text-button">Share requirement <ArrowRight size={15} /></Link></article>
           </div>
         </div>
       </section>

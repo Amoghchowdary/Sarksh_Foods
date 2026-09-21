@@ -13,10 +13,8 @@ import "./commercial-v76-form-clarity.css";
 import "./commercial-v77-clean-contact.css";
 import "./admin-v82.css";
 import "./customer-v84.css";
-import "./home-v86-luxury.css";
-import "./theme-v87-red-white.css";
-import "./home-v88-cinematic-red.css";
-import "./home-v89-reference.css";
+import "./theme-v90-public.css";
+import "./home-v90-fmcg.css";
 
 const rootElement = document.getElementById("app");
 

@@ -1,6 +1,6 @@
-# SARKSH Foods V8.5 Production Checklist
+# SARKSH Foods V9.0 Production Checklist
 
-## Existing backend — keep intact
+## Backend — keep intact
 
 - [x] Apps Script production endpoint is live
 - [x] Backend health reports version `8.4`
@@ -8,20 +8,19 @@
 - [x] Google Drive storage configured
 - [x] Customer accounts configured
 - [x] Admin hashed-password access configured
-- [ ] Do **not** create a second database for this patch
-- [ ] Do **not** redeploy Apps Script merely for V8.5 SEO/login-origin changes
+- [ ] Do not create a second database for V9.0
+- [ ] Do not redeploy Apps Script unless backend code itself changes
 
-## Login/session regression QA
+## V9.0 public experience
 
-- [ ] Open `https://www.sarkshfoods.in/account/`
-- [ ] Create/sign in to a test customer
-- [ ] Refresh the page and confirm the session remains active
-- [ ] Navigate storefront → account and confirm the same session remains active
-- [ ] Confirm `https://sarkshfoods.in/account/` redirects to the `www` origin
-- [ ] Sign out and sign back in
-- [ ] Test forgot-password flow
-- [ ] Open `/admin/`, sign in, refresh and confirm the admin session remains active
-- [ ] Confirm blocked browser storage returns a readable error rather than a blank/broken portal
+- [ ] Homepage uses a full-width red background with no exposed side bars
+- [ ] Product photograph and the three product tiles align inside one visual stage
+- [ ] Header, sections, cards and footer use one red/white customer-facing system
+- [ ] Homepage remains clear at desktop, tablet and mobile widths
+- [ ] Products, Chilli Powder, Business Orders, About, Contact, Pan-India and Privacy pages match the same public theme
+- [ ] Public wording uses customer-friendly language
+- [ ] Official logo remains unchanged
+- [ ] 3D opening animation remains unchanged
 
 ## Production build
 
@@ -36,58 +35,38 @@ npm run build:prod
 npm run verify:prod
 ```
 
-Expected backend remains `8.4`; frontend package is V8.5 (`0.8.6`).
+Expected backend remains `8.4`; website package is V9.0 (`0.9.0`).
 
-## GitHub Pages / DNS
+## Customer account checks
+
+- [ ] Sign in at `https://www.sarkshfoods.in/account/`
+- [ ] Refresh and confirm the session remains active
+- [ ] Add/edit a delivery address
+- [ ] Place a test order and confirm it appears in the private Bookings sheet
+- [ ] Test sign out and forgot-password flow
+- [ ] Confirm `/account/` remains `noindex,nofollow,noarchive`
+
+## GitHub Pages / domain
 
 - [ ] Pages source = GitHub Actions
 - [ ] Primary custom domain = `www.sarkshfoods.in`
 - [ ] `www` CNAME points to `AmoghChowdary.github.io`
 - [ ] Apex has only GitHub Pages A records (`185.199.108.153`, `.109.153`, `.110.153`, `.111.153`)
-- [ ] No legacy apex A record such as `2.57.91.91`
-- [ ] `https://sarkshfoods.in/...` redirects to `https://www.sarkshfoods.in/...`
-- [ ] HTTPS enforced after GitHub certificate provisioning
+- [ ] HTTPS enforced
 
-## SEO/indexing artifact QA
+## SEO / indexing
 
 - [ ] `/robots.txt` loads
-- [ ] `/sitemap.xml` loads and uses only `https://www.sarkshfoods.in/...`
-- [ ] `/sitemap-index.xml` loads
-- [ ] `/sitemap-pages.xml` loads
-- [ ] `/sitemap-products.xml` loads
-- [ ] `/sitemap-images.xml` loads
-- [ ] `/brand.json` loads
-- [ ] `/product-catalog.json` loads
-- [ ] `/llms.txt` and `/llms-full.txt` load
-- [ ] `/.well-known/site-info.json` loads
-- [ ] IndexNow key file loads from the site root
-- [ ] post-deploy `Notify participating search engines` workflow job completes or reports only a non-blocking IndexNow error
-- [ ] `/chilli-powder/` canonical is `https://www.sarkshfoods.in/chilli-powder/`
-- [ ] public pages do not contain an apex canonical
-- [ ] `/account/` and `/admin/` remain `noindex,nofollow,noarchive`
-- [ ] `robots.txt` does not block those noindex pages, so crawlers can read the directive
+- [ ] `/sitemap.xml` loads and uses `https://www.sarkshfoods.in/...`
+- [ ] `/sitemap-index.xml`, `/sitemap-pages.xml`, `/sitemap-products.xml` and `/sitemap-images.xml` load
+- [ ] `/brand.json` and `/product-catalog.json` load
+- [ ] `/llms.txt`, `/llms-full.txt` and `/.well-known/site-info.json` load
+- [ ] `/chilli-powder/` canonical uses the `www` domain
+- [ ] `/account/` and `/admin/` remain noindex
+- [ ] No fabricated price, rating, review or stock information is added
 
 ## Search Console
 
 - [ ] Submit `https://www.sarkshfoods.in/sitemap.xml`
-- [ ] Optionally submit `https://www.sarkshfoods.in/sitemap-index.xml`
-- [ ] Inspect/test/request indexing for `/`
-- [ ] Inspect/test/request indexing for `/chilli-powder/`
-- [ ] Inspect/test/request indexing for `/products/`
-- [ ] Inspect/test/request indexing for `/about/`
-- [ ] Confirm inspected canonical is the `www` URL
-- [ ] Do not request indexing for `/account/` or `/admin/`
-
-## Product/brand presentation
-
-- [ ] homepage H1/lead binds SARKSH Foods to red chilli powder/chili powder
-- [ ] chilli product page H1 is `SARKSH Foods Chilli Powder`
-- [ ] official logo remains unchanged
-- [ ] 3D intro remains unchanged
-- [ ] no fabricated rating, review, price or stock schema
-
-## Payments
-
-- [ ] Razorpay remains deferred
-- [ ] no card/CVV fields exist
-- [ ] no payment credentials are stored in Sheets/Drive
+- [ ] Request indexing for `/`, `/chilli-powder/`, `/products/` and `/about/`
+- [ ] Confirm the selected canonical is the `www` URL

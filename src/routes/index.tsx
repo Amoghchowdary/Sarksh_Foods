@@ -1,5 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, ArrowUpRight, Building2, Check, Leaf, ShieldCheck, ShoppingBag, Store, Truck, UtensilsCrossed } from "lucide-react";
+import {
+  ArrowRight,
+  Building2,
+  Check,
+  Leaf,
+  PackageCheck,
+  ShieldCheck,
+  ShoppingBag,
+  Store,
+  Truck,
+  UtensilsCrossed,
+} from "lucide-react";
 import { BookProductButton } from "@/components/site/ProductBookingModal";
 import { PRODUCTS } from "@/lib/products";
 
@@ -9,154 +20,168 @@ const product = PRODUCTS[0];
 function Home() {
   return (
     <>
-      <section className="home-reference-hero" aria-labelledby="home-reference-title">
-        <div className="home-reference-seo">
-          <span>PURE SPICES · RICHER LIVES</span>
-          <h1 id="home-reference-title">SARKSH Foods Premium Red Chilli Powder in India</h1>
-          <p>SARKSH Foods is an Indian packaged-food brand. Our 1 kg red chilli powder carton brings authentic flavour, rich colour and uncompromising quality to kitchens and businesses across India.</p>
-        </div>
+      <section className="home-v90-hero" aria-labelledby="home-v90-title">
+        <div className="v90-hero-glow" aria-hidden="true" />
+        <div className="site-frame v90-hero-grid">
+          <div className="v90-hero-copy">
+            <div className="v90-kicker"><span>PREMIUM INDIAN SPICE</span><i /></div>
+            <h1 id="home-v90-title">
+              <span>SARKSH Foods</span>
+              <strong>Red Chilli Powder, made to stand out.</strong>
+            </h1>
+            <p className="v90-hero-lead">
+              Rich colour, bold flavour and a premium 1 kg pack created for everyday cooking,
+              professional kitchens and modern retail.
+            </p>
 
-        <div className="home-reference-canvas" aria-label="SARKSH Foods premium chilli powder showcase">
-          <img
-            className="home-reference-art"
-            src="/assets/home-reference-v89.png"
-            alt="SARKSH Foods Premium Red Chilli Powder in India with a 1 kg chilli powder carton, dried red chillies and ground chilli powder"
-            fetchPriority="high"
-            decoding="async"
-          />
-          <Link to="/products" className="home-reference-hotspot home-reference-hotspot--shop" aria-label="Shop Products"><span>Shop Products</span></Link>
-          <Link to="/enterprise" className="home-reference-hotspot home-reference-hotspot--business" aria-label="Business Orders"><span>Business Orders</span></Link>
-        </div>
+            <div className="v90-hero-actions">
+              <BookProductButton product={product} className="v90-button v90-button--solid" label="Order Chilli Powder" />
+              <Link to="/enterprise" className="v90-button v90-button--outline">
+                Business Orders <ArrowRight size={17} />
+              </Link>
+            </div>
 
-        <div className="home-reference-mobile">
-          <div className="home-reference-mobile-copy">
-            <div className="home-reference-mobile-kicker">PURE SPICES · RICHER LIVES</div>
-            <h2><span>SARKSH Foods</span>Premium Red Chilli Powder in India</h2>
-            <p>SARKSH Foods is an Indian packaged-food brand. Our 1 kg red chilli powder carton brings authentic flavour, rich colour and uncompromising quality to kitchens and businesses across India.</p>
-            <div className="home-reference-mobile-actions">
-              <Link to="/products"><ShoppingBag size={17} /> Shop Products <ArrowRight size={16} /></Link>
-              <Link to="/enterprise"><Building2 size={17} /> Business Orders <ArrowUpRight size={16} /></Link>
+            <div className="v90-hero-assurance" aria-label="Product highlights">
+              <span><Leaf size={18} /><b>100% Pure &amp; Natural</b></span>
+              <span><ShieldCheck size={18} /><b>FSSAI Registered</b></span>
+              <span><Truck size={18} /><b>Orders Across India</b></span>
             </div>
           </div>
-          <div className="home-reference-mobile-media">
-            <img src="/assets/sarksh-foods-chilli-powder-og.jpg" alt="SARKSH Foods Premium Red Chilli Powder 1 kg carton" />
+
+          <div className="v90-product-stage" aria-label="SARKSH Foods Chilli Powder 1 kg product presentation">
+            <div className="v90-product-photo">
+              <img
+                src="/assets/sarksh-foods-chilli-powder-og.jpg"
+                alt="SARKSH Foods Chilli Powder 1 kg carton with red chillies and ground chilli powder"
+                fetchPriority="high"
+                decoding="async"
+              />
+              <div className="v90-product-photo-shade" aria-hidden="true" />
+              <div className="v90-photo-label"><span>1 KG</span><strong>CHILLI POWDER</strong></div>
+            </div>
+
+            <div className="v90-product-tiles">
+              <article>
+                <span>01</span>
+                <strong>Rich Colour</strong>
+                <p>A confident red for everyday Indian cooking.</p>
+              </article>
+              <article>
+                <span>02</span>
+                <strong>Bold Flavour</strong>
+                <p>Made for dishes that need presence and depth.</p>
+              </article>
+              <article>
+                <span>03</span>
+                <strong>Premium Pack</strong>
+                <p>A 1 kg carton designed for shelf recognition.</p>
+              </article>
+            </div>
           </div>
-          <div className="home-reference-mobile-trust">
-            <span><Leaf size={18} /><b>100% Pure &amp; Natural</b></span>
-            <span><ShieldCheck size={18} /><b>Trusted Indian Brand</b></span>
-            <span><Truck size={18} /><b>Pan India Delivery</b></span>
-            <span><Store size={18} /><b>For Homes &amp; Businesses</b></span>
+        </div>
+
+        <div className="v90-proof-rail">
+          <div className="site-frame v90-proof-rail-grid">
+            <span><Leaf size={22} /><b>Pure &amp; Natural</b><small>Simple product promise</small></span>
+            <i />
+            <span><PackageCheck size={22} /><b>1 kg Carton</b><small>Current pack size</small></span>
+            <i />
+            <span><UtensilsCrossed size={22} /><b>Home &amp; Food Service</b><small>Made for everyday use</small></span>
+            <i />
+            <span><Truck size={22} /><b>Pan-India Orders</b><small>Home and business enquiries</small></span>
           </div>
         </div>
       </section>
 
-      <section className="spice-marquee" aria-label="Guntur chilli varieties and SARKSH Foods processing flow">
-        <div className="spice-marquee-label">
-          <span>GUNTUR CHILLI</span>
-          <strong>VARIETIES &amp; PROCESS</strong>
-        </div>
-        <div className="spice-marquee-window">
-          <div className="spice-marquee-track">
-            {[0, 1].map((loop) => (
-              <div className="spice-marquee-group" aria-hidden={loop === 1 ? true : undefined} key={loop}>
-                <span className="spice-marquee-item"><b>Guntur Sannam S4</b><small>Chilli variety</small></span>
-                <i />
-                <span className="spice-marquee-item"><b>Teja</b><small>Chilli variety</small></span>
-                <i />
-                <span className="spice-marquee-item"><b>273</b><small>Chilli variety</small></span>
-                <i />
-                <span className="spice-marquee-item"><b>Byadagi</b><small>Chilli variety</small></span>
-                <i />
-                <span className="spice-marquee-item spice-process"><b>Sourced</b><small>Selected lots</small></span>
-                <span className="spice-arrow">→</span>
-                <span className="spice-marquee-item spice-process"><b>Sorted</b><small>Quality grading</small></span>
-                <span className="spice-arrow">→</span>
-                <span className="spice-marquee-item spice-process"><b>Cleaned</b><small>Foreign matter removed</small></span>
-                <span className="spice-arrow">→</span>
-                <span className="spice-marquee-item spice-process"><b>Destemmed</b><small>Prepared for grinding</small></span>
-                <span className="spice-arrow">→</span>
-                <span className="spice-marquee-item spice-process"><b>Ground</b><small>Chilli to powder</small></span>
-                <span className="spice-arrow">→</span>
-                <span className="spice-marquee-item spice-process"><b>Sieved</b><small>Consistent finish</small></span>
-                <span className="spice-arrow">→</span>
-                <span className="spice-marquee-item spice-process"><b>Packed</b><small>Ready for dispatch</small></span>
-                <i />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="promise-section section-pad">
-        <div className="site-frame promise-grid">
-          <div className="section-intro">
-            <span className="eyebrow">THE SARKSH PROMISE</span>
-            <h2>A chilli powder designed to be noticed before the first pinch.</h2>
-            <p>Strong shelf presence, a clear product story and the familiar confidence of a kitchen essential—brought together under the SARKSH Foods identity.</p>
-          </div>
-          <div className="promise-features">
-            <article><span>01</span><h3>100% Pure &amp; Natural</h3><p>An on-pack promise presented clearly on the 1 kg carton.</p></article>
-            <article><span>02</span><h3>Rich Colour. Bold Flavour.</h3><p>Created to bring visible character and flavour to everyday cooking.</p></article>
-            <article><span>03</span><h3>No Added Preservatives</h3><p>A simple, direct product message customers can understand at a glance.</p></article>
-          </div>
-        </div>
-      </section>
-
-      <section className="product-focus section-pad">
-        <div className="site-frame product-focus-grid">
-          <div className="product-focus-media">
-            <div className="product-focus-backdrop" />
+      <section className="v90-product-section section-pad">
+        <div className="site-frame v90-product-section-grid">
+          <div className="v90-pack-display">
+            <div className="v90-pack-halo" aria-hidden="true" />
             <img src="/assets/chilli-pack-front.webp" alt="SARKSH Foods Chilli Powder 1 kg carton" loading="lazy" />
+            <div className="v90-pack-caption"><span>THE CURRENT RANGE</span><strong>Premium Red Chilli Powder · 1 kg</strong></div>
           </div>
-          <div className="product-focus-copy">
-            <span className="eyebrow">OUR PRODUCT</span>
-            <h2>SARKSH Foods Chilli Powder</h2>
-            <p className="section-lead">One pack. One clear identity. Ready for home and business orders.</p>
-            <p>The current SARKSH Foods range begins with a 1 kg chilli powder carton. Order for household use or share a larger requirement through the business route.</p>
-            <div className="product-points">
-              <span><Check size={17} /> 1 kg carton</span>
-              <span><Check size={17} /> Home order requests</span>
-              <span><Check size={17} /> Retail, wholesale &amp; HoReCa enquiries</span>
+
+          <div className="v90-section-copy">
+            <span className="v90-section-kicker">A KITCHEN ESSENTIAL, ELEVATED</span>
+            <h2>Premium on the shelf. Familiar in the kitchen.</h2>
+            <p className="v90-section-lead">
+              SARKSH Foods Chilli Powder brings a strong brand presence to a product used every day.
+              The pack is easy to recognise, the product story is easy to understand, and ordering stays simple.
+            </p>
+            <div className="v90-check-grid">
+              <span><Check size={17} /> 100% Pure &amp; Natural</span>
+              <span><Check size={17} /> Rich Colour. Bold Flavour.</span>
+              <span><Check size={17} /> No Added Preservatives</span>
+              <span><Check size={17} /> 1 kg Premium Carton</span>
             </div>
-            <div className="inline-actions">
-              <BookProductButton product={product} label="Order 1 kg carton" />
-              <Link to="/chilli-powder" className="text-link">Explore Chilli Powder <ArrowRight size={16} /></Link>
+            <div className="v90-inline-actions">
+              <BookProductButton product={product} className="v90-button v90-button--light" label="Order 1 kg Carton" />
+              <Link to="/chilli-powder" className="v90-text-link">View product details <ArrowRight size={16} /></Link>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="buyer-section section-pad">
+      <section className="v90-occasion-section section-pad">
         <div className="site-frame">
-          <div className="section-heading-row">
-            <div><span className="eyebrow eyebrow--gold">BUILT FOR THE MARKET</span><h2>From one kitchen to an entire supply chain.</h2></div>
-            <p>Choose the buying route that matches your requirement. Household orders stay simple; commercial quantities move through SARKSH Foods Business.</p>
+          <div className="v90-section-heading">
+            <div><span className="v90-section-kicker">MADE FOR THE WAY INDIA COOKS</span><h2>One product. Many kitchens.</h2></div>
+            <p>From everyday meals to professional food preparation, choose the ordering option that fits your requirement.</p>
           </div>
-          <div className="buyer-cards">
-            <article><ShoppingBag size={25} /><span>01</span><h3>Home</h3><p>Order the current 1 kg carton for household use.</p><BookProductButton product={product} className="text-button" label="Order for home" /></article>
-            <article><Store size={25} /><span>02</span><h3>Retail &amp; Wholesale</h3><p>Share quantities for store, resale or wholesale requirements.</p><Link to="/enterprise" className="text-button">Business orders <ArrowRight size={15} /></Link></article>
-            <article><UtensilsCrossed size={25} /><span>03</span><h3>HoReCa</h3><p>Send requirements for hotels, restaurants, caterers and institutions.</p><Link to="/enterprise" className="text-button">Food-service orders <ArrowRight size={15} /></Link></article>
-            <article><Truck size={25} /><span>04</span><h3>Distribution</h3><p>Start a conversation for larger market and distribution requirements.</p><Link to="/enterprise" className="text-button">Distribution enquiry <ArrowRight size={15} /></Link></article>
+
+          <div className="v90-occasion-grid">
+            <article>
+              <ShoppingBag size={26} />
+              <span>HOME</span>
+              <h3>Everyday cooking</h3>
+              <p>Order the current 1 kg carton for regular household use.</p>
+              <BookProductButton product={product} className="v90-card-link" label="Order for home" />
+            </article>
+            <article>
+              <UtensilsCrossed size={26} />
+              <span>FOOD SERVICE</span>
+              <h3>Professional kitchens</h3>
+              <p>Share requirements for restaurants, caterers, hotels and institutions.</p>
+              <Link to="/enterprise" className="v90-card-link">Business orders <ArrowRight size={15} /></Link>
+            </article>
+            <article>
+              <Store size={26} />
+              <span>TRADE</span>
+              <h3>Retail &amp; wholesale</h3>
+              <p>Connect with us for store, resale, wholesale and distribution requirements.</p>
+              <Link to="/enterprise" className="v90-card-link">Trade enquiries <ArrowRight size={15} /></Link>
+            </article>
           </div>
         </div>
       </section>
 
-      <section className="brand-band section-pad">
-        <div className="site-frame brand-band-grid">
-          <div className="brand-band-logo"><img src="/assets/logos/sarksh-foods-logo.svg" alt="SARKSH Foods — Legacy of Elegance" /></div>
-          <div className="brand-band-copy">
-            <span className="eyebrow eyebrow--gold">LEGACY OF ELEGANCE</span>
-            <h2>A brand built to be recognised.</h2>
-            <p>The temple, palms, maroon and gold form the visual signature of SARKSH Foods. The same identity carries from the pack to the website, so the brand stays familiar wherever customers meet it.</p>
-            <Link to="/about" className="button-light">Our story <ArrowUpRight size={17} /></Link>
+      <section className="v90-brand-section section-pad">
+        <div className="site-frame v90-brand-grid">
+          <div className="v90-brand-mark"><img src="/assets/logos/sarksh-foods-logo.svg" alt="SARKSH Foods — Legacy of Elegance" /></div>
+          <div className="v90-brand-copy">
+            <span className="v90-section-kicker">LEGACY OF ELEGANCE</span>
+            <h2>A food brand built to be recognised.</h2>
+            <p>
+              SARKSH Foods combines a distinctive Indian identity with clear, modern presentation.
+              The temple, palms and deep maroon signature carry from the pack to every customer touchpoint.
+            </p>
+            <Link to="/about" className="v90-text-link">Discover SARKSH Foods <ArrowRight size={16} /></Link>
+          </div>
+          <div className="v90-brand-stats">
+            <div><strong>1 kg</strong><span>Current pack</span></div>
+            <div><strong>India</strong><span>Order coverage</span></div>
+            <div><strong>FSSAI</strong><span>Registered</span></div>
           </div>
         </div>
       </section>
 
-      <section className="home-cta">
-        <div className="site-frame home-cta-inner">
-          <div><span className="eyebrow">READY TO ORDER?</span><h2>Order SARKSH Foods Chilli Powder for home or business, with enquiries accepted across India.</h2></div>
-          <div className="home-cta-actions"><BookProductButton product={product} label="Order now" /><Link to="/enterprise" className="button-secondary">Business orders <ArrowUpRight size={17} /></Link></div>
+      <section className="v90-final-cta">
+        <div className="site-frame v90-final-cta-inner">
+          <div><span>READY TO ORDER?</span><h2>Bring SARKSH Foods to your kitchen or business.</h2></div>
+          <div className="v90-final-actions">
+            <BookProductButton product={product} className="v90-button v90-button--solid" label="Order Chilli Powder" />
+            <Link to="/enterprise" className="v90-button v90-button--outline">Business Orders <Building2 size={17} /></Link>
+          </div>
         </div>
       </section>
     </>

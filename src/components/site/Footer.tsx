@@ -11,7 +11,7 @@ export function Footer() {
           <img src="/assets/logos/sarksh-foods-logo.svg" alt="SARKSH Foods — Legacy of Elegance" />
           <div>
             <strong>SARKSH FOODS</strong>
-            <p>Chilli powder for home, trade and professional kitchens.</p>
+            <p>Premium red chilli powder for homes, retailers and professional kitchens.</p>
           </div>
         </div>
         <BookProductButton product={PRODUCTS[0]} className="button-gold" label="Order Chilli Powder" />
@@ -35,9 +35,9 @@ export function Footer() {
           <Link to="/account">Customer Account</Link>
         </div>
         <div className="footer-cta">
-          <span>Need a commercial quantity?</span>
-          <h3>Tell us what you need.</h3>
-          <Link to="/enterprise" className="footer-enquire">Open business orders <ArrowUpRight size={16} /></Link>
+          <span>Ordering for a business?</span>
+          <h3>Share your quantity and delivery location.</h3>
+          <Link to="/enterprise" className="footer-enquire">Business Orders <ArrowUpRight size={16} /></Link>
         </div>
       </div>
       <div className="footer-bottom">

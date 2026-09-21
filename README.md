@@ -1,139 +1,53 @@
-# SARKSH Foods V8.9 — Approved Reference Landing Page
+# SARKSH Foods — V9.0 Production FMCG Website
 
-V8.9 replaces the previous reconstructed hero with the **approved generated landing-page reference itself** on desktop, so the composition, typography, product framing, button placement, trust row and lower premium rail match the supplied reference exactly. The two visible hero CTAs remain real interactive links through transparent hit areas, while semantic H1/body content remains available to search engines and assistive technology. Mobile uses a responsive semantic version of the same hierarchy.
+Production website for SARKSH Foods, built around a premium red-and-white customer experience and the current 1 kg SARKSH Foods Chilli Powder range.
 
-The rest of the production system remains unchanged: V8.5 SEO/indexing and canonical host, V8.4 Apps Script/Sheets/Drive/customer/admin backend, account portal, order history, saved addresses, admin authentication and the existing 3D intro.
+## V9.0 focus
 
-# SARKSH Foods V8.5 — Indexing & Login Reliability Patch
+V9.0 replaces the previous screenshot-led landing treatment with a real responsive homepage. The product photograph, product tiles, navigation, calls to action and content are separate interface elements so they align correctly on desktop, tablet and mobile.
 
-Primary production origin: **https://www.sarkshfoods.in**
+The public website now uses one cohesive deep-red visual system across Home, Products, Chilli Powder, Business Orders, About, Contact, Pan-India and Privacy pages.
 
-V8.8 keeps the V8.5 production SEO/indexing/login hardening and the V8.7 red/white public-site system, while restoring the cinematic landing-page composition requested from the approved visual reference. The supplied official SARKSH Foods logo remains unchanged. The homepage uses layered oxblood, burgundy, maroon and chilli-red gradients with white typography and white interactive accents.
+## Current production architecture
 
-### V8.8 visual changes
+- React + TypeScript + TanStack Router
+- GitHub Pages deployment
+- Google Apps Script production service
+- Private Google Sheets database
+- Private Google Drive storage
+- Customer accounts with saved addresses and order history
+- Protected admin workspace
+- Production SEO, sitemap, structured data and indexing files
 
-- layered red palette derived from the supplied maroon reference, moving through deep oxblood, burgundy, maroon and chilli-red tones;
-- white typography and dividers throughout the customer-facing website;
-- exactly two primary hero routes: **Shop Products** and **Business Orders**;
-- official logo remains in the production header;
-- premium hero image retained as a full-bleed right-side cinematic scene;
-- reference-style **TRADITION · IN EVERY · PINCH** image-side message;
-- public product, enterprise, about, contact and footer surfaces aligned to the same red/white design system;
-- customer portal visually aligned to the red/white brand while preserving the V8.4 authentication/backend contract;
-- 3D intro mechanism is unchanged, with only customer-facing text/background colours aligned to the new palette.
-
-V8.5 keeps the approved V8.4 storefront, customer portal, private Google Sheets/Drive backend, admin portal and 3D brand intro intact. This release concentrates on two production issues: **search-engine indexability/canonical consistency** and **customer/admin login reliability**.
-
-## What V8.5 fixes
-
-### 1. One production hostname
-
-GitHub Pages currently serves the custom domain as `www.sarkshfoods.in`, while V8.4 generated canonical URLs, sitemap URLs and production checks for `sarkshfoods.in`.
-
-V8.5 standardizes every public SEO signal on:
+## Production domain
 
 `https://www.sarkshfoods.in`
 
-The apex host is treated only as a legacy/redirecting origin. This prevents competing canonical signals and keeps browser-scoped account/admin sessions on one hostname.
-
-### 2. Customer/admin login hardening
-
-- one canonical production hostname for browser sessions;
-- safe `localStorage` / `sessionStorage` wrappers so blocked storage reports a useful error instead of failing unpredictably;
-- shared Apps Script request transport with a 30-second timeout;
-- clearer errors when Apps Script returns HTML, an invalid deployment page or a network failure;
-- returned session tokens are validated before they are stored;
-- login email addresses are normalized before submission.
-
-The Apps Script backend remains **version 8.4**. V8.5 does not replace Google Sheets/Drive and does not introduce a new database.
-
-## Search-engine files generated at build time
-
-Production builds generate:
-
-- `/robots.txt`
-- `/sitemap.xml`
-- `/sitemap-index.xml`
-- `/sitemap-pages.xml`
-- `/sitemap-products.xml`
-- `/sitemap-images.xml`
-- `/llms.txt`
-- `/llms-full.txt`
-- `/brand.json`
-- `/product-catalog.json`
-- `/.well-known/site-info.json`
-- a public IndexNow ownership key file for participating search engines
-
-The generated public HTML also contains crawl-first semantic content and structured data for the SARKSH Foods brand, OnlineStore/Organization, WebSite, WebPage, breadcrumbs and the chilli-powder Product entity. No fake price, rating, review or availability data is generated.
-
-## Product/brand SEO focus
-
-The site deliberately binds the entity **SARKSH Foods** to:
-
-- SARKSH Foods Chilli Powder
-- red chilli powder
-- chilli powder / chili powder
-- 1 kg chilli powder
-- premium chilli powder in India
-- household and commercial chilli-powder buying intent
-
-The preferred product URL is:
-
-`https://www.sarkshfoods.in/chilli-powder/`
-
-`/products/chilli-powder/` remains functional but canonicalizes to `/chilli-powder/`.
-
-## Production backend
-
-The website remains wired to the existing Apps Script endpoint:
-
-`https://script.google.com/macros/s/AKfycbw_nR3t5gJfE5BOB4F1NduKDL1Mm10ad73BbnXRygL9pWDm-EwqmcegcVyswZimIYTtgA/exec`
-
-Expected backend health remains:
-
-- backend version `8.4`
-- Google Sheets configured
-- Google Drive configured
-- customer accounts configured
-- admin hashed-password access configured
-
-No Apps Script redeployment is required for the V8.5 frontend/indexing/login-origin patch. After GitHub Pages deploys successfully, the workflow also sends the changed public URLs to IndexNow for Bing and other participating engines. Google discovery continues through crawlable HTML, sitemaps and Search Console URL Inspection. The included Apps Script source only aligns future seeded URLs with the `www` hostname.
-
-## Local production preflight
-
-PowerShell:
+## Local validation
 
 ```powershell
-cd "C:\Users\SarkshGroups\OneDrive\Desktop\SARKSH_FOODS\sarksh_foods_brand_v8_9"
+npm install
+npm run typecheck
+npm run backend:health
 
 $env:SITE_URL="https://www.sarkshfoods.in"
 $env:VITE_API_BASE_URL="https://script.google.com/macros/s/AKfycbw_nR3t5gJfE5BOB4F1NduKDL1Mm10ad73BbnXRygL9pWDm-EwqmcegcVyswZimIYTtgA/exec"
 
-npm install
-npm run typecheck
-npm run backend:health
-npm run build:prod
-npm run verify:prod
+npm run validate:prod
 ```
 
-For ordinary local development:
+## Customer routes
 
-```powershell
-npm run dev
-```
+- `/` — Home
+- `/products/` — Products
+- `/chilli-powder/` — Chilli Powder
+- `/enterprise/` — Business Orders
+- `/pan-india/` — Pan-India
+- `/about/` — About
+- `/contact/` — Contact
+- `/account/` — Customer Account
+- `/privacy/` — Privacy
 
-- Storefront: `http://localhost:5173/`
-- Customer portal: `http://localhost:5173/account/`
-- Admin: `http://localhost:5173/admin/`
+## Protected systems
 
-## GitHub Pages
-
-`.github/workflows/deploy-pages.yml` builds and validates for `https://www.sarkshfoods.in`, checks the V8.4 backend, generates the crawler artifacts, verifies canonical URLs/private-route controls and deploys `dist/` using GitHub Pages.
-
-No Google OAuth variable is required.
-
-Optional repository variable:
-
-`GOOGLE_SITE_VERIFICATION`
-
-See `SEO_STRATEGY.md`, `PRODUCTION_CHECKLIST.md`, `GITHUB_PAGES_DOMAIN_SETUP.md`, `CUSTOMER_PORTAL_SETUP.md` and `ADMIN_BACKEND_SETUP.md`.
+The existing 3D opening animation, official SARKSH Foods logo, production backend contract, customer-account system, admin functions and SEO/indexing architecture are retained.
