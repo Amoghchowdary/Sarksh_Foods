@@ -1,19 +1,19 @@
-# SARKSH Foods V8.7 — Premium Red + White Production Theme
+# SARKSH Foods V8.8 — Cinematic Red Homepage
 
 # SARKSH Foods V8.5 — Indexing & Login Reliability Patch
 
 Primary production origin: **https://www.sarkshfoods.in**
 
-V8.7 keeps the V8.5 production SEO/indexing/login hardening and the V8.6 premium hero composition, while moving the customer-facing visual system to the approved **red + white** palette. The supplied official SARKSH Foods logo remains unchanged. The public site now uses a deep maroon/red gradient with white typography and white interactive accents instead of gold UI text.
+V8.8 keeps the V8.5 production SEO/indexing/login hardening and the V8.7 red/white public-site system, while restoring the cinematic landing-page composition requested from the approved visual reference. The supplied official SARKSH Foods logo remains unchanged. The homepage uses layered oxblood, burgundy, maroon and chilli-red gradients with white typography and white interactive accents.
 
-### V8.7 visual changes
+### V8.8 visual changes
 
-- red gradient derived from the supplied maroon palette (`#390908` → `#4B100D` → `#5A1713`);
+- layered red palette derived from the supplied maroon reference, moving through deep oxblood, burgundy, maroon and chilli-red tones;
 - white typography and dividers throughout the customer-facing website;
 - exactly two primary hero routes: **Shop Products** and **Business Orders**;
 - official logo remains in the production header;
-- premium hero image retained with red-toned framing;
-- new homepage quotation: **“A richer red. A bolder presence. Made to be remembered.”**;
+- premium hero image retained as a full-bleed right-side cinematic scene;
+- reference-style **TRADITION · IN EVERY · PINCH** image-side message;
 - public product, enterprise, about, contact and footer surfaces aligned to the same red/white design system;
 - customer portal visually aligned to the red/white brand while preserving the V8.4 authentication/backend contract;
 - 3D intro mechanism is unchanged, with only customer-facing text/background colours aligned to the new palette.
@@ -100,7 +100,7 @@ No Apps Script redeployment is required for the V8.5 frontend/indexing/login-ori
 PowerShell:
 
 ```powershell
-cd "C:\Users\SarkshGroups\OneDrive\Desktop\SARKSH_FOODS\sarksh_foods_brand_v8_7"
+cd "C:\Users\SarkshGroups\OneDrive\Desktop\SARKSH_FOODS\sarksh_foods_brand_v8_8"
 
 $env:SITE_URL="https://www.sarkshfoods.in"
 $env:VITE_API_BASE_URL="https://script.google.com/macros/s/AKfycbw_nR3t5gJfE5BOB4F1NduKDL1Mm10ad73BbnXRygL9pWDm-EwqmcegcVyswZimIYTtgA/exec"

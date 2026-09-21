@@ -13,11 +13,10 @@ function Home() {
         <div className="v86-hero-ambient" aria-hidden="true" />
         <div className="site-frame v86-hero-grid">
           <div className="v86-hero-copy">
-            <div className="v86-hero-kicker"><span>PURE SPICE · DISTINCTIVE CHARACTER</span><i /></div>
+            <div className="v86-hero-kicker"><span>PURE SPICES · RICHER LIVES</span><i /></div>
             <h1><span>SARKSH Foods</span><em>Premium Red Chilli<br />Powder in India</em></h1>
-            <p className="v86-hero-lead">A premium 1 kg red chilli powder carton made for homes and professional kitchens across India—distinctive on the shelf, confident in the kitchen and unmistakably SARKSH Foods.</p>
+            <p className="v86-hero-lead">SARKSH Foods is an Indian packaged-food brand. Our 1 kg red chilli powder carton brings authentic flavour, rich colour and uncompromising quality to kitchens and businesses across India.</p>
 
-            <blockquote className="v87-hero-quote">“A richer red. A bolder presence. Made to be remembered.”</blockquote>
 
             <div className="v86-hero-actions">
               <Link to="/products" className="v86-button v86-button--gold"><ShoppingBag size={18} /> Shop Products <ArrowRight size={17} /></Link>
@@ -25,9 +24,10 @@ function Home() {
             </div>
 
             <div className="v86-hero-trust" aria-label="SARKSH Foods product and service highlights">
-              <span><Leaf size={17} /><strong>100% Pure &amp; Natural</strong></span>
-              <span><ShieldCheck size={17} /><strong>FSSAI Registered</strong></span>
-              <span><Truck size={17} /><strong>Pan-India Enquiries</strong></span>
+              <span><Leaf size={18} /><strong>100% Pure &amp; Natural</strong></span>
+              <span><ShieldCheck size={18} /><strong>Trusted Indian Brand</strong></span>
+              <span><Truck size={18} /><strong>Pan India Delivery</strong></span>
+              <span><Store size={18} /><strong>For Homes &amp; Businesses</strong></span>
             </div>
           </div>
 
@@ -40,8 +40,8 @@ function Home() {
                 decoding="async"
               />
               <div className="v86-photo-shade" aria-hidden="true" />
-              <div className="v86-photo-note"><span>1 KG</span><strong>RED CHILLI POWDER</strong></div>
             </div>
+            <div className="v88-image-mantra" aria-label="Tradition in every pinch"><span>TRADITION</span><span>IN EVERY</span><span>PINCH</span><i /></div>
           </div>
         </div>
 
