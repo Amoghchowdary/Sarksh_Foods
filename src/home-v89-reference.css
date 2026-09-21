@@ -1,0 +1,222 @@
+/* SARKSH Foods V8.9 — approved reference landing page */
+
+.home-reference-hero {
+  position: relative;
+  padding-top: var(--header-h);
+  overflow: hidden;
+  background: #0b0806;
+  color: #fff;
+}
+
+.home-reference-seo {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.home-reference-canvas {
+  position: relative;
+  width: min(100%, calc((100svh - var(--header-h)) * 1.679697));
+  aspect-ratio: 1332 / 793;
+  margin: 0 auto;
+  background: #0b0806;
+  isolation: isolate;
+}
+
+.home-reference-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.home-reference-hotspot {
+  position: absolute;
+  z-index: 3;
+  display: block;
+  border-radius: 14px;
+  color: transparent;
+  background: transparent;
+  transition: box-shadow .18s ease, transform .18s ease, background .18s ease;
+}
+
+.home-reference-hotspot span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+
+.home-reference-hotspot:hover {
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.025);
+  box-shadow: 0 0 0 2px rgba(238,185,74,.18), 0 12px 34px rgba(0,0,0,.24);
+}
+
+.home-reference-hotspot:focus-visible {
+  outline: 3px solid #f0bd55;
+  outline-offset: 4px;
+  box-shadow: 0 0 0 7px rgba(240,189,85,.17);
+}
+
+/* Coordinates are based on the approved 1332 × 793 reference artwork. */
+.home-reference-hotspot--shop {
+  left: 2.55%;
+  top: 60.88%;
+  width: 15.98%;
+  height: 6.68%;
+}
+.home-reference-hotspot--business {
+  left: 20.20%;
+  top: 60.88%;
+  width: 17.72%;
+  height: 6.68%;
+}
+
+.home-reference-mobile { display: none; }
+
+/* Homepage-only header: preserve the approved dark/gold character while keeping
+   the actual official logo and all real navigation functional. */
+.site-header.site-header--home-reference {
+  background: rgba(14,10,7,.97) !important;
+  border-bottom-color: rgba(221,170,67,.18) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(14px);
+}
+.site-header.site-header--home-reference.site-header--scrolled {
+  background: rgba(12,8,6,.985) !important;
+  box-shadow: 0 12px 32px rgba(0,0,0,.28) !important;
+}
+.site-header--home-reference .header-brand-copy strong,
+.site-header--home-reference .nav-link--active,
+.site-header--home-reference .nav-link:hover {
+  color: #e2b653 !important;
+}
+.site-header--home-reference .header-brand-copy small,
+.site-header--home-reference .nav-link {
+  color: rgba(255,255,255,.82) !important;
+}
+.site-header--home-reference .nav-link::after { background: #dfb24f !important; }
+.site-header--home-reference .header-account-link {
+  color: #fff !important;
+  border-color: rgba(255,255,255,.28) !important;
+  background: rgba(255,255,255,.02) !important;
+}
+.site-header--home-reference .header-account-link:hover { border-color: rgba(226,182,83,.65) !important; }
+.site-header--home-reference .header-book-button {
+  color: #140d07 !important;
+  background: linear-gradient(135deg, #f0c86a 0%, #dca13d 100%) !important;
+  box-shadow: 0 10px 28px rgba(202,146,48,.19) !important;
+}
+.site-header--home-reference .mobile-menu-button {
+  color: #fff !important;
+  border-color: rgba(255,255,255,.28) !important;
+}
+.site-header--home-reference .mobile-menu {
+  background: #100b08 !important;
+  border-bottom-color: rgba(226,182,83,.18) !important;
+}
+.site-header--home-reference .mobile-nav-link { color: rgba(255,255,255,.88) !important; border-bottom-color: rgba(255,255,255,.1) !important; }
+.site-header--home-reference .mobile-nav-link--active { color: #e2b653 !important; }
+
+@media (max-width: 820px) {
+  .home-reference-canvas { display: none; }
+  .home-reference-mobile {
+    display: grid;
+    background:
+      radial-gradient(circle at 85% 18%, rgba(112,54,18,.24), transparent 27%),
+      linear-gradient(145deg, #0c0906 0%, #17100b 52%, #0a0806 100%);
+  }
+  .home-reference-mobile-copy { padding: 42px 24px 30px; }
+  .home-reference-mobile-kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+    color: #e2b653;
+    font-size: .62rem;
+    font-weight: 800;
+    letter-spacing: .24em;
+  }
+  .home-reference-mobile-copy h2 {
+    display: grid;
+    gap: 4px;
+    max-width: 620px;
+    color: #fff;
+    font-size: clamp(2.65rem, 11vw, 4.9rem);
+    line-height: .98;
+    letter-spacing: -.045em;
+  }
+  .home-reference-mobile-copy h2 span { color: #e2b653; }
+  .home-reference-mobile-copy p {
+    max-width: 620px;
+    margin-top: 22px;
+    color: rgba(255,255,255,.74);
+    font-size: .96rem;
+    line-height: 1.75;
+  }
+  .home-reference-mobile-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 26px;
+  }
+  .home-reference-mobile-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 50px;
+    padding: 0 18px;
+    border-radius: 14px;
+    font-size: .78rem;
+    font-weight: 800;
+  }
+  .home-reference-mobile-actions a:first-child { background: #e4b54f; color: #120c07; }
+  .home-reference-mobile-actions a:last-child { border: 1px solid rgba(255,255,255,.76); color: #fff; }
+  .home-reference-mobile-media { position: relative; min-height: 460px; overflow: hidden; }
+  .home-reference-mobile-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(10,7,5,.08), rgba(10,7,5,.16));
+  }
+  .home-reference-mobile-media img { width: 100%; height: 100%; object-fit: cover; object-position: 58% 50%; }
+  .home-reference-mobile-trust {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 1px;
+    background: rgba(226,182,83,.18);
+    border-top: 1px solid rgba(226,182,83,.34);
+  }
+  .home-reference-mobile-trust span {
+    min-height: 74px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 18px;
+    background: #100b08;
+    color: #fff;
+  }
+  .home-reference-mobile-trust svg { color: #e2b653; flex: 0 0 auto; }
+  .home-reference-mobile-trust b { font-size: .68rem; line-height: 1.35; }
+}
+
+@media (max-width: 520px) {
+  .home-reference-mobile-copy { padding-inline: 20px; }
+  .home-reference-mobile-actions { display: grid; }
+  .home-reference-mobile-actions a { width: 100%; }
+  .home-reference-mobile-media { min-height: 390px; }
+  .home-reference-mobile-trust { grid-template-columns: 1fr; }
+}

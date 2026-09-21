@@ -1,4 +1,8 @@
-# SARKSH Foods V8.8 — Cinematic Red Homepage
+# SARKSH Foods V8.9 — Approved Reference Landing Page
+
+V8.9 replaces the previous reconstructed hero with the **approved generated landing-page reference itself** on desktop, so the composition, typography, product framing, button placement, trust row and lower premium rail match the supplied reference exactly. The two visible hero CTAs remain real interactive links through transparent hit areas, while semantic H1/body content remains available to search engines and assistive technology. Mobile uses a responsive semantic version of the same hierarchy.
+
+The rest of the production system remains unchanged: V8.5 SEO/indexing and canonical host, V8.4 Apps Script/Sheets/Drive/customer/admin backend, account portal, order history, saved addresses, admin authentication and the existing 3D intro.
 
 # SARKSH Foods V8.5 — Indexing & Login Reliability Patch
 
@@ -100,7 +104,7 @@ No Apps Script redeployment is required for the V8.5 frontend/indexing/login-ori
 PowerShell:
 
 ```powershell
-cd "C:\Users\SarkshGroups\OneDrive\Desktop\SARKSH_FOODS\sarksh_foods_brand_v8_8"
+cd "C:\Users\SarkshGroups\OneDrive\Desktop\SARKSH_FOODS\sarksh_foods_brand_v8_9"
 
 $env:SITE_URL="https://www.sarkshfoods.in"
 $env:VITE_API_BASE_URL="https://script.google.com/macros/s/AKfycbw_nR3t5gJfE5BOB4F1NduKDL1Mm10ad73BbnXRygL9pWDm-EwqmcegcVyswZimIYTtgA/exec"

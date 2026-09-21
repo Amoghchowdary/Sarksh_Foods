@@ -9,51 +9,43 @@ const product = PRODUCTS[0];
 function Home() {
   return (
     <>
-      <section className="home-hero home-hero--v86">
-        <div className="v86-hero-ambient" aria-hidden="true" />
-        <div className="site-frame v86-hero-grid">
-          <div className="v86-hero-copy">
-            <div className="v86-hero-kicker"><span>PURE SPICES · RICHER LIVES</span><i /></div>
-            <h1><span>SARKSH Foods</span><em>Premium Red Chilli<br />Powder in India</em></h1>
-            <p className="v86-hero-lead">SARKSH Foods is an Indian packaged-food brand. Our 1 kg red chilli powder carton brings authentic flavour, rich colour and uncompromising quality to kitchens and businesses across India.</p>
-
-
-            <div className="v86-hero-actions">
-              <Link to="/products" className="v86-button v86-button--gold"><ShoppingBag size={18} /> Shop Products <ArrowRight size={17} /></Link>
-              <Link to="/enterprise" className="v86-button v86-button--outline"><Building2 size={18} /> Business Orders <ArrowUpRight size={17} /></Link>
-            </div>
-
-            <div className="v86-hero-trust" aria-label="SARKSH Foods product and service highlights">
-              <span><Leaf size={18} /><strong>100% Pure &amp; Natural</strong></span>
-              <span><ShieldCheck size={18} /><strong>Trusted Indian Brand</strong></span>
-              <span><Truck size={18} /><strong>Pan India Delivery</strong></span>
-              <span><Store size={18} /><strong>For Homes &amp; Businesses</strong></span>
-            </div>
-          </div>
-
-          <div className="v86-hero-visual">
-            <div className="v86-photo-frame">
-              <img
-                src="/assets/sarksh-foods-chilli-powder-og.jpg"
-                alt="SARKSH Foods premium red chilli powder 1 kg carton with dried red chillies and ground chilli powder"
-                fetchPriority="high"
-                decoding="async"
-              />
-              <div className="v86-photo-shade" aria-hidden="true" />
-            </div>
-            <div className="v88-image-mantra" aria-label="Tradition in every pinch"><span>TRADITION</span><span>IN EVERY</span><span>PINCH</span><i /></div>
-          </div>
+      <section className="home-reference-hero" aria-labelledby="home-reference-title">
+        <div className="home-reference-seo">
+          <span>PURE SPICES · RICHER LIVES</span>
+          <h1 id="home-reference-title">SARKSH Foods Premium Red Chilli Powder in India</h1>
+          <p>SARKSH Foods is an Indian packaged-food brand. Our 1 kg red chilli powder carton brings authentic flavour, rich colour and uncompromising quality to kitchens and businesses across India.</p>
         </div>
 
-        <div className="v86-hero-rail">
-          <div className="site-frame v86-hero-rail-inner">
-            <span><Leaf size={21} /><b>AUTHENTIC</b><small>Indian flavours</small></span>
-            <i />
-            <span><ShieldCheck size={21} /><b>PREMIUM</b><small>Product identity</small></span>
-            <i />
-            <span><UtensilsCrossed size={21} /><b>BUILT FOR</b><small>Homes &amp; businesses</small></span>
-            <i />
-            <span><Truck size={21} /><b>DELIVERING</b><small>Across India</small></span>
+        <div className="home-reference-canvas" aria-label="SARKSH Foods premium chilli powder showcase">
+          <img
+            className="home-reference-art"
+            src="/assets/home-reference-v89.png"
+            alt="SARKSH Foods Premium Red Chilli Powder in India with a 1 kg chilli powder carton, dried red chillies and ground chilli powder"
+            fetchPriority="high"
+            decoding="async"
+          />
+          <Link to="/products" className="home-reference-hotspot home-reference-hotspot--shop" aria-label="Shop Products"><span>Shop Products</span></Link>
+          <Link to="/enterprise" className="home-reference-hotspot home-reference-hotspot--business" aria-label="Business Orders"><span>Business Orders</span></Link>
+        </div>
+
+        <div className="home-reference-mobile">
+          <div className="home-reference-mobile-copy">
+            <div className="home-reference-mobile-kicker">PURE SPICES · RICHER LIVES</div>
+            <h2><span>SARKSH Foods</span>Premium Red Chilli Powder in India</h2>
+            <p>SARKSH Foods is an Indian packaged-food brand. Our 1 kg red chilli powder carton brings authentic flavour, rich colour and uncompromising quality to kitchens and businesses across India.</p>
+            <div className="home-reference-mobile-actions">
+              <Link to="/products"><ShoppingBag size={17} /> Shop Products <ArrowRight size={16} /></Link>
+              <Link to="/enterprise"><Building2 size={17} /> Business Orders <ArrowUpRight size={16} /></Link>
+            </div>
+          </div>
+          <div className="home-reference-mobile-media">
+            <img src="/assets/sarksh-foods-chilli-powder-og.jpg" alt="SARKSH Foods Premium Red Chilli Powder 1 kg carton" />
+          </div>
+          <div className="home-reference-mobile-trust">
+            <span><Leaf size={18} /><b>100% Pure &amp; Natural</b></span>
+            <span><ShieldCheck size={18} /><b>Trusted Indian Brand</b></span>
+            <span><Truck size={18} /><b>Pan India Delivery</b></span>
+            <span><Store size={18} /><b>For Homes &amp; Businesses</b></span>
           </div>
         </div>
       </section>

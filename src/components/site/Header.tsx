@@ -14,6 +14,7 @@ const NAV = [
 
 export function Header() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const homeReference = pathname === "/";
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -27,7 +28,7 @@ export function Header() {
   useEffect(() => setOpen(false), [pathname]);
 
   return (
-    <header className={`site-header${scrolled ? " site-header--scrolled" : ""}${open ? " site-header--open" : ""}`}>
+    <header className={`site-header${homeReference ? " site-header--home-reference" : ""}${scrolled ? " site-header--scrolled" : ""}${open ? " site-header--open" : ""}`}>
       <div className="site-frame header-inner">
         <Link to="/" aria-label="SARKSH Foods home" className="header-brand">
           <img src="/assets/logos/sarksh-foods-logo.svg" alt="" />
