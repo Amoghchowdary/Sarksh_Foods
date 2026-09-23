@@ -33,8 +33,8 @@ function PanIndiaPage() {
       <section className="enterprise-buyers section-pad">
         <div className="site-frame">
           <div className="section-heading-row">
-            <div><span className="eyebrow">INDIA COVERAGE</span><h2>Orders and enquiries from across India.</h2></div>
-            <p>SARKSH Foods accepts household and business enquiries from customers across Indian regions, subject to final serviceability and delivery confirmation.</p>
+            <div><span className="eyebrow">INDIA COVERAGE</span><h2>One national enquiry route.</h2></div>
+            <p>We do not create duplicate city pages. Instead, this page provides a single, useful view of the regions SARKSH Foods serves.</p>
           </div>
           <div className="enterprise-buyer-grid">
             {regions.map(([title, states]) => (

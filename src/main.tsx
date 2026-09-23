@@ -11,10 +11,14 @@ import "./commercial-v74-spice-marquee.css";
 import "./commercial-v75-contact-trust.css";
 import "./commercial-v76-form-clarity.css";
 import "./commercial-v77-clean-contact.css";
+import "./commercial-v10-product-hero.css";
+import "./commercial-v10-responsive.css";
+import "./commercial-v10-5-polish.css";
+import "./commercial-v11-quality.css";
+import "./commercial-v11-1-scene.css";
+import "./commercial-v11-2-reference.css";
 import "./admin-v82.css";
 import "./customer-v84.css";
-import "./theme-v90-public.css";
-import "./home-v90-fmcg.css";
 
 const rootElement = document.getElementById("app");
 
@@ -22,13 +26,9 @@ if (!rootElement) {
   throw new Error("Application root element was not found");
 }
 
-// Production SEO pages contain a crawl-first HTML shell inside #app. Search engines
-// can parse that static content immediately, while real browsers replace it with
-// the interactive React application as soon as JavaScript starts.
-if (rootElement.querySelector("[data-seo-prerender='true']")) {
-  rootElement.replaceChildren();
-}
-
+// Generated production HTML contains crawl-first semantic content.
+ // Clear it before hydration so the approved V11.2 interface renders unchanged.
+rootElement.replaceChildren();
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <RouterProvider router={router} />

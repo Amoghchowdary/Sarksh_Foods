@@ -1,0 +1,86 @@
+/* =========================================================
+   SARKSH FOODS V10 — PRODUCT-SIDE HERO ONLY
+   Base: founder-approved V8.4 website.
+   Scope: ONLY the Home hero visual column is changed.
+   Everything else stays on the V8.4 design/mechanism.
+   ========================================================= */
+
+.sarksh-site-shell .home-hero-product-visual {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 0 !important;
+  background: var(--v71-mid) !important;
+}
+
+.sarksh-site-shell .home-hero-product-visual .hero-product-scene {
+  position: absolute;
+  z-index: 0;
+  inset: -4%;
+  width: 108%;
+  height: 108%;
+  display: block;
+  object-fit: cover;
+  object-position: 50% 50%;
+  filter: none;
+}
+
+/* Blend the cinematic product environment into the existing V8.4 maroon
+   hero so it reads as one continuous brand surface rather than a pasted image. */
+.sarksh-site-shell .home-hero-product-visual::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0 auto 0 0;
+  width: 28%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(104, 29, 23, .96) 0%,
+    rgba(104, 29, 23, .58) 34%,
+    rgba(104, 29, 23, 0) 100%
+  );
+}
+
+.sarksh-site-shell .home-hero-product-visual::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: auto 0 0;
+  height: 16%;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(59, 9, 8, 0), rgba(59, 9, 8, .22));
+}
+
+@media (max-width: 980px) {
+  .sarksh-site-shell .home-hero-product-visual {
+    min-height: min(54svh, 620px);
+  }
+  .sarksh-site-shell .home-hero-product-visual .hero-product-scene {
+    object-position: 50% 48%;
+    inset: -3%;
+    width: 106%;
+    height: 106%;
+  }
+  .sarksh-site-shell .home-hero-product-visual::before {
+    width: 18%;
+  }
+}
+
+@media (max-width: 640px) {
+  .sarksh-site-shell .home-hero-product-visual {
+    min-height: 440px;
+  }
+  .sarksh-site-shell .home-hero-product-visual .hero-product-scene {
+    object-position: 50% 50%;
+    inset: -2%;
+    width: 104%;
+    height: 104%;
+  }
+  .sarksh-site-shell .home-hero-product-visual::before {
+    width: 0;
+  }
+  .sarksh-site-shell .home-hero-product-visual::after {
+    height: 12%;
+  }
+}

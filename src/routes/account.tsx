@@ -22,7 +22,6 @@ import {
   UserRound,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { readLocal, removeLocal, writeLocal } from "@/lib/browserStorage";
 import {
   customerApi,
   type CustomerAddress,
@@ -39,7 +38,7 @@ type AuthMode = "login" | "register" | "forgot" | "reset";
 type Notice = { type: "success" | "error" | "info"; text: string } | null;
 
 function CustomerPortal() {
-  const [sessionToken, setSessionToken] = useState(() => readLocal(SESSION_KEY));
+  const [sessionToken, setSessionToken] = useState(() => localStorage.getItem(SESSION_KEY) || "");
   const [data, setData] = useState<CustomerBootstrap | null>(null);
   const [tab, setTab] = useState<PortalTab>("products");
   const [loading, setLoading] = useState(Boolean(sessionToken));
@@ -47,7 +46,7 @@ function CustomerPortal() {
 
   const signOut = useCallback(async () => {
     const token = sessionToken;
-    removeLocal(SESSION_KEY);
+    localStorage.removeItem(SESSION_KEY);
     setSessionToken("");
     setData(null);
     setNotice(null);
@@ -66,7 +65,7 @@ function CustomerPortal() {
     } catch (error) {
       const message = error instanceof Error ? error.message : "Your account could not be loaded.";
       if (/session|expired|invalid/i.test(message)) {
-        removeLocal(SESSION_KEY);
+        localStorage.removeItem(SESSION_KEY);
         setSessionToken("");
         setData(null);
         setNotice({ type: "error", text: "Your session expired. Sign in again." });
@@ -83,10 +82,7 @@ function CustomerPortal() {
   }, [sessionToken, refresh]);
 
   function acceptSession(token: string) {
-    if (!writeLocal(SESSION_KEY, token)) {
-      setNotice({ type: "error", text: "Your browser is blocking local storage, so a persistent customer login cannot be kept. Enable site storage and sign in again." });
-      return;
-    }
+    localStorage.setItem(SESSION_KEY, token);
     setSessionToken(token);
     setNotice(null);
   }

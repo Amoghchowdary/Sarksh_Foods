@@ -1,10 +1,16 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbw_nR3t5gJfE5BOB4F1NduKDL1Mm10ad73BbnXRygL9pWDm-EwqmcegcVyswZimIYTtgA/exec";
+const API_URL = (process.env.VITE_API_BASE_URL || "").trim();
+const appsScriptPattern = /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]{20,}\/exec$/;
+
+if (!appsScriptPattern.test(API_URL)) {
+  console.error("Backend health check failed: VITE_API_BASE_URL is not configured.");
+  process.exit(1);
+}
 
 try {
   const response = await fetch(API_URL, {
     method: "GET",
     redirect: "follow",
-    headers: { "user-agent": "SARKSH-Foods-Production-Preflight/9.0" },
+    headers: { "user-agent": "SARKSH-Foods-V13-Production-Preflight" },
   });
 
   const text = await response.text();
@@ -18,22 +24,11 @@ try {
   if (!response.ok || payload?.ok !== true) {
     throw new Error(payload?.message || `Backend health check failed with HTTP ${response.status}.`);
   }
-  if (!payload.databaseConfigured) {
-    throw new Error("Backend is reachable, but the Google Sheets database is not configured. Run setupProductionBackend() in Apps Script.");
-  }
-  if (!payload.driveConfigured) {
-    throw new Error("Backend is reachable, but Google Drive storage is not configured. Run setupProductionBackend() in Apps Script.");
-  }
-
-  if (String(payload.version || "") !== "8.4") {
-    throw new Error(`Backend version ${payload.version || "unknown"} is active. Deploy the V8.4 Apps Script code before publishing the customer portal.`);
-  }
-  if (!payload.customerAccountsConfigured) {
-    throw new Error("Customer account database is not configured. Run setupProductionBackend() after updating Apps Script.");
-  }
-  if (!payload.adminPasswordConfigured) {
-    throw new Error("Admin password is not initialized. Run initializeAdminAccess() once in Apps Script.");
-  }
+  if (!payload.databaseConfigured) throw new Error("Google Sheets database is not configured.");
+  if (!payload.driveConfigured) throw new Error("Google Drive storage is not configured.");
+  if (String(payload.version || "") !== "8.4") throw new Error(`Unexpected backend version ${payload.version || "unknown"}.`);
+  if (!payload.customerAccountsConfigured) throw new Error("Customer account database is not configured.");
+  if (!payload.adminPasswordConfigured) throw new Error("Admin password is not initialized.");
 
   console.log(`Backend healthy: ${payload.service || "SARKSH Foods API"}`);
   console.log(`Version: ${payload.version || "unknown"}`);

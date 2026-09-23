@@ -1,6 +1,6 @@
 {
-  "name": "sarksh-foods-brand-commerce-v9-production-fmcg",
-  "version": "0.9.0",
+  "name": "sarksh-foods-v13-production-search-secure",
+  "version": "13.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,8 +12,11 @@
     "seo:generate": "node scripts/generate-seo.mjs",
     "verify:prod": "node scripts/verify-production.mjs",
     "backend:health": "node scripts/check-backend.mjs",
-    "validate": "npm run typecheck && npm run build",
-    "validate:prod": "npm run typecheck && npm run backend:health && npm run build:prod && npm run verify:prod"
+    "security:audit": "node scripts/audit-public-repo.mjs",
+    "search:verify": "node scripts/verify-search.mjs",
+    "search:live": "node scripts/check-live-search.mjs",
+    "search:indexnow": "node scripts/submit-indexnow.mjs",
+    "validate:prod": "npm run security:audit && npm run typecheck && npm run backend:health && npm run build:prod && npm run verify:prod && npm run search:verify"
   },
   "dependencies": {
     "@tanstack/react-router": "^1.170.16",

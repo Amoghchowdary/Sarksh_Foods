@@ -1,0 +1,224 @@
+/* =========================================================
+   SARKSH FOODS V10.4 — FULL-SCREEN RESPONSIVE HOME HERO
+   Scope: presentation/responsiveness of the existing Home hero only.
+   No copy, routes, buttons, ordering logic, account/admin or backend
+   functionality is changed.
+   ========================================================= */
+
+.sarksh-site-shell .home-hero {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+  padding-top: var(--header-h);
+  background: #160a07 !important;
+}
+
+/* The supplied product scene is the full hero background. */
+.sarksh-site-shell .home-hero::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: var(--header-h) 0 0;
+  background-image: url("/assets/home-hero-background-v10-4.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  pointer-events: none;
+}
+
+/* Contrast protection only. Existing words/buttons stay untouched. */
+.sarksh-site-shell .home-hero::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: var(--header-h) 0 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg,
+      rgba(18, 7, 5, .90) 0%,
+      rgba(26, 8, 6, .78) 25%,
+      rgba(33, 9, 7, .54) 42%,
+      rgba(22, 7, 5, .16) 61%,
+      rgba(9, 4, 3, .03) 100%),
+    linear-gradient(180deg,
+      rgba(8, 3, 2, .08) 0%,
+      rgba(8, 3, 2, 0) 58%,
+      rgba(8, 3, 2, .18) 100%);
+}
+
+/* Existing hero content becomes an overlay over one continuous image canvas. */
+.sarksh-site-shell .home-hero > .home-hero-grid {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: none;
+  min-height: calc(100svh - var(--header-h));
+  margin: 0;
+  padding:
+    clamp(34px, 6vh, 72px)
+    clamp(24px, 4.4vw, 76px)
+    clamp(34px, 6vh, 72px)
+    max(clamp(24px, 4.4vw, 76px), calc((100vw - 1500px) / 2 + 42px));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+}
+
+.sarksh-site-shell .home-hero-copy {
+  position: relative;
+  z-index: 3;
+  width: min(100%, 690px);
+  max-width: 690px;
+  align-self: center;
+  padding: 0;
+  background: transparent !important;
+}
+
+/* The same product image is already inside the full background. Hide only the
+   duplicated visual layer; the element/content remains in source unchanged. */
+.sarksh-site-shell .home-hero-product-visual {
+  display: none !important;
+}
+
+/* ========================= DESKTOP ========================= */
+@media (min-width: 1100px) {
+  .sarksh-site-shell .home-hero::before {
+    background-image: url("/assets/home-hero-background-v10-4.webp");
+    background-position: center center;
+  }
+
+  .sarksh-site-shell .home-hero-copy {
+    width: min(46vw, 690px);
+  }
+}
+
+/* ========================= TABLET ========================== */
+@media (min-width: 700px) and (max-width: 1099px) {
+  .sarksh-site-shell .home-hero {
+    min-height: max(760px, 100svh);
+  }
+
+  .sarksh-site-shell .home-hero::before,
+  .sarksh-site-shell .home-hero::after {
+    inset: var(--header-h) 0 0;
+  }
+
+  .sarksh-site-shell .home-hero::before {
+    background-image: url("/assets/home-hero-background-v10-4-tablet.webp");
+    background-position: 58% center;
+  }
+
+  .sarksh-site-shell .home-hero::after {
+    background:
+      linear-gradient(90deg,
+        rgba(18,7,5,.92) 0%,
+        rgba(26,8,6,.82) 31%,
+        rgba(33,9,7,.56) 52%,
+        rgba(15,5,4,.14) 76%,
+        rgba(8,3,2,.03) 100%),
+      linear-gradient(180deg, rgba(8,3,2,.08), rgba(8,3,2,0) 56%, rgba(8,3,2,.24));
+  }
+
+  .sarksh-site-shell .home-hero > .home-hero-grid {
+    min-height: calc(max(760px, 100svh) - var(--header-h));
+    padding: clamp(32px, 5vh, 52px) clamp(26px, 5vw, 54px);
+  }
+
+  .sarksh-site-shell .home-hero-copy {
+    width: min(58vw, 570px);
+    max-width: 570px;
+  }
+
+  .sarksh-site-shell .home-hero-copy h1 {
+    font-size: clamp(3.2rem, 7vw, 5rem);
+  }
+}
+
+/* ========================== MOBILE ========================= */
+@media (max-width: 699px) {
+  .sarksh-site-shell .home-hero {
+    min-height: max(760px, 100svh);
+  }
+
+  .sarksh-site-shell .home-hero::before,
+  .sarksh-site-shell .home-hero::after {
+    inset: var(--header-h) 0 0;
+  }
+
+  .sarksh-site-shell .home-hero::before {
+    background-image: url("/assets/home-hero-background-v10-4-mobile.webp");
+    background-size: cover;
+    background-position: 57% center;
+  }
+
+  .sarksh-site-shell .home-hero::after {
+    background:
+      linear-gradient(180deg,
+        rgba(18,7,5,.24) 0%,
+        rgba(18,7,5,.34) 24%,
+        rgba(25,8,6,.62) 54%,
+        rgba(28,8,6,.90) 78%,
+        rgba(28,8,6,.98) 100%),
+      linear-gradient(90deg,
+        rgba(18,7,5,.62) 0%,
+        rgba(18,7,5,.40) 64%,
+        rgba(18,7,5,.18) 100%);
+  }
+
+  .sarksh-site-shell .home-hero > .home-hero-grid {
+    min-height: calc(max(760px, 100svh) - var(--header-h));
+    padding: clamp(24px, 5vh, 42px) 20px 28px;
+    align-items: end;
+  }
+
+  .sarksh-site-shell .home-hero-copy {
+    width: 100%;
+    max-width: 620px;
+  }
+
+  .sarksh-site-shell .home-hero-copy h1 {
+    margin-top: 10px;
+    font-size: clamp(2.7rem, 12vw, 4rem);
+    line-height: .92;
+  }
+
+  .sarksh-site-shell .hero-lead {
+    font-size: clamp(.84rem, 3.5vw, 1rem);
+    line-height: 1.5;
+  }
+
+  .sarksh-site-shell .home-hero-copy .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .sarksh-site-shell .home-hero-copy .button-primary,
+  .sarksh-site-shell .home-hero-copy .button-secondary {
+    width: 100%;
+  }
+
+  .sarksh-site-shell .hero-facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 430px) {
+  .sarksh-site-shell .home-hero > .home-hero-grid {
+    padding-inline: 16px;
+  }
+
+  .sarksh-site-shell .home-hero-copy h1 {
+    font-size: clamp(2.35rem, 12vw, 3.2rem);
+  }
+
+  .sarksh-site-shell .hero-facts {
+    gap: 0;
+  }
+
+  .sarksh-site-shell .hero-facts div {
+    padding-inline: 8px;
+  }
+}

@@ -6,15 +6,14 @@ import { PRODUCTS } from "@/lib/products";
 
 const NAV = [
   { to: "/", label: "Home" },
-  { to: "/products", label: "Products" },
-  { to: "/enterprise", label: "Business Orders" },
-  { to: "/about", label: "About" },
+  { to: "/chilli-powder", label: "Chilli Powder" },
+  { to: "/enterprise", label: "Business" },
+  { to: "/about", label: "Our Story" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
 export function Header() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
-  const isHome = pathname === "/";
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -28,7 +27,7 @@ export function Header() {
   useEffect(() => setOpen(false), [pathname]);
 
   return (
-    <header className={`site-header${isHome ? " site-header--home-v9" : ""}${scrolled ? " site-header--scrolled" : ""}${open ? " site-header--open" : ""}`}>
+    <header className={`site-header${scrolled ? " site-header--scrolled" : ""}${open ? " site-header--open" : ""}`}>
       <div className="site-frame header-inner">
         <Link to="/" aria-label="SARKSH Foods home" className="header-brand">
           <img src="/assets/logos/sarksh-foods-logo.svg" alt="" />

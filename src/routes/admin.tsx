@@ -19,7 +19,6 @@ import {
   Users,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { readSession, removeSession, writeSession } from "@/lib/browserStorage";
 import {
   adminApi,
   type AdminBootstrap,
@@ -38,7 +37,7 @@ type Notice = { type: "success" | "error" | "info"; text: string } | null;
 const TOKEN_KEY = "sarksh-foods-admin-session";
 
 function AdminPage() {
-  const [token, setToken] = useState(() => readSession(TOKEN_KEY));
+  const [token, setToken] = useState(() => sessionStorage.getItem(TOKEN_KEY) || "");
   const [data, setData] = useState<AdminBootstrap | null>(null);
   const [tab, setTab] = useState<Tab>("overview");
   const [loading, setLoading] = useState(Boolean(token));
@@ -46,7 +45,7 @@ function AdminPage() {
 
   const signOut = useCallback(async () => {
     const active = token;
-    removeSession(TOKEN_KEY);
+    sessionStorage.removeItem(TOKEN_KEY);
     setToken("");
     setData(null);
     setNotice(null);
@@ -65,7 +64,7 @@ function AdminPage() {
     } catch (error) {
       const message = error instanceof Error ? error.message : "Admin data could not be loaded.";
       if (/session|invalid|expired|required/i.test(message)) {
-        removeSession(TOKEN_KEY);
+        sessionStorage.removeItem(TOKEN_KEY);
         setToken("");
         setData(null);
         setNotice({ type: "error", text: "Admin session expired. Sign in again." });
@@ -82,10 +81,7 @@ function AdminPage() {
   }, [token, refresh]);
 
   const acceptSession = useCallback((sessionToken: string) => {
-    if (!writeSession(TOKEN_KEY, sessionToken)) {
-      setNotice({ type: "error", text: "Your browser is blocking session storage. Enable site storage and sign in again." });
-      return;
-    }
+    sessionStorage.setItem(TOKEN_KEY, sessionToken);
     setToken(sessionToken);
     setNotice(null);
   }, []);
@@ -109,7 +105,7 @@ function AdminPage() {
         </nav>
         <div className="admin-sidebar-footer">
           <span>Authorized admin</span>
-          <strong>{data?.admin.email || "amoghchowdaryamaraneni@gmail.com"}</strong>
+          <strong>{data?.admin.email || "Authenticated session"}</strong>
           <button type="button" onClick={() => void signOut()}><LogOut size={16} /> Sign out</button>
         </div>
       </aside>
@@ -168,10 +164,10 @@ function AdminLogin({ onSession, notice, setNotice }: { onSession: (token: strin
         <span className="admin-kicker">Production control</span>
         <h1>SARKSH Foods Admin</h1>
         <p>Products, orders, enquiries, website health, Google Sheets and Drive—one controlled workspace.</p>
-        <div className="admin-login-trust"><ShieldCheck size={19} /><span>Access restricted to <strong>amoghchowdaryamaraneni@gmail.com</strong></span></div>
+        <div className="admin-login-trust"><ShieldCheck size={19} /><span>Restricted administrative access</span></div>
         {notice ? <div className={`admin-notice admin-notice--${notice.type}`}>{notice.text}</div> : null}
         <form className="admin-form" onSubmit={login}>
-          <label className="admin-field"><span>Admin email</span><input name="email" type="email" autoComplete="username" defaultValue="amoghchowdaryamaraneni@gmail.com" required /></label>
+          <label className="admin-field"><span>Admin email</span><input name="email" type="email" autoComplete="username" required /></label>
           <label className="admin-field"><span>Password</span><input name="password" type="password" autoComplete="current-password" required /></label>
           <button className="admin-primary" type="submit" disabled={busy}>{busy ? <LoaderCircle size={16} className="admin-spin" /> : <ShieldCheck size={16} />} {busy ? "Signing in…" : "Sign in"}</button>
         </form>

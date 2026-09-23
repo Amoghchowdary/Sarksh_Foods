@@ -1,0 +1,95 @@
+/* =========================================================
+   SARKSH FOODS V11.1 — HERO SCENE CORRECTION
+   Presentation only: existing wording, buttons, routes, forms,
+   customer account, admin and Apps Script behaviour are unchanged.
+   ========================================================= */
+
+.sarksh-site-shell .home-hero {
+  background: #3a0a08 !important;
+}
+
+.sarksh-site-shell .home-hero::before {
+  background-image: image-set(
+    url("/assets/home-hero-background-v11-1-4k.webp") 1x,
+    url("/assets/home-hero-background-v11-1-8k.webp") 2x
+  ) !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+/* Keep the left copy readable without blurring or washing out the product scene. */
+.sarksh-site-shell .home-hero::after {
+  background:
+    linear-gradient(90deg,
+      rgba(47, 7, 6, .88) 0%,
+      rgba(55, 9, 7, .72) 28%,
+      rgba(68, 12, 9, .35) 46%,
+      rgba(68, 12, 9, .05) 62%,
+      rgba(68, 12, 9, 0) 100%),
+    linear-gradient(180deg,
+      rgba(20, 3, 3, .03) 0%,
+      rgba(20, 3, 3, 0) 68%,
+      rgba(20, 3, 3, .12) 100%) !important;
+}
+
+/* The new scene already contains the approved product presentation.
+   Hide only the duplicate visual layer; no interaction or content is removed. */
+.sarksh-site-shell .home-hero-product-visual {
+  display: none !important;
+}
+
+.sarksh-site-shell .home-hero-copy {
+  width: min(43vw, 670px) !important;
+  max-width: 670px !important;
+}
+
+/* Preserve crisp live HTML typography above the photographic background. */
+.sarksh-site-shell .home-hero-copy,
+.sarksh-site-shell .home-hero-copy * {
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 700px) and (max-width: 1099px) {
+  .sarksh-site-shell .home-hero::before {
+    background-image: url("/assets/home-hero-background-v11-1-tablet.webp") !important;
+    background-position: center center !important;
+  }
+
+  .sarksh-site-shell .home-hero::after {
+    background: linear-gradient(90deg,
+      rgba(47,7,6,.91) 0%,
+      rgba(58,10,8,.75) 34%,
+      rgba(70,13,10,.40) 56%,
+      rgba(70,13,10,.07) 78%,
+      rgba(70,13,10,0) 100%) !important;
+  }
+
+  .sarksh-site-shell .home-hero-copy {
+    width: min(56vw, 560px) !important;
+    max-width: 560px !important;
+  }
+}
+
+@media (max-width: 699px) {
+  .sarksh-site-shell .home-hero::before {
+    background-image: url("/assets/home-hero-background-v11-1-mobile.webp") !important;
+    background-position: center top !important;
+  }
+
+  .sarksh-site-shell .home-hero::after {
+    background: linear-gradient(180deg,
+      rgba(40,6,5,.04) 0%,
+      rgba(40,6,5,.10) 35%,
+      rgba(52,8,7,.55) 58%,
+      rgba(58,10,8,.93) 78%,
+      rgba(58,10,8,1) 100%) !important;
+  }
+
+  .sarksh-site-shell .home-hero-copy {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}

@@ -74,7 +74,7 @@ function ContactPage() {
             <span className="eyebrow eyebrow--gold">CONTACT &amp; ORDERS</span>
             <h1>Let&apos;s get your requirement moving.</h1>
             <p>
-              Home order, retail, wholesale, distribution, hotel, restaurant, catering or institutional requirement—share the details and we will take it from there.
+              Home order, retail, wholesale, distribution, HoReCa or institutional requirement—share the details once and use one clear route for follow-up.
             </p>
           </div>
 

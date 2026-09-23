@@ -1,0 +1,119 @@
+/* =========================================================
+   SARKSH FOODS V11.2 — APPROVED HOMEPAGE REFERENCE
+   Desktop presentation follows the user-approved hero exactly.
+   Existing application functionality and responsive fallback remain intact.
+   ========================================================= */
+
+.home-approved-reference-stage {
+  display: none;
+}
+
+@media (min-width: 1100px) {
+  .sarksh-site-shell .home-hero {
+    min-height: auto !important;
+    padding-top: var(--header-h) !important;
+    background: #1c0b07 !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  .sarksh-site-shell .home-hero::before,
+  .sarksh-site-shell .home-hero::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  .sarksh-site-shell .home-approved-reference-stage {
+    display: block;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    background: #1c0b07;
+    line-height: 0;
+  }
+
+  .sarksh-site-shell .home-approved-reference-stage picture,
+  .sarksh-site-shell .home-approved-reference-stage img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .sarksh-site-shell .home-approved-reference-stage img {
+    image-rendering: auto;
+  }
+
+  /* Preserve the semantic homepage content in source while the approved
+     desktop artwork is the visual presentation. */
+  .sarksh-site-shell .home-hero-grid {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    min-height: 1px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+  }
+
+  .sarksh-site-shell .home-reference-hotspots {
+    position: absolute;
+    inset: 0;
+    line-height: normal;
+    pointer-events: none;
+  }
+
+  .sarksh-site-shell .home-reference-hotspot {
+    position: absolute !important;
+    z-index: 5;
+    display: block !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: transparent !important;
+    font-size: 0 !important;
+    opacity: .001 !important;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  .sarksh-site-shell .home-reference-hotspot svg {
+    display: none !important;
+  }
+
+  .sarksh-site-shell .home-reference-hotspot:focus-visible {
+    opacity: 1 !important;
+    outline: 3px solid rgba(255, 255, 255, .96) !important;
+    outline-offset: 3px !important;
+  }
+
+  /* Positions mapped directly from the approved desktop reference artwork. */
+  .sarksh-site-shell .home-reference-hotspot--order {
+    left: 9.25% !important;
+    top: 68.65% !important;
+    width: 13.35% !important;
+    height: 6.55% !important;
+  }
+
+  .sarksh-site-shell .home-reference-hotspot--business {
+    left: 23.15% !important;
+    top: 68.65% !important;
+    width: 12.85% !important;
+    height: 6.55% !important;
+  }
+}
+
+/* Tablet/mobile continue to use the live responsive layout and exact same
+   wording/actions, avoiding unreadably tiny text from scaling a desktop image. */
+@media (max-width: 1099px) {
+  .sarksh-site-shell .home-approved-reference-stage {
+    display: none !important;
+  }
+}

@@ -1,0 +1,97 @@
+/* =========================================================
+   SARKSH FOODS V11 — HIGH-DPI HERO CORRECTION
+   Presentation only: no copy, routes, forms, account, admin or backend logic changed.
+   ========================================================= */
+
+.sarksh-site-shell .home-hero::before {
+  background-image: image-set(
+    url("/assets/home-hero-background-v11-4k.webp") 1x,
+    url("/assets/home-hero-background-v11-8k.webp") 2x
+  ) !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  filter: none !important;
+}
+
+/* The requested red frame is removed completely. */
+.sarksh-site-shell .home-hero-copy {
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.sarksh-site-shell .home-hero-copy,
+.sarksh-site-shell .home-hero-copy * {
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Exact carton is now an independent sharp layer, so the old carton can never overlap it. */
+.sarksh-site-shell .home-hero > .home-hero-grid { position: relative; }
+
+.sarksh-site-shell .home-hero-product-visual {
+  display: block !important;
+  position: absolute !important;
+  z-index: 2 !important;
+  top: clamp(14px, 2vh, 26px) !important;
+  right: clamp(18px, 3.8vw, 76px) !important;
+  bottom: clamp(14px, 2vh, 26px) !important;
+  width: min(45vw, 780px) !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  background: transparent !important;
+  pointer-events: none;
+  isolation: isolate;
+}
+
+.sarksh-site-shell .home-hero-product-visual::before,
+.sarksh-site-shell .home-hero-product-visual::after { display: none !important; }
+
+.sarksh-site-shell .home-hero-product-visual .hero-product-scene {
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  filter: drop-shadow(0 28px 30px rgba(0,0,0,.32)) !important;
+  image-rendering: auto;
+}
+
+@media (min-width: 1100px) {
+  .sarksh-site-shell .home-hero-copy { width: min(43vw, 670px) !important; max-width: 670px !important; }
+}
+
+@media (min-width: 700px) and (max-width: 1099px) {
+  .sarksh-site-shell .home-hero::before {
+    background-image: url("/assets/home-hero-background-v11-4k.webp") !important;
+    background-position: 54% center !important;
+  }
+  .sarksh-site-shell .home-hero-product-visual {
+    width: min(48vw, 560px) !important;
+    right: clamp(8px, 2.4vw, 30px) !important;
+    top: 5% !important; bottom: 5% !important;
+  }
+  .sarksh-site-shell .home-hero-copy { width: min(51vw, 540px) !important; max-width: 540px !important; }
+}
+
+@media (max-width: 699px) {
+  .sarksh-site-shell .home-hero::before {
+    background-image: url("/assets/home-hero-background-v11-mobile-4k.webp") !important;
+    background-position: center center !important;
+  }
+  .sarksh-site-shell .home-hero-product-visual {
+    top: 2.5% !important; right: -13vw !important; bottom: auto !important;
+    width: min(82vw, 520px) !important; height: 46% !important; opacity: .97;
+  }
+  .sarksh-site-shell .home-hero > .home-hero-grid { align-items: end !important; }
+  .sarksh-site-shell .home-hero-copy {
+    width: 100% !important; max-width: 100% !important; position: relative; z-index: 4 !important;
+  }
+}

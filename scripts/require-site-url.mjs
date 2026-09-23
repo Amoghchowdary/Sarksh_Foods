@@ -1,26 +1,24 @@
 const SITE_URL = "https://www.sarkshfoods.in";
-const PRODUCTION_API_URL = "https://script.google.com/macros/s/AKfycbw_nR3t5gJfE5BOB4F1NduKDL1Mm10ad73BbnXRygL9pWDm-EwqmcegcVyswZimIYTtgA/exec";
 const siteUrl = (process.env.SITE_URL || "").trim().replace(/\/$/, "");
 const apiUrl = (process.env.VITE_API_BASE_URL || "").trim();
 
-const placeholderPattern = /(YOUR[-_ ]|example\.com|localhost|127\.0\.0\.1)/i;
-const validHttps = (value) => /^https:\/\/[A-Za-z0-9.-]+(?::\d+)?(?:\/.*)?$/.test(value);
+const placeholderPattern = /(__SET_|YOUR[-_ ]|example\.com|localhost|127\.0\.0\.1|REPLACE)/i;
+const appsScriptPattern = /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]{20,}\/exec$/;
 const errors = [];
 
 if (siteUrl !== SITE_URL) {
-  errors.push(`SITE_URL must be exactly ${SITE_URL} for the production build.`);
+  errors.push(`SITE_URL must be exactly ${SITE_URL} for production.`);
 }
-
-if (!validHttps(apiUrl) || placeholderPattern.test(apiUrl) || apiUrl !== PRODUCTION_API_URL) {
-  errors.push(`VITE_API_BASE_URL must be exactly ${PRODUCTION_API_URL} for this production deployment.`);
+if (!appsScriptPattern.test(apiUrl) || placeholderPattern.test(apiUrl)) {
+  errors.push("VITE_API_BASE_URL must be supplied securely at build time as a valid Apps Script /exec URL.");
 }
-
 
 if (errors.length) {
   console.error("\nProduction environment is incomplete:\n");
-  for (const error of errors) console.error(`- ${error}`);
-  console.error("\nFor local UI/build verification without the live backend, run: npm run build\n");
+  errors.forEach((error) => console.error(`- ${error}`));
+  console.error("\nFor local interface testing, run npm run dev. For production validation, set the environment values first.\n");
   process.exit(1);
 }
 
 console.log(`Production domain verified: ${SITE_URL}`);
+console.log("Backend endpoint supplied at build time: yes");

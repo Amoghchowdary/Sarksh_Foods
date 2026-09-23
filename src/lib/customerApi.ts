@@ -1,7 +1,4 @@
-import { postAppsScript, requireSessionToken, type AppsScriptResponse } from "@/lib/apiTransport";
-
-const DEFAULT_API_BASE = "https://script.google.com/macros/s/AKfycbw_nR3t5gJfE5BOB4F1NduKDL1Mm10ad73BbnXRygL9pWDm-EwqmcegcVyswZimIYTtgA/exec";
-const customerBase = (import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE).trim().replace(/\/$/, "");
+const customerBase = (import.meta.env.VITE_API_BASE_URL || "").trim().replace(/\/$/, "");
 
 export type CustomerProfile = {
   id: string;
@@ -83,21 +80,36 @@ export type CustomerBootstrap = {
   };
 };
 
-type ApiResponse = AppsScriptResponse;
+type ApiResponse = { ok?: boolean; message?: string; [key: string]: unknown };
 
-function call<T extends ApiResponse>(payload: Record<string, unknown>): Promise<T> {
-  return postAppsScript<T>(customerBase, payload, "Customer account");
+async function call<T extends ApiResponse>(payload: Record<string, unknown>): Promise<T> {
+  if (!customerBase) throw new Error("Production backend URL is not configured.");
+  const response = await fetch(customerBase, {
+    method: "POST",
+    headers: { "content-type": "text/plain;charset=UTF-8" },
+    body: JSON.stringify(payload),
+    redirect: "follow",
+  });
+  const text = await response.text();
+  let result: T;
+  try {
+    result = JSON.parse(text) as T;
+  } catch {
+    throw new Error(text.slice(0, 180) || "Customer API returned an invalid response.");
+  }
+  if (!response.ok || !result.ok) throw new Error(result.message || "The request could not be completed.");
+  return result;
 }
 
 function authed<T extends ApiResponse>(action: string, sessionToken: string, payload: Record<string, unknown> = {}) {
-  return call<T>({ action, sessionToken: requireSessionToken(sessionToken, "Customer login"), ...payload });
+  return call<T>({ action, sessionToken, ...payload });
 }
 
 export const customerApi = {
   register: (payload: { fullName: string; phone: string; email: string; password: string }) =>
-    call<{ ok: true; sessionToken: string; customer: CustomerProfile }>({ action: "customer.register", ...payload, email: payload.email.trim().toLowerCase() }).then((result) => ({ ...result, sessionToken: requireSessionToken(result.sessionToken, "Account creation") })),
+    call<{ ok: true; sessionToken: string; customer: CustomerProfile }>({ action: "customer.register", ...payload }),
   login: (email: string, password: string) =>
-    call<{ ok: true; sessionToken: string; customer: CustomerProfile }>({ action: "customer.login", email: email.trim().toLowerCase(), password }).then((result) => ({ ...result, sessionToken: requireSessionToken(result.sessionToken, "Customer login") })),
+    call<{ ok: true; sessionToken: string; customer: CustomerProfile }>({ action: "customer.login", email, password }),
   logout: (sessionToken: string) => call<{ ok: true }>({ action: "customer.logout", sessionToken }),
   bootstrap: (sessionToken: string) => authed<CustomerBootstrap>("customer.bootstrap", sessionToken),
   saveAddress: (sessionToken: string, address: Partial<CustomerAddress>) =>
@@ -109,9 +121,9 @@ export const customerApi = {
   reorder: (sessionToken: string, reference: string, addressId: string) =>
     authed<{ ok: true; id: string }>("customer.order.reorder", sessionToken, { reference, addressId }),
   changePassword: (sessionToken: string, currentPassword: string, newPassword: string) =>
-    authed<{ ok: true; sessionToken: string }>("customer.password.change", sessionToken, { currentPassword, newPassword }).then((result) => ({ ...result, sessionToken: requireSessionToken(result.sessionToken, "Password change") })),
+    authed<{ ok: true; sessionToken: string }>("customer.password.change", sessionToken, { currentPassword, newPassword }),
   requestPasswordReset: (email: string) =>
-    call<{ ok: true; message: string }>({ action: "customer.password.request", email: email.trim().toLowerCase() }),
+    call<{ ok: true; message: string }>({ action: "customer.password.request", email }),
   resetPassword: (email: string, code: string, newPassword: string) =>
-    call<{ ok: true; message: string }>({ action: "customer.password.reset", email: email.trim().toLowerCase(), code: code.trim(), newPassword }),
+    call<{ ok: true; message: string }>({ action: "customer.password.reset", email, code, newPassword }),
 };

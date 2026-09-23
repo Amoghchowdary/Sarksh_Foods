@@ -16,9 +16,9 @@ function ChilliPowderPage() {
           </div>
           <div className="product-detail-copy">
             <span className="eyebrow">SARKSH FOODS · PREMIUM CHILLI POWDER</span>
-            <h1>SARKSH Foods Chilli Powder</h1>
+            <h1>Chilli Powder</h1>
             <p className="product-detail-tagline">Bold colour. Full flavour. Distinctly SARKSH.</p>
-            <p>SARKSH Foods Chilli Powder is a premium red chilli powder, also commonly searched as chili powder, available in a 1 kg carton for household, retail, wholesale, HoReCa, distribution and institutional requirements across India.</p>
+            <p>SARKSH Foods Chilli Powder is available in a 1 kg carton for household, retail, wholesale, HoReCa, distribution and institutional requirements across India.</p>
             <div className="detail-specs">
               <div><span>Pack size</span><strong>1 kg</strong></div>
               <div><span>Category</span><strong>Ground Spice</strong></div>
@@ -39,8 +39,8 @@ function ChilliPowderPage() {
 
       <section className="product-story section-pad">
         <div className="site-frame product-story-grid">
-          <div><span className="eyebrow">CHILLI POWDER IN INDIA</span><h2>One premium chilli powder for homes and professional kitchens.</h2></div>
-          <p>Order for home use or share a business requirement for retail, wholesale, hotels, restaurants, catering, distribution or institutional use. Enquiries are accepted from across India, subject to final serviceability.</p>
+          <div><span className="eyebrow">CHILLI POWDER IN INDIA</span><h2>One product route for home and professional buyers.</h2></div>
+          <p>Order for home use or send a commercial requirement for retail, wholesale, hotels, restaurants, catering, distribution or institutional supply. SARKSH Foods serves enquiries across India through a single order workflow.</p>
         </div>
       </section>
 
@@ -48,7 +48,7 @@ function ChilliPowderPage() {
         <div className="site-frame">
           <div className="section-heading-row">
             <div><span className="eyebrow">WHO IT IS FOR</span><h2>From the pantry shelf to professional kitchens.</h2></div>
-            <p>Choose home ordering or business ordering for the same 1 kg SARKSH Foods Chilli Powder carton.</p>
+            <p>A clear buying route for the same 1 kg SARKSH Foods Chilli Powder carton.</p>
           </div>
           <div className="order-option-grid">
             <article><PackageCheck size={25} /><h3>Home orders</h3><p>Order the 1 kg carton for household use.</p><BookProductButton product={product} className="text-button" label="Order for home" /></article>

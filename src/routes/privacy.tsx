@@ -21,9 +21,9 @@ function PrivacyPage() {
             <h3>Customer accounts</h3>
             <p>If you create an account, we store your account identifier, name, mobile number, email, saved delivery addresses, account status, session records and order history so repeat ordering can be faster.</p>
             <h3>Passwords and sessions</h3>
-            <p>Customer passwords are not stored in readable form. They are securely transformed before storage, and sign-in or password-reset credentials are protected in the same way.</p>
+            <p>Plain-text customer passwords are not stored. Passwords are transformed using a unique salt and server-side hashing before storage. Session and reset secrets are stored only in hashed form on the backend.</p>
             <h3>Google Sheets and Drive</h3>
-            <p>Order, enquiry and account records are kept in private Google Sheets and Google Drive resources controlled by SARKSH Foods. Customers do not receive direct access to these private records.</p>
+            <p>Operational records are stored in private Google Sheets and Google Drive resources controlled by SARKSH Foods. The public website communicates with them only through the controlled Apps Script backend.</p>
             <h3>Payments</h3>
             <p>Online payments are not enabled in the current release. When a payment gateway such as Razorpay is connected, SARKSH Foods should not store card numbers, CVV values or payment credentials in Google Sheets.</p>
             <h3>Your choice</h3>
