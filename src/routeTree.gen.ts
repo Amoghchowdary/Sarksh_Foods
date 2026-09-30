@@ -15,11 +15,14 @@ import { Route as AccountRouteImport } from './routes/account'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as B2bRouteImport } from './routes/b2b'
 import { Route as ChilliPowderRouteImport } from './routes/chilli-powder'
+import { Route as ChilliPowderBrandsIndiaRouteImport } from './routes/chilli-powder-brands-india'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EnterpriseRouteImport } from './routes/enterprise'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as PanIndiaRouteImport } from './routes/pan-india'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProductsRouteImport } from './routes/products'
+import { Route as RedChilliPowderBuyingGuideRouteImport } from './routes/red-chilli-powder-buying-guide'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -52,6 +55,11 @@ const ChilliPowderRoute = ChilliPowderRouteImport.update({
   path: '/chilli-powder',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChilliPowderBrandsIndiaRoute = ChilliPowderBrandsIndiaRouteImport.update({
+  id: '/chilli-powder-brands-india',
+  path: '/chilli-powder-brands-india',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -60,6 +68,11 @@ const ContactRoute = ContactRouteImport.update({
 const EnterpriseRoute = EnterpriseRouteImport.update({
   id: '/enterprise',
   path: '/enterprise',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PanIndiaRoute = PanIndiaRouteImport.update({
@@ -77,6 +90,12 @@ const ProductsRoute = ProductsRouteImport.update({
   path: '/products',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RedChilliPowderBuyingGuideRoute =
+  RedChilliPowderBuyingGuideRouteImport.update({
+    id: '/red-chilli-powder-buying-guide',
+    path: '/red-chilli-powder-buying-guide',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ProductsSlugRoute = ProductsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -90,11 +109,14 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/b2b': typeof B2bRoute
   '/chilli-powder': typeof ChilliPowderRoute
+  '/chilli-powder-brands-india': typeof ChilliPowderBrandsIndiaRoute
   '/contact': typeof ContactRoute
   '/enterprise': typeof EnterpriseRoute
+  '/faq': typeof FaqRoute
   '/pan-india': typeof PanIndiaRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRouteWithChildren
+  '/red-chilli-powder-buying-guide': typeof RedChilliPowderBuyingGuideRoute
   '/products/$slug': typeof ProductsSlugRoute
 }
 export interface FileRoutesByTo {
@@ -104,11 +126,14 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/b2b': typeof B2bRoute
   '/chilli-powder': typeof ChilliPowderRoute
+  '/chilli-powder-brands-india': typeof ChilliPowderBrandsIndiaRoute
   '/contact': typeof ContactRoute
   '/enterprise': typeof EnterpriseRoute
+  '/faq': typeof FaqRoute
   '/pan-india': typeof PanIndiaRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRouteWithChildren
+  '/red-chilli-powder-buying-guide': typeof RedChilliPowderBuyingGuideRoute
   '/products/$slug': typeof ProductsSlugRoute
 }
 export interface FileRoutesById {
@@ -119,11 +144,14 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/b2b': typeof B2bRoute
   '/chilli-powder': typeof ChilliPowderRoute
+  '/chilli-powder-brands-india': typeof ChilliPowderBrandsIndiaRoute
   '/contact': typeof ContactRoute
   '/enterprise': typeof EnterpriseRoute
+  '/faq': typeof FaqRoute
   '/pan-india': typeof PanIndiaRoute
   '/privacy': typeof PrivacyRoute
   '/products': typeof ProductsRouteWithChildren
+  '/red-chilli-powder-buying-guide': typeof RedChilliPowderBuyingGuideRoute
   '/products/$slug': typeof ProductsSlugRoute
 }
 export interface FileRouteTypes {
@@ -135,11 +163,14 @@ export interface FileRouteTypes {
     | '/admin'
     | '/b2b'
     | '/chilli-powder'
+    | '/chilli-powder-brands-india'
     | '/contact'
     | '/enterprise'
+    | '/faq'
     | '/pan-india'
     | '/privacy'
     | '/products'
+    | '/red-chilli-powder-buying-guide'
     | '/products/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -149,11 +180,14 @@ export interface FileRouteTypes {
     | '/admin'
     | '/b2b'
     | '/chilli-powder'
+    | '/chilli-powder-brands-india'
     | '/contact'
     | '/enterprise'
+    | '/faq'
     | '/pan-india'
     | '/privacy'
     | '/products'
+    | '/red-chilli-powder-buying-guide'
     | '/products/$slug'
   id:
     | '__root__'
@@ -163,11 +197,14 @@ export interface FileRouteTypes {
     | '/admin'
     | '/b2b'
     | '/chilli-powder'
+    | '/chilli-powder-brands-india'
     | '/contact'
     | '/enterprise'
+    | '/faq'
     | '/pan-india'
     | '/privacy'
     | '/products'
+    | '/red-chilli-powder-buying-guide'
     | '/products/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -178,11 +215,14 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   B2bRoute: typeof B2bRoute
   ChilliPowderRoute: typeof ChilliPowderRoute
+  ChilliPowderBrandsIndiaRoute: typeof ChilliPowderBrandsIndiaRoute
   ContactRoute: typeof ContactRoute
   EnterpriseRoute: typeof EnterpriseRoute
+  FaqRoute: typeof FaqRoute
   PanIndiaRoute: typeof PanIndiaRoute
   PrivacyRoute: typeof PrivacyRoute
   ProductsRoute: typeof ProductsRouteWithChildren
+  RedChilliPowderBuyingGuideRoute: typeof RedChilliPowderBuyingGuideRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -229,6 +269,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChilliPowderRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/chilli-powder-brands-india': {
+      id: '/chilli-powder-brands-india'
+      path: '/chilli-powder-brands-india'
+      fullPath: '/chilli-powder-brands-india'
+      preLoaderRoute: typeof ChilliPowderBrandsIndiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -241,6 +288,13 @@ declare module '@tanstack/react-router' {
       path: '/enterprise'
       fullPath: '/enterprise'
       preLoaderRoute: typeof EnterpriseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pan-india': {
@@ -262,6 +316,13 @@ declare module '@tanstack/react-router' {
       path: '/products'
       fullPath: '/products'
       preLoaderRoute: typeof ProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/red-chilli-powder-buying-guide': {
+      id: '/red-chilli-powder-buying-guide'
+      path: '/red-chilli-powder-buying-guide'
+      fullPath: '/red-chilli-powder-buying-guide'
+      preLoaderRoute: typeof RedChilliPowderBuyingGuideRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products/$slug': {
@@ -293,11 +354,14 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   B2bRoute: B2bRoute,
   ChilliPowderRoute: ChilliPowderRoute,
+  ChilliPowderBrandsIndiaRoute: ChilliPowderBrandsIndiaRoute,
   ContactRoute: ContactRoute,
   EnterpriseRoute: EnterpriseRoute,
+  FaqRoute: FaqRoute,
   PanIndiaRoute: PanIndiaRoute,
   PrivacyRoute: PrivacyRoute,
   ProductsRoute: ProductsRouteWithChildren,
+  RedChilliPowderBuyingGuideRoute: RedChilliPowderBuyingGuideRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

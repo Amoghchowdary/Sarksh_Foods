@@ -1,3 +1,13 @@
+# SARKSH Foods V14 — SEO Database + Indexing
+
+**Release:** 14.0.0  
+**Frontend:** approved V11.2 visual system preserved  
+**Search layer:** V14 database-driven SEO, intent pages, structured data and indexing verification
+
+See `V14_SEO_DATABASE_INDEXING.md` and `GOOGLE_SEARCH_CONSOLE_V14.md` for the release architecture and launch procedure.
+
+---
+
 # SARKSH Foods V13 — Public Production Repository
 
 This repository is intentionally limited to the public website, public assets, build tooling, and public search-discovery files.

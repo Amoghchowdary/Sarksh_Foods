@@ -25,7 +25,7 @@ npm run typecheck
 npm run backend:health
 
 $env:SITE_URL="https://www.sarkshfoods.in"
-$env:VITE_API_BASE_URL="https://script.google.com/macros/s/AKfycbw_nR3t5gJfE5BOB4F1NduKDL1Mm10ad73BbnXRygL9pWDm-EwqmcegcVyswZimIYTtgA/exec"
+$env:VITE_API_BASE_URL="__VITE_API_BASE_URL__"
 
 npm run validate:prod
 ```

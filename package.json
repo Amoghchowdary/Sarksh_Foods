@@ -1,6 +1,6 @@
 {
-  "name": "sarksh-foods-v13-production-search-secure",
-  "version": "13.0.0",
+  "name": "sarksh-foods-v14-seo-database-indexing",
+  "version": "14.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -16,7 +16,8 @@
     "search:verify": "node scripts/verify-search.mjs",
     "search:live": "node scripts/check-live-search.mjs",
     "search:indexnow": "node scripts/submit-indexnow.mjs",
-    "validate:prod": "npm run security:audit && npm run typecheck && npm run backend:health && npm run build:prod && npm run verify:prod && npm run search:verify"
+    "validate:prod": "npm run security:audit && npm run seo:db:verify && npm run typecheck && npm run backend:health && npm run build:prod && npm run verify:prod && npm run search:verify",
+    "seo:db:verify": "node scripts/verify-seo-database.mjs"
   },
   "dependencies": {
     "@tanstack/react-router": "^1.170.16",

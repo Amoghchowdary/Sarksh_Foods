@@ -24,9 +24,9 @@ Private administration page; excluded from search indexing.
 
 ## Google Apps Script backend
 
-`https://script.google.com/macros/s/AKfycbw_nR3t5gJfE5BOB4F1NduKDL1Mm10ad73BbnXRygL9pWDm-EwqmcegcVyswZimIYTtgA/exec`
+The production Apps Script Web App endpoint is intentionally **not stored in this public repository**. Configure it as the GitHub Actions secret `VITE_API_BASE_URL`.
 
-The endpoint is an application gateway, not a database credential. Sensitive customer/admin operations require backend-issued session tokens. Google Sheets and Google Drive remain private.
+The endpoint is embedded into the public frontend at build time, but keeping the deployment identifier out of source history avoids accidental coupling between public source and the private backend project.
 
 ## Health check
 

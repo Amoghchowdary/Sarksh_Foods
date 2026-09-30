@@ -17,7 +17,6 @@ concurrency:
 env:
   SITE_URL: https://www.sarkshfoods.in
   BASE_PATH: /
-  VITE_API_BASE_URL: https://script.google.com/macros/s/AKfycbw_nR3t5gJfE5BOB4F1NduKDL1Mm10ad73BbnXRygL9pWDm-EwqmcegcVyswZimIYTtgA/exec
 
 jobs:
   build:
@@ -49,16 +48,26 @@ jobs:
           set -euo pipefail
           node scripts/require-site-url.mjs
 
+      - name: Verify V14 SEO database
+        run: npm run seo:db:verify
+
       - name: TypeScript check
         run: npm run typecheck
 
       - name: Check production backend health
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
         run: npm run backend:health
 
       - name: Build production site for www.sarkshfoods.in
         env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
           GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
-        run: npm run build:prod
+          INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY || 'd8b60c97f1da6c057f2fd80d68cd72ab' }}
+        shell: bash
+        run: |
+          export SEO_LASTMOD="$(git log -1 --format=%cI)"
+          npm run build:prod
 
       - name: Verify SEO and production artifact
         run: npm run verify:prod
@@ -85,7 +94,7 @@ jobs:
         uses: actions/deploy-pages@v4
 
   notify-indexnow:
-    name: Notify participating search engines
+    name: Notify IndexNow engines (not Google)
     runs-on: ubuntu-latest
     needs: deploy
     timeout-minutes: 5
@@ -98,6 +107,28 @@ jobs:
         with:
           node-version: 22
 
-      - name: Submit changed public URLs to IndexNow
+      - name: Submit V14 public URLs to IndexNow
         continue-on-error: true
+        env:
+          INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY || 'd8b60c97f1da6c057f2fd80d68cd72ab' }}
         run: node scripts/submit-indexnow.mjs
+
+  verify-live-search:
+    name: Verify public crawl endpoints
+    runs-on: ubuntu-latest
+    needs: deploy
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Wait briefly for Pages edge propagation
+        run: sleep 20
+
+      - name: Verify V14 pages, robots and sitemaps are publicly reachable
+        run: node scripts/check-live-search.mjs

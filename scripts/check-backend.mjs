@@ -10,7 +10,7 @@ try {
   const response = await fetch(API_URL, {
     method: "GET",
     redirect: "follow",
-    headers: { "user-agent": "SARKSH-Foods-V13-Production-Preflight" },
+    headers: { "user-agent": "SARKSH-Foods-V14-Production-Preflight" },
   });
 
   const text = await response.text();

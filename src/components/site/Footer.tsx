@@ -28,6 +28,12 @@ export function Footer() {
           <Link to="/enterprise">Distribution & HoReCa</Link>
         </div>
         <div className="footer-column">
+          <span>Guides</span>
+          <Link to="/chilli-powder-brands-india">Compare Chilli Powder Brands</Link>
+          <Link to="/red-chilli-powder-buying-guide">Red Chilli Powder Guide</Link>
+          <Link to="/faq">FAQ</Link>
+        </div>
+        <div className="footer-column">
           <span>Company</span>
           <Link to="/about">Our Story</Link>
           <Link to="/contact">Contact</Link>

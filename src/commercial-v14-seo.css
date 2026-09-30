@@ -1,0 +1,49 @@
+/* V14 — SEO database content surfaces. Intentionally additive; approved V11.2 homepage styling remains untouched. */
+.v14-content-hero {
+  background: radial-gradient(circle at 85% 5%, rgba(199, 156, 82, .18), transparent 30%), #3b0908;
+  color: #fffaf3;
+  padding: clamp(5rem, 9vw, 8rem) 0 clamp(3.5rem, 7vw, 6rem);
+}
+.v14-content-hero-inner { max-width: 920px; }
+.v14-content-hero h1 { margin: .6rem 0 1rem; max-width: 900px; font-size: clamp(2.5rem, 6vw, 5.2rem); line-height: .98; letter-spacing: -.035em; }
+.v14-content-hero p { max-width: 780px; margin: 0; font-size: clamp(1.05rem, 1.8vw, 1.3rem); line-height: 1.75; color: rgba(255,250,243,.82); }
+.v14-hero-links { display:flex; flex-wrap:wrap; gap:1rem; margin-top:1.8rem; }
+.v14-content-page { background:#fffaf3; }
+.v14-content-grid { display:grid; grid-template-columns:minmax(0, 1fr) minmax(250px, 330px); gap:clamp(2rem,5vw,5rem); align-items:start; }
+.v14-content-main { min-width:0; }
+.v14-content-aside { position:sticky; top:110px; padding:1.5rem; border:1px solid rgba(59,9,8,.14); background:#fff; box-shadow:0 18px 45px rgba(59,9,8,.07); }
+.v14-content-aside h3 { margin:.45rem 0 .75rem; font-size:1.55rem; }
+.v14-content-aside p { color:#5f4a46; line-height:1.7; }
+.v14-guide-intro { margin-bottom:2rem; max-width:800px; }
+.v14-guide-intro h2,.v14-brand-proof h2,.v14-callout h2 { margin:.45rem 0 .8rem; font-size:clamp(2rem,4vw,3.5rem); line-height:1.05; }
+.v14-guide-intro p,.v14-brand-proof p,.v14-callout p { line-height:1.8; color:#5f4a46; }
+.v14-check-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+.v14-check-card { position:relative; padding:1.5rem; min-height:220px; border:1px solid rgba(59,9,8,.12); background:#fff; }
+.v14-check-card svg { color:#a16f22; }
+.v14-check-card h3 { margin:.9rem 0 .55rem; font-size:1.25rem; }
+.v14-check-card p { margin:0; line-height:1.75; color:#66504b; }
+.v14-check-number { position:absolute; right:1rem; top:.85rem; font-family:Georgia,serif; font-size:2rem; color:rgba(59,9,8,.12); }
+.v14-brand-proof { margin-top:2.5rem; padding:clamp(1.5rem,4vw,3rem); background:#f3e7d8; border:1px solid rgba(59,9,8,.13); }
+.v14-proof-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.75rem; margin:1.5rem 0; }
+.v14-proof-grid div { padding:1rem; background:rgba(255,255,255,.62); }
+.v14-proof-grid span { display:block; font-size:.75rem; text-transform:uppercase; letter-spacing:.1em; color:#816b62; }
+.v14-proof-grid strong { display:block; margin-top:.35rem; color:#3b0908; }
+.v14-disclosure { font-size:.94rem; border-top:1px solid rgba(59,9,8,.14); padding-top:1rem; }
+.v14-faq-list { display:grid; gap:1rem; }
+.v14-faq-card { display:grid; grid-template-columns:auto 1fr; gap:1rem; padding:1.4rem; background:#fff; border:1px solid rgba(59,9,8,.12); scroll-margin-top:120px; }
+.v14-faq-card h2 { margin:0 0 .45rem; font-size:1.25rem; }
+.v14-faq-card p { margin:0; line-height:1.75; color:#66504b; }
+.v14-faq-icon { width:38px; height:38px; display:grid; place-items:center; border-radius:50%; background:#f3e7d8; color:#7d1b18; }
+.v14-article-stack { display:grid; gap:1rem; }
+.v14-article-stack article { display:grid; grid-template-columns:64px 1fr; gap:1rem; padding:1.5rem 0; border-bottom:1px solid rgba(59,9,8,.12); }
+.v14-article-stack article>span { font-family:Georgia,serif; font-size:2rem; color:#a16f22; }
+.v14-article-stack h2 { margin:0 0 .45rem; font-size:1.65rem; }
+.v14-article-stack p { margin:0; line-height:1.8; color:#66504b; }
+.v14-callout { margin-top:2.5rem; padding:clamp(1.5rem,4vw,3rem); background:#3b0908; color:#fffaf3; }
+.v14-callout p { color:rgba(255,250,243,.78); }
+@media (max-width:900px){
+  .v14-content-grid{grid-template-columns:1fr}.v14-content-aside{position:static}.v14-check-grid,.v14-proof-grid{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .v14-content-hero{padding-top:4.2rem}.v14-content-hero h1{font-size:2.6rem}.v14-article-stack article{grid-template-columns:1fr}.v14-faq-card{grid-template-columns:1fr}
+}
