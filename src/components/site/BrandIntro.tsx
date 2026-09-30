@@ -107,22 +107,22 @@ export function BrandIntro() {
 
           <div className="sarksh-intro-pack" aria-label="SARKSH Foods chilli powder carton assembling">
             <div className="sarksh-pack-face sarksh-pack-front">
-              <img src="/assets/chilli-box-front-v3.png" alt="" decoding="sync" />
+              <img src="/assets/chilli-box-front-v3.webp" alt="" width={900} height={1500} decoding="async" fetchPriority="high" />
             </div>
             <div className="sarksh-pack-face sarksh-pack-back">
-              <img src="/assets/chilli-box-front-v3.png" alt="" decoding="sync" />
+              <img src="/assets/chilli-box-front-v3.webp" alt="" width={900} height={1500} decoding="async" fetchPriority="high" />
             </div>
             <div className="sarksh-pack-face sarksh-pack-right">
-              <img src="/assets/chilli-box-side.png" alt="" decoding="sync" />
+              <img src="/assets/chilli-box-side.webp" alt="" width={320} height={1500} decoding="async" />
             </div>
             <div className="sarksh-pack-face sarksh-pack-left">
-              <img src="/assets/chilli-box-side.png" alt="" decoding="sync" />
+              <img src="/assets/chilli-box-side.webp" alt="" width={320} height={1500} decoding="async" />
             </div>
             <div className="sarksh-pack-face sarksh-pack-top">
-              <img src="/assets/chilli-box-top.png" alt="" decoding="sync" />
+              <img src="/assets/chilli-box-top.webp" alt="" width={900} height={320} decoding="async" />
             </div>
             <div className="sarksh-pack-face sarksh-pack-bottom">
-              <img src="/assets/chilli-box-top.png" alt="" decoding="sync" />
+              <img src="/assets/chilli-box-top.webp" alt="" width={900} height={320} decoding="async" />
             </div>
             <div className="sarksh-pack-highlight" />
           </div>
