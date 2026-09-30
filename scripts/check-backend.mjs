@@ -1,4 +1,4 @@
-const API_URL = (process.env.VITE_API_BASE_URL || "").trim();
+﻿const API_URL = (process.env.VITE_API_BASE_URL || "").trim();
 const appsScriptPattern = /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]{20,}\/exec$/;
 
 if (!appsScriptPattern.test(API_URL)) {
@@ -26,7 +26,7 @@ try {
   }
   if (!payload.databaseConfigured) throw new Error("Google Sheets database is not configured.");
   if (!payload.driveConfigured) throw new Error("Google Drive storage is not configured.");
-  if (String(payload.version || "") !== "8.4") throw new Error(`Unexpected backend version ${payload.version || "unknown"}.`);
+  if (String(payload.version || "") !== "14.1-fast") throw new Error(`Unexpected backend version ${payload.version || "unknown"}.`);
   if (!payload.customerAccountsConfigured) throw new Error("Customer account database is not configured.");
   if (!payload.adminPasswordConfigured) throw new Error("Admin password is not initialized.");
 
@@ -40,3 +40,4 @@ try {
   console.error(`Backend health check failed: ${error instanceof Error ? error.message : String(error)}`);
   process.exit(1);
 }
+

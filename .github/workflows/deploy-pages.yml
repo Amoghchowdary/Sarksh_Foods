@@ -1,4 +1,4 @@
-name: Deploy SARKSH Foods to GitHub Pages
+﻿name: Deploy SARKSH Foods to GitHub Pages
 
 on:
   push:
@@ -43,6 +43,8 @@ jobs:
           fi
 
       - name: Validate production configuration
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
         shell: bash
         run: |
           set -euo pipefail
@@ -132,3 +134,4 @@ jobs:
 
       - name: Verify V14 pages, robots and sitemaps are publicly reachable
         run: node scripts/check-live-search.mjs
+
