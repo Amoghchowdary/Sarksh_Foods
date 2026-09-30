@@ -18,7 +18,7 @@ yarn-error.log*
 pnpm-debug.log*
 
 # Local/private data
-data/
+/data/
 *.tmp
 *.local
 

@@ -1,0 +1,334 @@
+{
+  "version": "14.0.0",
+  "site": {
+    "name": "SARKSH Foods",
+    "alternateName": "SARKSH Foods — Legacy of Elegance",
+    "tagline": "Legacy of Elegance",
+    "url": "https://www.sarkshfoods.in",
+    "language": "en-IN",
+    "country": "India",
+    "logo": "/assets/logos/sarksh-foods-logo.svg",
+    "defaultImage": "/assets/sarksh-foods-chilli-powder-og.jpg",
+    "fssaiRegistrationNumber": "23626023001557",
+    "sameAs": []
+  },
+  "product": {
+    "slug": "chilli-powder",
+    "name": "SARKSH Foods Chilli Powder 1 kg",
+    "shortName": "SARKSH Foods Chilli Powder",
+    "alternateNames": [
+      "SARKSH Foods Red Chilli Powder 1 kg",
+      "SARKSH Foods Chili Powder 1 kg"
+    ],
+    "category": "Food > Spices > Chilli Powder",
+    "packSize": "1 kg",
+    "url": "/chilli-powder/",
+    "images": [
+      "/assets/sarksh-foods-chilli-powder-1kg-india.webp",
+      "/assets/chilli-pack-front.webp",
+      "/assets/sarksh-foods-chilli-powder-og.jpg"
+    ],
+    "description": "SARKSH Foods red chilli powder in a 1 kg carton for household and commercial requirements across India.",
+    "onPackStatements": [
+      "100% Pure & Natural",
+      "Rich Colour. Bold Flavour.",
+      "No Added Preservatives"
+    ],
+    "businessSegments": [
+      "Home orders",
+      "Retail",
+      "Wholesale",
+      "HoReCa",
+      "Distribution",
+      "Institutional"
+    ],
+    "merchant": {
+      "price": null,
+      "priceCurrency": "INR",
+      "availability": null,
+      "sku": null,
+      "gtin": null,
+      "shippingPolicyUrl": null,
+      "returnPolicyUrl": null
+    }
+  },
+  "pages": [
+    {
+      "path": "/",
+      "title": "SARKSH Foods | Premium Red Chilli Powder in India",
+      "description": "SARKSH Foods premium red chilli powder in a 1 kg carton for home orders and retail, wholesale, HoReCa, distribution and institutional enquiries across India.",
+      "image": "/assets/sarksh-foods-chilli-powder-og.jpg",
+      "type": "website",
+      "intent": "brand + commercial",
+      "primaryKeyword": "SARKSH Foods",
+      "secondaryKeywords": ["chilli powder in India", "red chilli powder"],
+      "priority": "1.0",
+      "changefreq": "weekly"
+    },
+    {
+      "path": "/chilli-powder/",
+      "title": "Premium Red Chilli Powder 1 kg in India | SARKSH Foods",
+      "description": "Explore SARKSH Foods premium red chilli powder in a 1 kg carton, including product details, pack information and home or business ordering routes across India.",
+      "image": "/assets/sarksh-foods-chilli-powder-og.jpg",
+      "type": "product",
+      "intent": "transactional",
+      "primaryKeyword": "red chilli powder 1 kg",
+      "secondaryKeywords": ["chilli powder", "chilli powder India"],
+      "priority": "0.95",
+      "changefreq": "weekly",
+      "schema": ["Product"]
+    },
+    {
+      "path": "/products/",
+      "title": "Chilli Powder Products in India | SARKSH Foods",
+      "description": "Explore SARKSH Foods chilli powder products, beginning with the 1 kg red chilli powder carton for household and commercial requirements across India.",
+      "image": "/assets/sarksh-foods-chilli-powder-og.jpg",
+      "type": "website",
+      "intent": "commercial",
+      "primaryKeyword": "chilli powder products",
+      "secondaryKeywords": ["red chilli powder India"],
+      "priority": "0.8",
+      "changefreq": "weekly",
+      "schema": ["ItemList"]
+    },
+    {
+      "path": "/products/chilli-powder/",
+      "title": "SARKSH Foods Chilli Powder 1 kg | Product Details",
+      "description": "View SARKSH Foods red chilli powder 1 kg carton details, product highlights and ordering routes for home and business buyers.",
+      "image": "/assets/sarksh-foods-chilli-powder-og.jpg",
+      "type": "product",
+      "intent": "transactional alias",
+      "primaryKeyword": "SARKSH Foods chilli powder",
+      "canonicalPath": "/chilli-powder/",
+      "noSitemap": true,
+      "schema": ["Product"]
+    },
+    {
+      "path": "/chilli-powder-brands-india/",
+      "title": "Chilli Powder Brands in India: What to Compare | SARKSH Foods",
+      "description": "Comparing chilli powder brands in India? Use a practical checklist covering labels, pack information, colour, flavour, supply route and buyer fit before choosing.",
+      "image": "/assets/sarksh-foods-chilli-powder-og.jpg",
+      "type": "article",
+      "intent": "informational comparison",
+      "primaryKeyword": "chilli powder brands in India",
+      "secondaryKeywords": ["best chilli powder brand in India", "red chilli powder brands"],
+      "priority": "0.9",
+      "changefreq": "monthly",
+      "schema": ["Article"]
+    },
+    {
+      "path": "/red-chilli-powder-buying-guide/",
+      "title": "Red Chilli Powder Buying Guide: Colour, Heat, Pack & Label Checks",
+      "description": "A practical red chilli powder buying guide for Indian households and businesses covering label checks, colour, heat, pack size, storage and supply requirements.",
+      "image": "/assets/sarksh-foods-chilli-powder-og.jpg",
+      "type": "article",
+      "intent": "informational",
+      "primaryKeyword": "red chilli powder buying guide",
+      "secondaryKeywords": ["how to choose chilli powder", "chilli powder quality"],
+      "priority": "0.85",
+      "changefreq": "monthly",
+      "schema": ["Article"]
+    },
+    {
+      "path": "/faq/",
+      "title": "SARKSH Foods FAQ | Chilli Powder Orders, Pack Size & Supply",
+      "description": "Answers to common questions about SARKSH Foods Chilli Powder, the 1 kg pack, home orders, business enquiries, pan-India supply and product information.",
+      "image": "/assets/logos/sarksh-foods-logo.svg",
+      "type": "website",
+      "intent": "informational support",
+      "primaryKeyword": "SARKSH Foods FAQ",
+      "secondaryKeywords": ["chilli powder questions", "SARKSH Foods chilli powder"],
+      "priority": "0.75",
+      "changefreq": "monthly",
+      "schema": ["FAQPage"]
+    },
+    {
+      "path": "/enterprise/",
+      "title": "Bulk Red Chilli Powder Enquiries in India | SARKSH Foods",
+      "description": "Send SARKSH Foods red chilli powder requirements for retail, wholesale, HoReCa, distribution and institutional supply enquiries across India.",
+      "image": "/assets/sarksh-foods-chilli-powder-og.jpg",
+      "type": "website",
+      "intent": "B2B transactional",
+      "primaryKeyword": "bulk red chilli powder India",
+      "secondaryKeywords": ["wholesale chilli powder", "HoReCa chilli powder"],
+      "priority": "0.85",
+      "changefreq": "monthly",
+      "schema": ["Service"]
+    },
+    {
+      "path": "/pan-india/",
+      "title": "Red Chilli Powder Supply Enquiries Across India | SARKSH Foods",
+      "description": "SARKSH Foods accepts red chilli powder home-order and commercial supply enquiries across India, subject to serviceability and confirmation.",
+      "image": "/assets/sarksh-foods-chilli-powder-og.jpg",
+      "type": "website",
+      "intent": "commercial geography",
+      "primaryKeyword": "red chilli powder supply India",
+      "secondaryKeywords": ["pan India chilli powder supply"],
+      "priority": "0.8",
+      "changefreq": "monthly",
+      "schema": ["Service"]
+    },
+    {
+      "path": "/about/",
+      "title": "About SARKSH Foods | Legacy of Elegance",
+      "description": "Learn about SARKSH Foods, the Indian packaged-food brand behind SARKSH Foods Chilli Powder and the Legacy of Elegance identity.",
+      "image": "/assets/logos/sarksh-foods-logo.svg",
+      "type": "website",
+      "intent": "brand entity",
+      "primaryKeyword": "SARKSH Foods",
+      "priority": "0.7",
+      "changefreq": "monthly"
+    },
+    {
+      "path": "/contact/",
+      "title": "Contact SARKSH Foods | Chilli Powder Orders & Enquiries",
+      "description": "Contact SARKSH Foods for chilli powder home orders and retail, wholesale, HoReCa, distribution or institutional requirements.",
+      "image": "/assets/logos/sarksh-foods-logo.svg",
+      "type": "website",
+      "intent": "contact",
+      "primaryKeyword": "contact SARKSH Foods",
+      "priority": "0.7",
+      "changefreq": "monthly"
+    },
+    {
+      "path": "/privacy/",
+      "title": "Privacy Policy | SARKSH Foods",
+      "description": "Read how SARKSH Foods handles information submitted through product orders, customer accounts and business enquiry forms.",
+      "image": "/assets/logos/sarksh-foods-logo.svg",
+      "type": "website",
+      "intent": "legal",
+      "primaryKeyword": "SARKSH Foods privacy",
+      "priority": "0.3",
+      "changefreq": "yearly"
+    },
+    {
+      "path": "/account/",
+      "title": "My SARKSH | Customer Account",
+      "description": "Private SARKSH Foods customer account for products, saved addresses, order history and repeat ordering.",
+      "image": "/assets/logos/sarksh-foods-logo.svg",
+      "type": "website",
+      "intent": "private account",
+      "primaryKeyword": "SARKSH account",
+      "noindex": true,
+      "noSitemap": true
+    },
+    {
+      "path": "/admin/",
+      "title": "SARKSH Foods Admin",
+      "description": "Private SARKSH Foods administration portal.",
+      "image": "/assets/logos/sarksh-foods-logo.svg",
+      "type": "website",
+      "intent": "private admin",
+      "primaryKeyword": "SARKSH admin",
+      "noindex": true,
+      "noSitemap": true
+    }
+  ],
+  "faq": [
+    {
+      "id": "choose-brand",
+      "question": "What should I compare when choosing a chilli powder brand in India?",
+      "answer": "Compare the product label, FSSAI information, ingredient and pack statements, pack size, colour and flavour profile, storage guidance, availability and whether the supplier supports your household or business quantity."
+    },
+    {
+      "id": "best-brand",
+      "question": "Which is the best chilli powder brand in India?",
+      "answer": "There is no single best brand for every buyer. The right choice depends on the flavour and colour you want, label transparency, pack size, consistency, availability and the buying route you need. SARKSH Foods publishes its current product facts and order routes so buyers can compare those points directly."
+    },
+    {
+      "id": "pack-size",
+      "question": "What pack size of SARKSH Foods Chilli Powder is currently available?",
+      "answer": "The current SARKSH Foods Chilli Powder pack shown on the website is a 1 kg carton."
+    },
+    {
+      "id": "home-order",
+      "question": "Can I order SARKSH Foods Chilli Powder for home use?",
+      "answer": "Yes. The website provides a home-order route for the current 1 kg chilli powder carton, subject to confirmation and serviceability."
+    },
+    {
+      "id": "business-order",
+      "question": "Does SARKSH Foods accept wholesale, retail and HoReCa enquiries?",
+      "answer": "Yes. Retail, wholesale, HoReCa, distribution and institutional buyers can submit their requirements through the Business Orders route."
+    },
+    {
+      "id": "pan-india",
+      "question": "Does SARKSH Foods accept chilli powder enquiries across India?",
+      "answer": "Yes. SARKSH Foods accepts home-order and commercial enquiries across India, subject to final serviceability and delivery confirmation."
+    },
+    {
+      "id": "fssai",
+      "question": "What FSSAI registration number is shown by SARKSH Foods?",
+      "answer": "The website identifies SARKSH Foods with FSSAI Registration No. 23626023001557."
+    },
+    {
+      "id": "on-pack",
+      "question": "What product statements are shown on the SARKSH Foods Chilli Powder pack?",
+      "answer": "The current pack and website present the statements 100% Pure & Natural, Rich Colour. Bold Flavour., and No Added Preservatives."
+    },
+    {
+      "id": "storage",
+      "question": "How should chilli powder be stored after opening?",
+      "answer": "Keep chilli powder tightly sealed in a cool, dry place away from moisture, heat and direct sunlight, and follow any storage directions printed on the product pack."
+    }
+  ],
+  "guides": {
+    "chilliPowderBrandsIndia": {
+      "intro": "Search results for chilli powder brands in India can mix national brands, regional specialists, marketplaces and local sellers. A useful comparison should start with verifiable product information rather than a generic best-brand claim.",
+      "criteria": [
+        {
+          "title": "Read the label first",
+          "text": "Check the brand name, food category, pack size, regulatory information and the exact claims printed on the pack."
+        },
+        {
+          "title": "Choose the flavour and colour profile you need",
+          "text": "Different chilli powders are selected for different balances of heat, colour and flavour. The right product depends on the cooking result you want."
+        },
+        {
+          "title": "Compare pack size with actual usage",
+          "text": "Households, retailers and professional kitchens consume chilli powder at very different rates. Compare pack size and ordering frequency, not just the front-of-pack design."
+        },
+        {
+          "title": "Look for clear product statements",
+          "text": "Specific, readable product information is more useful than vague superlatives. Check exactly what the brand says about the product and whether those statements are consistently shown."
+        },
+        {
+          "title": "Check the buying route",
+          "text": "A household buyer needs a simple order route. A retailer, wholesaler, HoReCa buyer or distributor needs quantity, serviceability and commercial enquiry support."
+        },
+        {
+          "title": "Check consistency and availability",
+          "text": "For repeat use, particularly in professional kitchens, availability and a consistent product specification matter as much as the first purchase."
+        },
+        {
+          "title": "Prefer verifiable brand information",
+          "text": "A brand page, product page, regulatory details, contact information and clear customer support create a stronger basis for comparison than an unsupported best-brand claim."
+        }
+      ]
+    },
+    "redChilliPowderBuyingGuide": {
+      "intro": "Buying red chilli powder is easier when colour, heat, pack size, label information and intended use are considered separately.",
+      "sections": [
+        {
+          "title": "Start with the dish, not the packet",
+          "text": "Think about whether your priority is colour, heat, flavour or a balance of all three. The same chilli powder will not suit every recipe or kitchen."
+        },
+        {
+          "title": "Read the pack information",
+          "text": "Check the product name, net quantity, regulatory information, ingredient or product statements and storage directions before purchase."
+        },
+        {
+          "title": "Match pack size to consumption",
+          "text": "A larger pack can be practical for frequent use, but only when storage conditions and consumption rate support it."
+        },
+        {
+          "title": "Store it correctly",
+          "text": "After opening, keep chilli powder sealed and protected from moisture, heat and direct sunlight, following the pack directions."
+        },
+        {
+          "title": "Separate household and business buying",
+          "text": "Retail, wholesale, HoReCa and institutional buyers should also consider repeat supply, order quantities, delivery serviceability and commercial support."
+        }
+      ]
+    }
+  }
+}
