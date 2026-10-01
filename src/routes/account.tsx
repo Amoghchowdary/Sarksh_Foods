@@ -1,3 +1,4 @@
+import "../customer-v84.css";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeft,
@@ -93,7 +94,7 @@ function CustomerPortal() {
     <div className="customer-shell">
       <aside className="customer-sidebar">
         <Link to="/" className="customer-brand" aria-label="SARKSH Foods home">
-          <img src="/assets/logos/sarksh-foods-logo.svg" alt="SARKSH Foods" />
+          <img src="/assets/logos/sarksh-foods-logo-ui.webp" alt="SARKSH Foods" width={1500} height={1500} decoding="async" />
           <div><strong>SARKSH FOODS</strong><span>Customer</span></div>
         </Link>
         <nav className="customer-nav" aria-label="Customer portal">
@@ -200,7 +201,7 @@ function CustomerAuth({ onSession, notice, setNotice }: { onSession: (token: str
   return (
     <main className="customer-auth-page">
       <section className="customer-auth-visual">
-        <Link to="/" className="customer-auth-logo"><img src="/assets/logos/sarksh-foods-logo.svg" alt="SARKSH Foods" /></Link>
+        <Link to="/" className="customer-auth-logo"><img src="/assets/logos/sarksh-foods-logo-ui.webp" alt="SARKSH Foods" width={1500} height={1500} decoding="async" /></Link>
         <div className="customer-auth-copy">
           <span>MY SARKSH</span>
           <h1>Your orders, addresses and favourites—kept together.</h1>

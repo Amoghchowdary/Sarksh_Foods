@@ -26,7 +26,7 @@ function PanIndiaPage() {
             <p>Household and commercial enquiries are accepted across Indian states and union territories, with final delivery subject to serviceability and order confirmation.</p>
             <BookProductButton product={product} label="Order Chilli Powder" />
           </div>
-          <div className="about-logo-stage"><img src="/assets/logos/sarksh-foods-logo.svg" alt="SARKSH Foods — Legacy of Elegance" /></div>
+          <div className="about-logo-stage"><img src="/assets/logos/sarksh-foods-logo-ui.webp" alt="SARKSH Foods — Legacy of Elegance" width={1500} height={1500} loading="lazy" decoding="async" /></div>
         </div>
       </section>
 

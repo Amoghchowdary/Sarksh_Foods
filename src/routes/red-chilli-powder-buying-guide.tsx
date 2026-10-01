@@ -1,3 +1,4 @@
+import "../commercial-v14-seo.css";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { SEO_DATABASE } from "@/lib/seoDatabase";

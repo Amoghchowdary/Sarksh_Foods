@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { ArrowRight, ArrowUpRight, Check, PackageCheck, ShoppingBag, Store, Truck, UtensilsCrossed } from "lucide-react";
 import { BookProductButton } from "@/components/site/ProductBookingModal";
 import { PRODUCTS } from "@/lib/products";
@@ -7,14 +8,29 @@ export const Route = createFileRoute("/")({ component: Home });
 const product = PRODUCTS[0];
 
 function Home() {
+  const [desktopReference, setDesktopReference] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(min-width: 1100px)").matches,
+  );
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 1100px)");
+    const sync = () => setDesktopReference(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
+
   return (
     <>
       <section className="home-hero">
-        <div className="home-approved-reference-stage" aria-label="SARKSH Foods premium chilli powder homepage hero">
+        {desktopReference ? <div className="home-approved-reference-stage" aria-label="SARKSH Foods premium chilli powder homepage hero">
           <picture>
             <img
-              src="/assets/home-approved-reference-v11-2.webp"
-              srcSet="/assets/home-approved-reference-v11-2.webp 1x, /assets/home-approved-reference-v11-2-2x.webp 2x, /assets/home-approved-reference-v11-2-4x.webp 4x"
+              src="/assets/home-approved-reference-v11-2-1440.webp"
+              srcSet="/assets/home-approved-reference-v11-2-960.webp 960w, /assets/home-approved-reference-v11-2-1440.webp 1440w, /assets/home-approved-reference-v11-2-1920.webp 1920w, /assets/home-approved-reference-v11-2-2560.webp 2560w"
+              sizes="100vw"
+              width={1795}
+              height={814}
               alt="SARKSH Foods Chilli Powder premium homepage hero — Bold colour. Full flavour. Distinctly SARKSH."
               fetchPriority="high"
               decoding="async"
@@ -24,7 +40,7 @@ function Home() {
             <BookProductButton product={product} className="home-reference-hotspot home-reference-hotspot--order" label="Order Chilli Powder" />
             <Link to="/enterprise" className="home-reference-hotspot home-reference-hotspot--business" aria-label="Business orders">Business orders</Link>
           </div>
-        </div>
+        </div> : null}
 
         <div className="site-frame home-hero-grid">
           <div className="home-hero-copy">
@@ -42,15 +58,19 @@ function Home() {
             </div>
           </div>
 
-          <div className="home-hero-visual home-hero-product-visual" aria-label="SARKSH Foods Chilli Powder premium product presentation">
-            <img
-              className="hero-product-scene"
-              src="/assets/sarksh-foods-carton-v11-3x.webp"
-              alt="SARKSH Foods Chilli Powder 1 kg carton"
-              fetchPriority="high"
-              decoding="async"
-            />
-          </div>
+          {!desktopReference ? (
+            <div className="home-hero-visual home-hero-product-visual" aria-label="SARKSH Foods Chilli Powder premium product presentation">
+              <img
+                className="hero-product-scene"
+                src="/assets/sarksh-foods-carton-v11-1080.webp"
+                width={1080}
+                height={1566}
+                alt="SARKSH Foods Chilli Powder 1 kg carton"
+                fetchPriority="high"
+                decoding="async"
+              />
+            </div>
+          ) : null}
         </div>
       </section>
 
@@ -110,7 +130,7 @@ function Home() {
         <div className="site-frame product-focus-grid">
           <div className="product-focus-media">
             <div className="product-focus-backdrop" />
-            <img src="/assets/chilli-pack-front.webp" alt="SARKSH Foods Chilli Powder 1 kg carton" loading="lazy" />
+            <img src="/assets/chilli-pack-front.webp" alt="SARKSH Foods Chilli Powder 1 kg carton" width={900} height={1500} loading="lazy" decoding="async" />
           </div>
           <div className="product-focus-copy">
             <span className="eyebrow">OUR PRODUCT</span>
@@ -147,7 +167,7 @@ function Home() {
 
       <section className="brand-band section-pad">
         <div className="site-frame brand-band-grid">
-          <div className="brand-band-logo"><img src="/assets/logos/sarksh-foods-logo.svg" alt="SARKSH Foods — Legacy of Elegance" /></div>
+          <div className="brand-band-logo"><img src="/assets/logos/sarksh-foods-logo-ui.webp" alt="SARKSH Foods — Legacy of Elegance" width={1500} height={1500} loading="lazy" decoding="async" /></div>
           <div className="brand-band-copy">
             <span className="eyebrow eyebrow--gold">LEGACY OF ELEGANCE</span>
             <h2>A brand built to be recognised.</h2>

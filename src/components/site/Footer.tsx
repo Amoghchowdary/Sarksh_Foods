@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="site-footer">
       <div className="site-frame footer-top">
         <div className="footer-brand-block">
-          <img src="/assets/logos/sarksh-foods-logo.svg" alt="SARKSH Foods — Legacy of Elegance" />
+          <img src="/assets/logos/sarksh-foods-logo-ui.webp" alt="SARKSH Foods — Legacy of Elegance" width={1500} height={1500} loading="lazy" decoding="async" />
           <div>
             <strong>SARKSH FOODS</strong>
             <p>Chilli powder for home, trade and professional kitchens.</p>

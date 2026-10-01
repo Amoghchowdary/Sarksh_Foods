@@ -17,9 +17,6 @@ import "./commercial-v10-5-polish.css";
 import "./commercial-v11-quality.css";
 import "./commercial-v11-1-scene.css";
 import "./commercial-v11-2-reference.css";
-import "./commercial-v14-seo.css";
-import "./admin-v82.css";
-import "./customer-v84.css";
 
 const rootElement = document.getElementById("app");
 

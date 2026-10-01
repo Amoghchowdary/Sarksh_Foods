@@ -1,3 +1,4 @@
+import "../admin-v82.css";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   Activity,
@@ -92,7 +93,7 @@ function AdminPage() {
     <div className="admin-shell">
       <aside className="admin-sidebar">
         <div className="admin-brand">
-          <img src="/assets/logos/sarksh-foods-logo.svg" alt="SARKSH Foods" />
+          <img src="/assets/logos/sarksh-foods-logo-ui.webp" alt="SARKSH Foods" width={1500} height={1500} decoding="async" />
           <div><strong>SARKSH FOODS</strong><span>Admin</span></div>
         </div>
         <nav className="admin-nav" aria-label="Admin sections">
@@ -160,7 +161,7 @@ function AdminLogin({ onSession, notice, setNotice }: { onSession: (token: strin
   return (
     <main className="admin-login-page">
       <section className="admin-login-card">
-        <img src="/assets/logos/sarksh-foods-logo.svg" alt="SARKSH Foods" />
+        <img src="/assets/logos/sarksh-foods-logo-ui.webp" alt="SARKSH Foods" width={1500} height={1500} decoding="async" />
         <span className="admin-kicker">Production control</span>
         <h1>SARKSH Foods Admin</h1>
         <p>Products, orders, enquiries, website health, Google Sheets and Drive—one controlled workspace.</p>

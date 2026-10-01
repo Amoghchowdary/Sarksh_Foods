@@ -30,7 +30,7 @@ export function Header() {
     <header className={`site-header${scrolled ? " site-header--scrolled" : ""}${open ? " site-header--open" : ""}`}>
       <div className="site-frame header-inner">
         <Link to="/" aria-label="SARKSH Foods home" className="header-brand">
-          <img src="/assets/logos/sarksh-foods-logo.svg" alt="" />
+          <img src="/assets/logos/sarksh-foods-logo-ui.webp" alt="" width={1500} height={1500} decoding="async" />
           <span className="header-brand-copy">
             <strong>SARKSH FOODS</strong>
             <small>Legacy of Elegance</small>

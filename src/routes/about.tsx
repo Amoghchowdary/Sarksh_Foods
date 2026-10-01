@@ -9,7 +9,7 @@ function AboutPage() {
       <section className="about-hero">
         <div className="site-frame about-hero-grid">
           <div className="about-hero-copy page-title-card"><span className="eyebrow eyebrow--gold">OUR STORY</span><h1>A food brand shaped by <em>heritage, recognition and ambition.</em></h1><p>SARKSH Foods begins with chilli powder and a brand language designed to remain recognisable as the range grows.</p><Link to="/chilli-powder" className="button-primary">Explore Chilli Powder <ArrowUpRight size={17} /></Link></div>
-          <div className="about-logo-stage"><img src="/assets/logos/sarksh-foods-logo.svg" alt="SARKSH Foods — Legacy of Elegance" /></div>
+          <div className="about-logo-stage"><img src="/assets/logos/sarksh-foods-logo-ui.webp" alt="SARKSH Foods — Legacy of Elegance" width={1500} height={1500} loading="lazy" decoding="async" /></div>
         </div>
       </section>
 
