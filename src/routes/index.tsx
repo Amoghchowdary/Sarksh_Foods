@@ -92,11 +92,13 @@ function Home() {
                 <Link to="/enterprise" className="button-secondary">Business orders <ArrowUpRight size={17} /></Link>
               </div>
 
-              <div className="home-mobile-facts" aria-label="Product facts">
-                <div><strong>1 kg</strong><span>Carton</span></div>
-                <div><strong>Home</strong><span>Order route</span></div>
-                <div><strong>Business</strong><span>Bulk enquiries</span></div>
-              </div>
+            </div>
+
+            <div className="home-mobile-facts home-mobile-trust" aria-label="SARKSH Foods trust points">
+              <div><Check size={14} /><span><strong>100%</strong><small>Pure &amp; Natural</small></span></div>
+              <div><Store size={14} /><span><strong>Trusted</strong><small>Indian Brand</small></span></div>
+              <div><Truck size={14} /><span><strong>Pan India</strong><small>Delivery</small></span></div>
+              <div><ShoppingBag size={14} /><span><strong>For Homes</strong><small>&amp; Businesses</small></span></div>
             </div>
           </div>
         )}

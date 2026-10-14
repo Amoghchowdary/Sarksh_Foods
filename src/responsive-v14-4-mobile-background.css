@@ -1,0 +1,463 @@
+/* =========================================================
+   SARKSH FOODS V14.4 — MOBILE/TABLET SCALED-DESKTOP HERO FIX
+   CSS ONLY. NO FUNCTIONALITY CHANGES.
+
+   This file is intentionally named the same as the current LAST mobile
+   background override so it can replace that file without touching JSX,
+   hooks, state, routing, order flow, account, chat widget or business flow.
+
+   Behaviour:
+   - Hero is always two columns below desktop: text LEFT, carton RIGHT.
+   - Hero never uses viewport-height sizing.
+   - Hero scales like the desktop composition using container query units.
+   - 16:9 from 480–1099px; 4:3 below 480px.
+   - Desktop scenic background stays visible with cover/center.
+   - Trust strip stays one row of four items.
+   - Small header keeps logo, account, Order now, hamburger.
+   ========================================================= */
+
+/* Keep the page from gaining horizontal scroll from old media rules. */
+@media (max-width: 1099px) {
+  html,
+  body,
+  #app,
+  .sarksh-site-shell,
+  .sarksh-site-shell main {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: clip !important;
+  }
+
+  /* Outer hero wrapper: no vh/svh/dvh sizing and no vertical push. */
+  .sarksh-site-shell .home-hero {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding-top: var(--header-h) !important;
+    overflow: hidden !important;
+    background: #2f0706 !important;
+  }
+
+  .sarksh-site-shell .home-hero::before,
+  .sarksh-site-shell .home-hero::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  /* Authoritative responsive hero.
+     No stacking; no viewport-height; no fixed pixel offsets. */
+  .sarksh-site-shell .home-mobile-hero {
+    container-type: inline-size !important;
+    position: relative !important;
+    isolation: isolate !important;
+
+    display: grid !important;
+    grid-template-columns: minmax(0, 47cqw) minmax(0, 53cqw) !important;
+    grid-template-rows: minmax(0, 1fr) 7.2cqw !important;
+
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: 16 / 9 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+
+    align-items: stretch !important;
+    justify-items: stretch !important;
+    overflow: hidden !important;
+
+    /* Same cinematic background family as the desktop hero.
+       First layer only darkens the copy side; the scene remains visible. */
+    background-image:
+      linear-gradient(
+        90deg,
+        rgba(29, 4, 3, .55) 0%,
+        rgba(29, 4, 3, .34) 31%,
+        rgba(29, 4, 3, .10) 54%,
+        rgba(29, 4, 3, .03) 76%,
+        rgba(29, 4, 3, .06) 100%
+      ),
+      image-set(
+        url("/assets/home-hero-background-v11-4k.webp") 1x,
+        url("/assets/home-hero-background-v11-8k.webp") 2x
+      ) !important;
+
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-color: #2f0706 !important;
+  }
+
+  /* Kill historical child background layers that obscured/cropped the scene. */
+  .sarksh-site-shell .home-mobile-media,
+  .sarksh-site-shell .home-mobile-copy {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+  }
+
+  .sarksh-site-shell .home-mobile-media::before,
+  .sarksh-site-shell .home-mobile-media::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  /* LEFT column — vertically centered, never pushed to the bottom. */
+  .sarksh-site-shell .home-mobile-copy {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+
+    z-index: 3 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+
+    width: 100% !important;
+    padding:
+      clamp(6px, 3.0cqw, 34px)
+      clamp(7px, 3.4cqw, 40px)
+      clamp(6px, 2.6cqw, 28px) !important;
+
+    background: transparent !important;
+    text-align: left !important;
+  }
+
+  .sarksh-site-shell .home-mobile-eyebrow {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 0 1.25cqw !important;
+    padding: 0 !important;
+
+    color: #f0be57 !important;
+    font-size: clamp(6px, 1.02cqw, 12px) !important;
+    line-height: 1.2 !important;
+    letter-spacing: .16em !important;
+    white-space: normal !important;
+    text-shadow: 0 .25cqw .9cqw rgba(12, 1, 1, .38) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-title {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    color: #fff9ef !important;
+    font-size: clamp(20px, 5.15cqw, 70px) !important;
+    line-height: .91 !important;
+    letter-spacing: -.03em !important;
+    white-space: normal !important;
+    text-wrap: balance !important;
+    text-shadow: 0 .25cqw 1.2cqw rgba(12, 1, 1, .34) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-title > span,
+  .sarksh-site-shell .home-mobile-title > em {
+    display: block !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    letter-spacing: inherit !important;
+    white-space: normal !important;
+  }
+
+  .sarksh-site-shell .home-mobile-title > em {
+    color: #f3c25c !important;
+  }
+
+  .sarksh-site-shell .home-mobile-lead {
+    display: block !important;
+    width: 100% !important;
+    max-width: 94% !important;
+
+    margin: 1.65cqw 0 0 !important;
+    padding: 0 !important;
+
+    color: rgba(255, 249, 239, .92) !important;
+    font-size: clamp(7px, 1.42cqw, 17px) !important;
+    line-height: 1.43 !important;
+    text-shadow: 0 .2cqw .8cqw rgba(12, 1, 1, .34) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-actions {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+
+    width: min(100%, 41cqw) !important;
+    margin: 1.7cqw 0 0 !important;
+    padding: 0 !important;
+    gap: .9cqw !important;
+  }
+
+  .sarksh-site-shell .home-mobile-actions > * {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 5.4cqw !important;
+    height: auto !important;
+
+    padding: 1.0cqw 1.1cqw !important;
+    gap: .65cqw !important;
+
+    justify-content: center !important;
+    align-items: center !important;
+
+    font-size: clamp(7px, 1.2cqw, 14px) !important;
+    line-height: 1.05 !important;
+    white-space: nowrap !important;
+  }
+
+  .sarksh-site-shell .home-mobile-actions svg {
+    width: clamp(9px, 1.55cqw, 16px) !important;
+    height: clamp(9px, 1.55cqw, 16px) !important;
+    flex: 0 0 auto !important;
+  }
+
+  /* RIGHT column — carton stays inside the scene and leaves room at the
+     far-right for the baked "TRADITION IN EVERY PINCH" background tagline. */
+  .sarksh-site-shell .home-mobile-media {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+
+    z-index: 2 !important;
+    position: relative !important;
+    inset: auto !important;
+
+    display: grid !important;
+    place-items: center start !important;
+
+    width: 100% !important;
+    padding: 2.4cqw 7.5cqw 2.0cqw 1.4cqw !important;
+    overflow: visible !important;
+    background: transparent !important;
+  }
+
+  .sarksh-site-shell .home-mobile-pack {
+    position: relative !important;
+    inset: auto !important;
+
+    display: block !important;
+    justify-self: start !important;
+    align-self: center !important;
+
+    width: 33.5cqw !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 42cqw !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    object-fit: contain !important;
+    object-position: center center !important;
+
+    transform: none !important;
+    filter: drop-shadow(0 1.1cqw 1.65cqw rgba(20, 3, 2, .35)) !important;
+  }
+
+  /* FOUR-COLUMN trust strip — always one row, scaled with the hero. */
+  .sarksh-site-shell .home-mobile-trust {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+
+    z-index: 4 !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+
+    width: 100% !important;
+    height: 7.2cqw !important;
+    min-height: 0 !important;
+    max-height: none !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border-top: 1px solid rgba(255, 255, 255, .17) !important;
+    border-bottom: 0 !important;
+    background: rgba(32, 5, 4, .88) !important;
+    backdrop-filter: blur(3px) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-trust > div {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    min-width: 0 !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: .7cqw .55cqw !important;
+    gap: .65cqw !important;
+  }
+
+  .sarksh-site-shell .home-mobile-trust > div + div {
+    border-left: 1px solid rgba(255, 255, 255, .14) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-trust svg {
+    width: clamp(9px, 1.55cqw, 18px) !important;
+    height: clamp(9px, 1.55cqw, 18px) !important;
+    flex: 0 0 auto !important;
+    color: #e4b44c !important;
+  }
+
+  .sarksh-site-shell .home-mobile-trust span {
+    display: grid !important;
+    min-width: 0 !important;
+    gap: .12cqw !important;
+  }
+
+  .sarksh-site-shell .home-mobile-trust strong {
+    color: #fff8e8 !important;
+    font-size: clamp(6px, 1.03cqw, 12px) !important;
+    line-height: 1.0 !important;
+    white-space: nowrap !important;
+  }
+
+  .sarksh-site-shell .home-mobile-trust small {
+    color: rgba(255, 248, 232, .75) !important;
+    font-size: clamp(5px, .80cqw, 9px) !important;
+    line-height: 1.05 !important;
+    white-space: nowrap !important;
+  }
+
+  /* Header: preserve same functionality, only resize/reflow presentation. */
+  .sarksh-site-shell .desktop-nav {
+    display: none !important;
+  }
+
+  .sarksh-site-shell .header-actions {
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .sarksh-site-shell .header-book-button {
+    display: inline-flex !important;
+  }
+
+  .sarksh-site-shell .mobile-menu-button {
+    display: grid !important;
+  }
+}
+
+/* MOBILE: 4:3 only below 480px, still TWO COLUMNS. */
+@media (max-width: 479px) {
+  :root {
+    --header-h: 58px;
+  }
+
+  .sarksh-site-shell .home-mobile-hero {
+    aspect-ratio: 4 / 3 !important;
+    background-size: cover !important;
+    background-position: center center !important;
+  }
+
+  .sarksh-site-shell .site-header,
+  .sarksh-site-shell .header-inner {
+    height: var(--header-h) !important;
+    min-height: var(--header-h) !important;
+  }
+
+  .sarksh-site-shell .header-inner {
+    padding-inline: 7px !important;
+    gap: 3px !important;
+  }
+
+  .sarksh-site-shell .header-brand {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    gap: 5px !important;
+  }
+
+  .sarksh-site-shell .header-brand > img {
+    width: 32px !important;
+    height: 38px !important;
+    flex: 0 0 auto !important;
+  }
+
+  .sarksh-site-shell .header-brand-copy {
+    min-width: 0 !important;
+  }
+
+  .sarksh-site-shell .header-brand-copy small {
+    display: none !important;
+  }
+
+  .sarksh-site-shell .header-brand-copy strong {
+    display: block !important;
+    max-width: 27vw !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+
+    font-size: clamp(8px, 2.35vw, 11px) !important;
+    letter-spacing: .08em !important;
+  }
+
+  .sarksh-site-shell .header-actions {
+    gap: 3px !important;
+    flex: 0 0 auto !important;
+  }
+
+  .sarksh-site-shell .header-account-link {
+    display: grid !important;
+    place-items: center !important;
+
+    width: 29px !important;
+    height: 29px !important;
+    min-height: 29px !important;
+    padding: 0 !important;
+  }
+
+  .sarksh-site-shell .header-account-link span {
+    display: none !important;
+  }
+
+  .sarksh-site-shell .header-account-link svg {
+    width: 15px !important;
+    height: 15px !important;
+  }
+
+  .sarksh-site-shell .header-book-button {
+    min-height: 29px !important;
+    height: 29px !important;
+    min-width: 0 !important;
+
+    padding: 4px 6px !important;
+    gap: 3px !important;
+    border-radius: 6px !important;
+
+    font-size: clamp(7px, 2.05vw, 9px) !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .sarksh-site-shell .header-book-button svg {
+    width: 11px !important;
+    height: 11px !important;
+  }
+
+  .sarksh-site-shell .mobile-menu-button {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+  }
+}
+
+/* Wider phones + tablets remain 16:9 and never stack. */
+@media (min-width: 480px) and (max-width: 1099px) {
+  .sarksh-site-shell .home-mobile-hero {
+    aspect-ratio: 16 / 9 !important;
+    background-size: cover !important;
+    background-position: center center !important;
+  }
+}

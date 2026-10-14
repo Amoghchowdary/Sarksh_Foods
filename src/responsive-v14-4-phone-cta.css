@@ -1,0 +1,73 @@
+/* SARKSH FOODS V14.4 — PHONE HERO COPY + CTA RESTORE
+   Restores the paragraph + Order Chilli Powder + Business orders
+   in mobile homepage view, matching the supplied reference. */
+
+@media (max-width: 699px) {
+  /* Support the original V14.4 hero structure */
+  .sarksh-site-shell .home-hero-copy > .hero-lead {
+    display: block !important;
+    margin: 14px 0 0 !important;
+    max-width: 100% !important;
+    color: rgba(255, 249, 239, .92) !important;
+    font-size: clamp(.82rem, 2.45vw, .95rem) !important;
+    line-height: 1.55 !important;
+  }
+
+  .sarksh-site-shell .home-hero-copy > .hero-actions {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin-top: 18px !important;
+  }
+
+  .sarksh-site-shell .home-hero-copy > .hero-actions > * {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 48px !important;
+    padding-inline: 10px !important;
+    justify-content: center !important;
+    font-size: clamp(.72rem, 2.5vw, .88rem) !important;
+    white-space: nowrap !important;
+  }
+
+  /* Also support the newer responsive hero structure if present */
+  .sarksh-site-shell .home-mobile-lead,
+  .sarksh-site-shell .home-responsive-lead {
+    display: block !important;
+    margin: 14px 0 0 !important;
+    max-width: 100% !important;
+    color: rgba(255, 249, 239, .92) !important;
+    font-size: clamp(.82rem, 2.45vw, .95rem) !important;
+    line-height: 1.55 !important;
+  }
+
+  .sarksh-site-shell .home-mobile-actions,
+  .sarksh-site-shell .home-responsive-actions {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin-top: 18px !important;
+  }
+
+  .sarksh-site-shell .home-mobile-actions > *,
+  .sarksh-site-shell .home-responsive-actions > * {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 48px !important;
+    padding-inline: 10px !important;
+    justify-content: center !important;
+    font-size: clamp(.72rem, 2.5vw, .88rem) !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* Very narrow phones: stack the buttons to avoid clipping */
+@media (max-width: 360px) {
+  .sarksh-site-shell .home-hero-copy > .hero-actions,
+  .sarksh-site-shell .home-mobile-actions,
+  .sarksh-site-shell .home-responsive-actions {
+    grid-template-columns: 1fr !important;
+  }
+}

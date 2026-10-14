@@ -1,0 +1,456 @@
+/* =========================================================
+   SARKSH FOODS V14.4 — MOBILE/TABLET TWO-COLUMN PRODUCTION FIX
+   CSS-only responsive correction + trust-strip layout.
+   No navigation, routing, ordering, backend, form, or account functionality changes.
+
+   Requirements implemented:
+   - Hero stays TWO COLUMNS at every width below desktop.
+   - Text LEFT, carton RIGHT. Never vertically stacked.
+   - Cinematic background remains visible; no flat-colour replacement.
+   - Headline, description, buttons, carton scale with clamp()/vw.
+   - Trust strip stays one row of FOUR compact items.
+   - Small header: logo + account icon + compact Order Now + hamburger.
+   - Existing hamburger opens the exact same navigation links.
+   - Overrides old max-width rules that forced column layouts / fixed hero heights.
+   ========================================================= */
+
+/* ---------- tablet + mobile shared ---------- */
+@media (max-width: 1099px) {
+  :root {
+    --sf-mobile-hero-gap: clamp(6px, 1.4vw, 16px);
+  }
+
+  .sarksh-site-shell .home-hero {
+    min-height: 0 !important;
+    height: auto !important;
+    padding-top: var(--header-h) !important;
+    overflow: hidden !important;
+    background: transparent !important;
+  }
+
+  /* Disable old pseudo-image/fixed-height hero layers. */
+  .sarksh-site-shell .home-hero::before,
+  .sarksh-site-shell .home-hero::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  /* Authoritative two-column hero. */
+  .sarksh-site-shell .home-mobile-hero {
+    position: relative !important;
+    isolation: isolate;
+    display: grid !important;
+    grid-template-columns: minmax(0, 47%) minmax(0, 53%) !important;
+    grid-template-rows: minmax(0, 1fr) auto !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    background-color: #2f0706 !important;
+    background-repeat: no-repeat !important;
+  }
+
+  /* Text stays LEFT. */
+  .sarksh-site-shell .home-mobile-copy {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    z-index: 3 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: clamp(14px, 3.3vw, 42px) clamp(10px, 2.8vw, 38px) !important;
+    background: linear-gradient(90deg, rgba(42,5,4,.89) 0%, rgba(42,5,4,.69) 66%, rgba(42,5,4,.18) 100%) !important;
+  }
+
+  /* Carton stays RIGHT. */
+  .sarksh-site-shell .home-mobile-media {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    z-index: 2 !important;
+    position: relative !important;
+    inset: auto !important;
+    display: grid !important;
+    place-items: center !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: clamp(8px, 2vw, 24px) clamp(6px, 1.5vw, 18px) !important;
+    overflow: visible !important;
+    background: transparent !important;
+  }
+
+  .sarksh-site-shell .home-mobile-media::before,
+  .sarksh-site-shell .home-mobile-media::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  .sarksh-site-shell .home-mobile-pack {
+    position: relative !important;
+    inset: auto !important;
+    display: block !important;
+    width: min(43vw, 520px) !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 88% !important;
+    margin: auto !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important;
+    filter: drop-shadow(0 14px 20px rgba(20,3,2,.34)) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-eyebrow {
+    margin: 0 0 clamp(5px, 1vw, 10px) !important;
+    color: #f0be57 !important;
+    font-size: clamp(.43rem, .95vw, .66rem) !important;
+    line-height: 1.25 !important;
+    letter-spacing: clamp(.10em, .22vw, .17em) !important;
+    white-space: normal !important;
+  }
+
+  .sarksh-site-shell .home-mobile-title {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    font-size: clamp(1.35rem, 4.55vw, 4.4rem) !important;
+    line-height: .91 !important;
+    letter-spacing: -.028em !important;
+    white-space: normal !important;
+    text-wrap: balance;
+  }
+
+  .sarksh-site-shell .home-mobile-title > span,
+  .sarksh-site-shell .home-mobile-title > em {
+    display: block !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    letter-spacing: inherit !important;
+  }
+
+  .sarksh-site-shell .home-mobile-lead {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: clamp(7px, 1.4vw, 17px) 0 0 !important;
+    color: rgba(255,249,239,.92) !important;
+    font-size: clamp(.52rem, 1.35vw, .94rem) !important;
+    line-height: 1.45 !important;
+  }
+
+  .sarksh-site-shell .home-mobile-actions {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: clamp(4px, .8vw, 10px) !important;
+    width: 100% !important;
+    margin-top: clamp(8px, 1.5vw, 18px) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-actions > * {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: clamp(28px, 6vw, 46px) !important;
+    padding: clamp(5px, 1vw, 10px) clamp(4px, .9vw, 12px) !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    font-size: clamp(.46rem, 1.16vw, .78rem) !important;
+    line-height: 1.12 !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+  .sarksh-site-shell .home-mobile-actions svg {
+    width: clamp(11px, 2vw, 16px) !important;
+    height: clamp(11px, 2vw, 16px) !important;
+    flex: 0 0 auto !important;
+  }
+
+  /* One row of four trust points spanning the complete hero width. */
+  .sarksh-site-shell .home-mobile-trust {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    z-index: 4 !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    width: 100% !important;
+    margin: 0 !important;
+    border-top: 1px solid rgba(255,255,255,.15) !important;
+    border-bottom: 1px solid rgba(255,255,255,.10) !important;
+    background: rgba(34,5,4,.84) !important;
+    backdrop-filter: blur(4px);
+  }
+
+  .sarksh-site-shell .home-mobile-trust > div {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: clamp(3px, .65vw, 8px) !important;
+    min-width: 0 !important;
+    padding: clamp(6px, 1.2vw, 11px) clamp(3px, .7vw, 9px) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-trust > div + div {
+    border-left: 1px solid rgba(255,255,255,.14) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-trust svg {
+    width: clamp(11px, 1.65vw, 17px) !important;
+    height: clamp(11px, 1.65vw, 17px) !important;
+    color: #e4b44c !important;
+    flex: 0 0 auto !important;
+  }
+
+  .sarksh-site-shell .home-mobile-trust span {
+    display: grid !important;
+    gap: 1px !important;
+    min-width: 0 !important;
+  }
+
+  .sarksh-site-shell .home-mobile-trust strong {
+    color: #fff8e8 !important;
+    font-size: clamp(.43rem, .95vw, .65rem) !important;
+    line-height: 1.05 !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
+  }
+
+  .sarksh-site-shell .home-mobile-trust small {
+    color: rgba(255,248,232,.72) !important;
+    font-size: clamp(.35rem, .76vw, .54rem) !important;
+    line-height: 1.08 !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* ---------- phones ---------- */
+@media (max-width: 699px) {
+  :root {
+    --header-h: 60px;
+  }
+
+  /* Match the full mobile background ratio: 2160 x 2770.
+     No flat-colour replacement; scene remains fully visible. */
+  .sarksh-site-shell .home-mobile-hero {
+    aspect-ratio: 2160 / 2770 !important;
+    min-height: 0 !important;
+    max-height: calc(100svh - var(--header-h)) !important;
+    background-image:
+      linear-gradient(90deg, rgba(32,4,3,.26) 0%, rgba(32,4,3,.05) 44%, rgba(32,4,3,.05) 100%),
+      url("/assets/home-hero-background-v11-mobile-4k.webp") !important;
+    background-size: 100% 100% !important;
+    background-position: center !important;
+  }
+
+  /* Header: logo + account + compact Order Now + hamburger */
+  .sarksh-site-shell .site-header,
+  .sarksh-site-shell .header-inner {
+    height: var(--header-h) !important;
+    min-height: var(--header-h) !important;
+  }
+
+  .sarksh-site-shell .header-inner {
+    gap: 4px !important;
+    padding-inline: 8px !important;
+  }
+
+  .sarksh-site-shell .header-brand {
+    gap: 5px !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+
+  .sarksh-site-shell .header-brand > img {
+    width: 34px !important;
+    height: 40px !important;
+    flex: 0 0 auto !important;
+  }
+
+  .sarksh-site-shell .header-brand-copy {
+    display: flex !important;
+    min-width: 0 !important;
+  }
+
+  .sarksh-site-shell .header-brand-copy small {
+    display: none !important;
+  }
+
+  .sarksh-site-shell .header-brand-copy strong {
+    max-width: 26vw !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    font-size: clamp(.54rem, 2.15vw, .68rem) !important;
+    letter-spacing: .09em !important;
+  }
+
+  .sarksh-site-shell .header-actions {
+    gap: 3px !important;
+    flex: 0 0 auto !important;
+  }
+
+  .sarksh-site-shell .header-account-link {
+    display: grid !important;
+    place-items: center !important;
+    width: 31px !important;
+    height: 31px !important;
+    min-height: 31px !important;
+    padding: 0 !important;
+  }
+
+  .sarksh-site-shell .header-account-link span {
+    display: none !important;
+  }
+
+  .sarksh-site-shell .header-account-link svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .sarksh-site-shell .header-book-button {
+    display: inline-flex !important;
+    min-width: 0 !important;
+    min-height: 31px !important;
+    height: 31px !important;
+    padding: 5px 7px !important;
+    border-radius: 6px !important;
+    gap: 4px !important;
+    font-size: clamp(.48rem, 1.8vw, .62rem) !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .sarksh-site-shell .header-book-button svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  .sarksh-site-shell .mobile-menu-button {
+    display: grid !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+  }
+
+  /* Keep the existing hamburger behavior and exact navigation links. */
+  .sarksh-site-shell .mobile-menu {
+    top: 100% !important;
+  }
+
+  .sarksh-site-shell .home-mobile-copy {
+    padding: clamp(9px, 2.6vw, 16px) clamp(7px, 2vw, 12px) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-pack {
+    width: min(45vw, 230px) !important;
+    max-height: 83% !important;
+  }
+
+  .sarksh-site-shell .home-mobile-title {
+    font-size: clamp(1.15rem, 5.55vw, 2rem) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-lead {
+    font-size: clamp(.48rem, 2.05vw, .68rem) !important;
+    line-height: 1.36 !important;
+  }
+
+  .sarksh-site-shell .home-mobile-actions > * {
+    font-size: clamp(.42rem, 1.72vw, .58rem) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-trust > div {
+    padding-block: clamp(5px, 1.55vw, 8px) !important;
+  }
+}
+
+/* ---------- very narrow phones ---------- */
+@media (max-width: 380px) {
+  .sarksh-site-shell .header-brand-copy strong {
+    max-width: 22vw !important;
+    font-size: .52rem !important;
+  }
+
+  .sarksh-site-shell .header-book-button {
+    padding-inline: 5px !important;
+    font-size: .46rem !important;
+  }
+
+  .sarksh-site-shell .home-mobile-hero {
+    grid-template-columns: minmax(0, 48%) minmax(0, 52%) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-title {
+    font-size: clamp(1.05rem, 5.45vw, 1.45rem) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-lead {
+    font-size: clamp(.43rem, 1.95vw, .58rem) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-pack {
+    width: min(44vw, 190px) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-trust strong {
+    font-size: .40rem !important;
+  }
+
+  .sarksh-site-shell .home-mobile-trust small {
+    font-size: .32rem !important;
+  }
+}
+
+/* ---------- tablet ---------- */
+@media (min-width: 700px) and (max-width: 1099px) {
+  :root {
+    --header-h: 72px;
+  }
+
+  .sarksh-site-shell .home-mobile-hero {
+    aspect-ratio: 2560 / 1920 !important;
+    min-height: 0 !important;
+    max-height: calc(100svh - var(--header-h)) !important;
+    background-image:
+      linear-gradient(90deg, rgba(35,5,4,.62) 0%, rgba(35,5,4,.27) 43%, rgba(35,5,4,.04) 68%),
+      url("/assets/home-hero-background-v11-1-tablet.webp") !important;
+    background-size: 100% 100% !important;
+    background-position: center !important;
+  }
+
+  .sarksh-site-shell .home-mobile-copy {
+    padding: clamp(24px, 4vw, 48px) clamp(22px, 3.8vw, 46px) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-pack {
+    width: min(44vw, 470px) !important;
+    max-height: 86% !important;
+  }
+
+  .sarksh-site-shell .home-mobile-title {
+    font-size: clamp(2.4rem, 5.3vw, 4.2rem) !important;
+  }
+
+  .sarksh-site-shell .home-mobile-lead {
+    font-size: clamp(.78rem, 1.45vw, 1rem) !important;
+    line-height: 1.52 !important;
+  }
+
+  .sarksh-site-shell .home-mobile-actions > * {
+    font-size: clamp(.64rem, 1.15vw, .8rem) !important;
+  }
+
+  /* Tablet header also keeps Order Now visible and compact. */
+  .sarksh-site-shell .header-book-button {
+    display: inline-flex !important;
+    min-height: 36px !important;
+    padding-inline: 10px !important;
+    font-size: .66rem !important;
+  }
+}
