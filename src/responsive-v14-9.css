@@ -1,0 +1,80 @@
+/* =========================================================
+   SARKSH FOODS V14.9 — MOBILE HOMEPAGE CLEANUP
+   Loaded AFTER V14.8.
+   Scope:
+   - remove the duplicate/oversized mobile homepage marketing lettering
+   - keep the cinematic product image as the visual focus
+   - retain only actionable CTAs + compact facts below the image
+   Desktop and tablet remain unchanged.
+   ========================================================= */
+
+@media (max-width: 699px) {
+  /* Remove the duplicate marketing lettering shown in the user's screenshot. */
+  .sarksh-site-shell .home-hero-copy > .eyebrow,
+  .sarksh-site-shell .home-hero-copy > h1,
+  .sarksh-site-shell .home-hero-copy > .hero-lead {
+    display: none !important;
+  }
+
+  /* Give the scenic image the visual priority. */
+  :root {
+    --mobile-scene-h: clamp(250px, 58vw, 355px);
+  }
+
+  .sarksh-site-shell .home-hero-copy {
+    padding: 16px 18px 24px !important;
+    background: linear-gradient(180deg, #681d17 0%, #5a1512 56%, #3b0908 100%) !important;
+  }
+
+  .sarksh-site-shell .home-hero-copy .hero-actions {
+    margin-top: 0 !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 9px !important;
+  }
+
+  .sarksh-site-shell .home-hero-copy .hero-actions > * {
+    width: 100% !important;
+    min-height: 48px !important;
+  }
+
+  .sarksh-site-shell .hero-facts {
+    margin-top: 16px !important;
+    padding-top: 4px !important;
+  }
+
+  .sarksh-site-shell .hero-facts div {
+    padding: 9px 5px !important;
+  }
+
+  /* Make the image panel visually clean and avoid soft scaling artifacts. */
+  .sarksh-site-shell .home-hero::before {
+    background-position: 58% center !important;
+    background-size: cover !important;
+    image-rendering: auto !important;
+  }
+}
+
+@media (max-width: 390px) {
+  :root {
+    --mobile-scene-h: 230px;
+  }
+
+  .sarksh-site-shell .home-hero-copy {
+    padding-inline: 14px !important;
+  }
+}
+
+@media (min-width: 540px) and (max-width: 699px) {
+  :root {
+    --mobile-scene-h: clamp(270px, 54vw, 340px);
+  }
+
+  .sarksh-site-shell .home-hero-copy {
+    padding-inline: 24px !important;
+  }
+
+  .sarksh-site-shell .home-hero-copy .hero-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}

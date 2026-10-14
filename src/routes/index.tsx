@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, ArrowUpRight, Check, PackageCheck, ShoppingBag, Store, Truck, UtensilsCrossed } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, ShoppingBag, Store, Truck, UtensilsCrossed } from "lucide-react";
 import { BookProductButton } from "@/components/site/ProductBookingModal";
 import { PRODUCTS } from "@/lib/products";
 
@@ -23,45 +23,49 @@ function Home() {
   return (
     <>
       <section className="home-hero">
-        {desktopReference ? <div className="home-approved-reference-stage" aria-label="SARKSH Foods premium chilli powder homepage hero">
-          <picture>
-            <img
-              src="/assets/home-approved-reference-v11-2-1440.webp"
-              srcSet="/assets/home-approved-reference-v11-2-960.webp 960w, /assets/home-approved-reference-v11-2-1440.webp 1440w, /assets/home-approved-reference-v11-2-1920.webp 1920w, /assets/home-approved-reference-v11-2-2560.webp 2560w"
-              sizes="100vw"
-              width={1795}
-              height={814}
-              alt="SARKSH Foods Chilli Powder premium homepage hero — Bold colour. Full flavour. Distinctly SARKSH."
-              fetchPriority="high"
-              decoding="async"
-            />
-          </picture>
-          <div className="home-reference-hotspots" aria-label="Homepage hero actions">
-            <BookProductButton product={product} className="home-reference-hotspot home-reference-hotspot--order" label="Order Chilli Powder" />
-            <Link to="/enterprise" className="home-reference-hotspot home-reference-hotspot--business" aria-label="Business orders">Business orders</Link>
-          </div>
-        </div> : null}
-
-        <div className="site-frame home-hero-grid">
-          <div className="home-hero-copy">
-            <span className="eyebrow">SARKSH FOODS · CHILLI POWDER</span>
-            <h1>Bold colour.<br />Full flavour.<br /><em>Distinctly SARKSH.</em></h1>
-            <p className="hero-lead">Premium chilli powder for homes, retail shelves and professional kitchens, available in a 1 kg carton with pan-India order and business-enquiry routes.</p>
-            <div className="hero-actions">
-              <BookProductButton product={product} label="Order Chilli Powder" />
-              <Link to="/enterprise" className="button-secondary">Business orders <ArrowUpRight size={17} /></Link>
+        {desktopReference ? (
+          <>
+            <div className="home-approved-reference-stage" aria-label="SARKSH Foods premium chilli powder homepage hero">
+              <picture>
+                <img
+                  src="/assets/home-approved-reference-v11-2-1440.webp"
+                  srcSet="/assets/home-approved-reference-v11-2-960.webp 960w, /assets/home-approved-reference-v11-2-1440.webp 1440w, /assets/home-approved-reference-v11-2-1920.webp 1920w, /assets/home-approved-reference-v11-2-2560.webp 2560w"
+                  sizes="100vw"
+                  width={1795}
+                  height={814}
+                  alt="SARKSH Foods Chilli Powder premium homepage hero — Bold colour. Full flavour. Distinctly SARKSH."
+                  fetchPriority="high"
+                  decoding="async"
+                />
+              </picture>
+              <div className="home-reference-hotspots" aria-label="Homepage hero actions">
+                <BookProductButton product={product} className="home-reference-hotspot home-reference-hotspot--order" label="Order Chilli Powder" />
+                <Link to="/enterprise" className="home-reference-hotspot home-reference-hotspot--business" aria-label="Business orders">Business orders</Link>
+              </div>
             </div>
-            <div className="hero-facts" aria-label="Product facts">
-              <div><strong>1 kg</strong><span>Carton</span></div>
-              <div><strong>Home</strong><span>Order route</span></div>
-              <div><strong>Business</strong><span>Bulk enquiries</span></div>
-            </div>
-          </div>
 
-          {!desktopReference ? (
-            <div className="home-hero-visual home-hero-product-visual" aria-label="SARKSH Foods Chilli Powder premium product presentation">
+            <div className="site-frame home-hero-grid">
+              <div className="home-hero-copy">
+                <span className="eyebrow">SARKSH FOODS · CHILLI POWDER</span>
+                <h1>Bold colour.<br />Full flavour.<br /><em>Distinctly SARKSH.</em></h1>
+                <p className="hero-lead">Premium chilli powder for homes, retail shelves and professional kitchens, available in a 1 kg carton with pan-India order and business-enquiry routes.</p>
+                <div className="hero-actions">
+                  <BookProductButton product={product} label="Order Chilli Powder" />
+                  <Link to="/enterprise" className="button-secondary">Business orders <ArrowUpRight size={17} /></Link>
+                </div>
+                <div className="hero-facts" aria-label="Product facts">
+                  <div><strong>1 kg</strong><span>Carton</span></div>
+                  <div><strong>Home</strong><span>Order route</span></div>
+                  <div><strong>Business</strong><span>Bulk enquiries</span></div>
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="home-mobile-hero">
+            <div className="home-mobile-media" aria-label="SARKSH Foods Chilli Powder product image for mobile and tablet">
               <img
-                className="hero-product-scene"
+                className="home-mobile-pack"
                 src="/assets/sarksh-foods-carton-v11-1080.webp"
                 width={1080}
                 height={1566}
@@ -70,8 +74,32 @@ function Home() {
                 decoding="async"
               />
             </div>
-          ) : null}
-        </div>
+
+            <div className="home-mobile-copy">
+              <span className="home-mobile-eyebrow">SARKSH FOODS · CHILLI POWDER</span>
+              <h1 className="home-mobile-title">
+                <span>Bold colour.</span>
+                <span>Full flavour.</span>
+                <em>Distinctly SARKSH.</em>
+              </h1>
+
+              <p className="home-mobile-lead">
+                Premium chilli powder for homes, retail shelves and professional kitchens, available in a 1 kg carton with pan-India order and business-enquiry routes.
+              </p>
+
+              <div className="home-mobile-actions">
+                <BookProductButton product={product} label="Order Chilli Powder" />
+                <Link to="/enterprise" className="button-secondary">Business orders <ArrowUpRight size={17} /></Link>
+              </div>
+
+              <div className="home-mobile-facts" aria-label="Product facts">
+                <div><strong>1 kg</strong><span>Carton</span></div>
+                <div><strong>Home</strong><span>Order route</span></div>
+                <div><strong>Business</strong><span>Bulk enquiries</span></div>
+              </div>
+            </div>
+          </div>
+        )}
       </section>
 
       <section className="spice-marquee" aria-label="Guntur chilli varieties and SARKSH Foods processing flow">

@@ -26,6 +26,20 @@ export function Header() {
 
   useEffect(() => setOpen(false), [pathname]);
 
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   return (
     <header className={`site-header${scrolled ? " site-header--scrolled" : ""}${open ? " site-header--open" : ""}`}>
       <div className="site-frame header-inner">
@@ -52,7 +66,9 @@ export function Header() {
         </nav>
 
         <div className="header-actions">
-          <Link to="/account" className="header-account-link" aria-label="Customer account"><UserRound size={18} /><span>Account</span></Link>
+          <Link to="/account" className="header-account-link" aria-label="Customer account">
+            <UserRound size={18} /><span>Account</span>
+          </Link>
           <BookProductButton product={PRODUCTS[0]} className="header-book-button" label="Order now" />
           <button
             type="button"
@@ -70,11 +86,18 @@ export function Header() {
         <div className="mobile-menu">
           <nav className="site-frame" aria-label="Mobile navigation">
             {NAV.map((item) => (
-              <Link key={item.to} to={item.to} className="mobile-nav-link" activeProps={{ className: "mobile-nav-link mobile-nav-link--active" }}>
+              <Link
+                key={item.to}
+                to={item.to}
+                className="mobile-nav-link"
+                activeProps={{ className: "mobile-nav-link mobile-nav-link--active" }}
+              >
                 {item.label}
               </Link>
             ))}
-            <Link to="/account" className="mobile-nav-link"><UserRound size={17} /> Customer account</Link>
+            <Link to="/account" className="mobile-nav-link">
+              <UserRound size={17} /> Customer account
+            </Link>
             <BookProductButton product={PRODUCTS[0]} className="button-primary mobile-book-button" label="Order Chilli Powder" />
             <span className="mobile-menu-note"><ShoppingBag size={15} /> 1 kg carton · Home & business orders</span>
           </nav>

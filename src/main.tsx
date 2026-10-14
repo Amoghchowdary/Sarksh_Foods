@@ -17,6 +17,7 @@ import "./commercial-v10-5-polish.css";
 import "./commercial-v11-quality.css";
 import "./commercial-v11-1-scene.css";
 import "./commercial-v11-2-reference.css";
+import "./responsive-v14-14.css";
 
 const rootElement = document.getElementById("app");
 
@@ -24,12 +25,36 @@ if (!rootElement) {
   throw new Error("Application root element was not found");
 }
 
-// Generated production HTML contains crawl-first semantic content.
- // Clear it before hydration so the approved V11.2 interface renders unchanged.
+document.addEventListener(
+  "error",
+  (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLImageElement)) return;
+
+    const isSupportedZone = Boolean(
+      target.closest(".customer-product-media") ||
+      target.closest(".product-detail-media") ||
+      target.closest(".catalog-hero-media") ||
+      target.closest(".catalog-pack") ||
+      target.closest(".enterprise-pack") ||
+      target.closest(".pack-display") ||
+      target.closest(".product-focus-media") ||
+      target.closest(".product-story-media") ||
+      target.closest(".home-mobile-media")
+    );
+
+    if (!isSupportedZone) return;
+    if (target.dataset.sarkshFallback === "1") return;
+
+    target.dataset.sarkshFallback = "1";
+    target.src = "/assets/chilli-pack-front.webp";
+  },
+  true,
+);
+
 rootElement.replaceChildren();
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>,
 );
-

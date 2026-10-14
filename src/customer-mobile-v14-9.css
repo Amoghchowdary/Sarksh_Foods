@@ -1,0 +1,30 @@
+/* =========================================================
+   SARKSH FOODS V14.9 — CUSTOMER ACCOUNT MOBILE CLEANUP
+   Scope: remove the oversized decorative product-image block on mobile,
+   exactly as requested in the supplied customer-account screenshot.
+   Product information and ordering controls remain intact.
+   ========================================================= */
+
+@media (max-width: 699px) {
+  .customer-shell .customer-product-card {
+    grid-template-columns: 1fr !important;
+    border-radius: 20px !important;
+  }
+
+  .customer-shell .customer-product-media {
+    display: none !important;
+  }
+
+  .customer-shell .customer-product-body {
+    padding: 20px !important;
+  }
+
+  .customer-shell .customer-product-body h2 {
+    font-size: clamp(1.65rem, 7vw, 2rem) !important;
+  }
+
+  .customer-shell .customer-order-controls {
+    grid-template-columns: 92px minmax(0, 1fr) !important;
+    gap: 10px !important;
+  }
+}

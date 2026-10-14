@@ -1,16 +1,19 @@
 import { ShoppingBag } from "lucide-react";
 import { lazy, Suspense, useState } from "react";
+import { createPortal } from "react-dom";
 import type { Product } from "@/lib/products";
 
 const loadBookingDialog = () => import("./BookingDialog");
 const LazyBookingDialog = lazy(() => loadBookingDialog().then((module) => ({ default: module.BookingDialog })));
 
 export function ProductBookingModal({ product, open, onClose }: { product: Product; open: boolean; onClose: () => void }) {
-  if (!open) return null;
-  return (
+  if (!open || typeof document === "undefined") return null;
+
+  return createPortal(
     <Suspense fallback={null}>
       <LazyBookingDialog product={product} onClose={onClose} />
-    </Suspense>
+    </Suspense>,
+    document.body,
   );
 }
 
