@@ -1,0 +1,33 @@
+/* V21 PRODUCT SCENERY RESTORATION — this stylesheet affects only the product range.
+   The approved full landscape is a true DOM image, not clipped foliage overlays.
+   Navbar, hero, sourcing section, and all other sections are unchanged from V20. */
+.range-v19 { background:#fbf3e8; background-image:url('../assets/range-forest-dark-soil-v21.webp'); background-position:center center; background-size:cover; background-repeat:no-repeat; }
+.range-v19 > .range-scene-photo {
+  display:block !important; position:absolute; inset:0; z-index:0; width:100%; height:100%;
+  max-width:none; max-height:none; object-fit:cover; object-position:center center;
+  border:0; opacity:1; visibility:visible; pointer-events:none;
+}
+.range-v19 > .wrap {position:relative; z-index:5}
+.range-v19 .range-falling-leaves {z-index:3}
+.range-v19 .range-leaf-crown {display:none!important}
+.range-v19 .product-name-card {background:rgba(255,253,249,.93)}
+/* Make the full-height image available in the narrow responsive layout too.
+   Do not hide the trunk, soil, or bananas under a large cream background. */
+@media(max-width:780px){
+  .range-v19 > .range-scene-photo{object-position:center center;opacity:1}
+  .range-v19 .range-banyan,.range-v19 .range-banana{
+    display:block!important;z-index:2;opacity:.70;top:0;bottom:0;width:min(24vw,155px);
+    background-repeat:no-repeat;background-size:auto 100%;pointer-events:none;
+  }
+  .range-v19 .range-banyan{background-position:left center;mask-image:linear-gradient(90deg,#000 36%,transparent 100%)}
+  .range-v19 .range-banana{background-position:right center;mask-image:linear-gradient(270deg,#000 36%,transparent 100%)}
+  .range-v19 .wrap{width:calc(100% - 66px)}
+  .range-v19:before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(90deg,rgba(255,249,237,.52),rgba(255,249,237,.89) 26%,rgba(255,249,237,.89) 75%,rgba(255,249,237,.47));}
+  .range-v19 .wrap{position:relative;z-index:5}
+}
+@media(max-width:530px){
+  .range-v19:before{background:linear-gradient(90deg,rgba(255,249,237,.5),rgba(255,249,237,.94) 24%,rgba(255,249,237,.94) 75%,rgba(255,249,237,.5));}
+  .range-v19 .wrap{width:calc(100% - 58px)}
+  .range-v19 .range-banyan,.range-v19 .range-banana{width:25vw;opacity:.62}
+}

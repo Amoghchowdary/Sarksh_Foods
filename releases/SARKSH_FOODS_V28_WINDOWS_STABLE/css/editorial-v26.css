@@ -1,0 +1,23 @@
+@import url('editorial-v22.css');
+/* V26 visual finishing. The stylesheet is included on the three editorial pages ONLY. */
+body[data-page='recipes'] .ed-card img,
+body[data-page='blog'] .ed-card img { height:310px; object-position:center 47%; }
+body[data-page='recipes'] .ed-card,
+body[data-page='blog'] .ed-card {min-height:640px}
+body[data-page='blog'] .ed-card {min-height:590px}
+body[data-page='recipes'] .ed-card-body,
+body[data-page='blog'] .ed-card-body {padding:28px 30px 32px;}
+body[data-page='recipes'] .ed-card-body a,
+body[data-page='blog'] .ed-card-body a {padding-top:18px;}
+.ed-card img,.ed-quality-image,.ed-storyhero-image,.ed-feature-image {color:#4a2518;}
+.ed-quality-title {font-size:clamp(2.25rem,4vw,4.05rem);margin:16px 0 24px}
+.ed-quality-prose {line-height:1.95;color:#625449;margin:0 0 17px}
+.ed-quality-card {box-shadow:0 13px 35px rgba(64,27,11,.06)}
+.ed-quality-card .ed-quality-image {display:block; object-position:center;}
+.ed-process-six {grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 28px}
+.ed-process-six article {padding:24px 18px; background:#fffdf9;border:1px solid #ecdcca;border-top:2px solid #bf8a50;border-radius:0 0 9px 9px;}
+@media (max-width:980px){.ed-process-six{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:650px){body[data-page='recipes'] .ed-card,body[data-page='blog'] .ed-card{min-height:unset}
+body[data-page='recipes'] .ed-card img,body[data-page='blog'] .ed-card img{height:240px}
+.ed-process-six{grid-template-columns:1fr}.ed-quality-title{font-size:clamp(2rem,10vw,3rem)} }
+@media (prefers-reduced-motion:reduce){.ed-card{transition:none}}

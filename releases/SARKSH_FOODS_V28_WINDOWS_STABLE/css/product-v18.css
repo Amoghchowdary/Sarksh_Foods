@@ -1,0 +1,74 @@
+/* SARKSH FOODS V18 — PRODUCT RANGE ONLY.
+   No changes to homepage hero animation, India sourcing section or products.html.
+   Real product-card content remains name-only. */
+.range-heritage {
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:radial-gradient(ellipse at 50% 5%,#fffcf7 0%,#fff8ef 54%,#f8ecdd 100%);
+  border-top:3px solid #d5aa75;
+  border-bottom:1px solid #e1c4a3;
+}
+.range-heritage .wrap {position:relative;z-index:3;}
+.range-heritage .section-heading{padding-inline:clamp(30px,9vw,145px);}
+.range-heritage .range-heritage-border{
+ position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,#8a121c 28%,#cf9c61 50%,#8a121c 72%,transparent);z-index:4;opacity:.58;
+}
+.range-heritage .range-banyan,.range-heritage .range-banana{
+  position:absolute;top:0;bottom:0;width:clamp(112px,10.2vw,178px);
+  z-index:2;pointer-events:none;background-repeat:no-repeat;background-position:center top;background-size:100% 100%;
+  filter:saturate(.96) contrast(1.015);
+}
+.range-heritage .range-banyan{left:0;background-image:url('../assets/banyan-product-border.webp')}
+.range-heritage .range-banana{right:0;background-image:url('../assets/banana-product-border.webp')}
+.range-heritage .product-name-grid{max-width:1220px;margin-inline:auto}
+.range-heritage .product-name-card{background:#fffdfaee;backdrop-filter:none;z-index:1}
+.range-heritage .range-note{max-width:1220px;margin-inline:auto}
+.range-falling-leaves{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2;contain:paint}
+.falling-leaf{
+ --start:0%;--drift:70vw;--time:17s;--delay:-3s;--size:14px;
+ position:absolute;left:var(--start);top:-45px;width:var(--size);height:var(--size);display:block;
+ animation:rangeLeafFall var(--time) linear var(--delay) infinite;will-change:transform,opacity;
+}
+.falling-leaf svg{width:100%;height:100%;display:block;overflow:visible;transform:rotate(-17deg)}
+.falling-leaf path{fill:#6d862f;stroke:#52702c;stroke-width:.75;opacity:.62}
+.falling-leaf:nth-child(3n) path{fill:#b19a46;stroke:#8b8e3d;opacity:.50}
+.falling-leaf:nth-child(4n) path{fill:#526c28;stroke:#405b27;opacity:.63}
+@keyframes rangeLeafFall{
+ 0%{transform:translate3d(0,-28px,0) rotate(-16deg) scale(.7);opacity:0}
+ 7%{opacity:.72}
+ 32%{transform:translate3d(calc(var(--drift)*.28),220px,0) rotate(87deg) scale(1);opacity:.74}
+ 64%{transform:translate3d(calc(var(--drift)*.60),530px,0) rotate(199deg) scale(.92);opacity:.56}
+ 90%{opacity:.52}
+ 100%{transform:translate3d(var(--drift),980px,0) rotate(344deg) scale(.8);opacity:0}
+}
+.falling-leaf-1{--start:1%;--drift:62vw;--time:15s;--delay:-3s;--size:18px}
+.falling-leaf-2{--start:4%;--drift:74vw;--time:20s;--delay:-14s;--size:16px}
+.falling-leaf-3{--start:0%;--drift:55vw;--time:17s;--delay:-8s;--size:14px}
+.falling-leaf-4{--start:8%;--drift:79vw;--time:22s;--delay:-5s;--size:13px}
+.falling-leaf-5{--start:2%;--drift:47vw;--time:14s;--delay:-10s;--size:17px}
+.falling-leaf-6{--start:10%;--drift:60vw;--time:23s;--delay:-18s;--size:13px}
+.falling-leaf-7{--start:4%;--drift:81vw;--time:19s;--delay:-2s;--size:12px}
+.falling-leaf-8{--start:0%;--drift:58vw;--time:16s;--delay:-12s;--size:18px}
+.falling-leaf-9{--start:7%;--drift:70vw;--time:21s;--delay:-8s;--size:14px}
+.falling-leaf-10{--start:12%;--drift:63vw;--time:24s;--delay:-21s;--size:14px}
+.falling-leaf-11{--start:2%;--drift:86vw;--time:18s;--delay:-13s;--size:17px}
+.falling-leaf-12{--start:6%;--drift:72vw;--time:20s;--delay:-4s;--size:13px}
+.falling-leaf-13{--start:0%;--drift:64vw;--time:25s;--delay:-17s;--size:12px}
+.falling-leaf-14{--start:10%;--drift:54vw;--time:16s;--delay:-7s;--size:15px}
+@media(max-width:1350px){
+ .range-heritage .range-banyan,.range-heritage .range-banana{width:clamp(66px,8vw,105px);opacity:.92}
+ .range-heritage .section-heading{padding-inline:clamp(18px,7vw,100px)}
+}
+@media(max-width:780px){
+ .range-heritage .range-banyan,.range-heritage .range-banana{width:clamp(40px,10vw,72px);opacity:.65;background-size:cover}
+ .range-heritage .section-heading{padding-inline:10px}
+ .range-heritage .product-name-grid{position:relative;z-index:4}
+ .falling-leaf{--size:11px;animation-duration:calc(var(--time) * 1.13)}
+}
+@media(max-width:510px){
+ .range-heritage .range-banyan,.range-heritage .range-banana{width:37px;opacity:.35}
+ .range-heritage .product-name-card{background:#fffdfa}
+ .range-heritage .range-heritage-border{opacity:.45}
+}
+@media(prefers-reduced-motion:reduce){.range-heritage .falling-leaf{animation:none!important;display:none!important}}
