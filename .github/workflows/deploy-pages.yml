@@ -1,4 +1,4 @@
-﻿name: Deploy SARKSH Foods to GitHub Pages
+name: Deploy SARKSH Foods to GitHub Pages
 
 on:
   push:
@@ -74,6 +74,26 @@ jobs:
       - name: Verify SEO and production artifact
         run: npm run verify:prod
 
+      # V30: the approved static design is published ONLY at /v30/.
+      # Production root stays on the existing Vite + Apps Script integration.
+      # GitHub Pages cannot run the V30 Node backend or collect payments.
+      - name: Validate and stage V30 static preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd releases/SARKSH_FOODS_V30_GITHUB_ACTIONS_VERIFIED
+          npm run ci:v30
+          cd ../..
+          mkdir -p dist/v30
+          cp -a releases/SARKSH_FOODS_V30_GITHUB_ACTIONS_VERIFIED/dist-pages/. dist/v30/
+          test -s dist/index.html
+          test -s dist/v30/index.html
+          test -s dist/v30/products.html
+          test -s dist/v30/V30_PREVIEW_ONLY.txt
+          test ! -e dist/v30/backend
+          test ! -e dist/v30/apps-script
+          grep -q 'noindex, nofollow, noarchive' dist/v30/index.html
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
@@ -103,12 +123,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-
       - name: Submit V14 public URLs to IndexNow
         continue-on-error: true
         env:
@@ -123,15 +141,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-
       - name: Wait briefly for Pages edge propagation
         run: sleep 20
-
       - name: Verify V14 pages, robots and sitemaps are publicly reachable
         run: node scripts/check-live-search.mjs
-

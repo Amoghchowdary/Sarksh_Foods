@@ -1,0 +1,23 @@
+/** Source and artifact security gates; does not pretend to replace penetration testing. */
+import assert from 'node:assert/strict';
+import {readFile, stat} from 'node:fs/promises';
+import {join,resolve,dirname} from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
+const read=x=>readFile(join(root,x),'utf8');
+const gitignore=await read('.gitignore');
+for(const pattern of ['.env','data/','node_modules/'])assert(gitignore.includes(pattern),`Missing ignore pattern ${pattern}`);
+const secret=await read('backend/gas-client.mjs');
+assert(secret.includes('process.env.SARKSH_GAS_SECRET'),'No server-only GAS secret configured');
+assert(secret.includes('AbortSignal.timeout'),'Missing upstream timeout');
+const api=await read('backend/commerce-gas.mjs');
+for(const check of ['crypto.scrypt','crypto.timingSafeEqual','HttpOnly; SameSite=Lax','csrfOk','checkOrigin','Request too large'])assert(api.includes(check),`Backend check missing: ${check}`);
+assert(api.includes('if(!checkOrigin(req,res))return;'),'Enquiry origin guard missing');
+assert(api.includes('b.password.length>128'),'Authentication input bound missing');
+const gs=await read('apps-script/Code.gs');
+assert(gs.includes("getProperty('SERVICE_SECRET')"),'Apps Script service authorization missing');
+assert(gs.includes('sfCell_'),'Sheets formula protection missing');
+const html=await read('index.html');
+assert(!html.includes('SARKSH_GAS_SECRET'),'Secret in frontend HTML');
+assert(!(await stat(join(root,'.env')).catch(()=>null)),'Real .env must not be included in release archive');
+console.log('V30 source security gates passed (server input controls, private GAS secret, Sheet formulas, release secrets)');

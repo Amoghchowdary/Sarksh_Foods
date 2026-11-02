@@ -1,0 +1,107 @@
+/* SARKSH FOODS V15 — definitive homepage hero styles. No inherited V10 hero CSS. */
+:root {--header-h:70px}
+.site-header {height:70px!important;min-height:70px;position:relative;z-index:50;background:#fffaf4}
+.site-header .brand img{width:86px;height:62px;object-fit:contain}
+.site-header .brand-type strong{font-size:clamp(21px,1.48vw,28px)}
+.site-header .brand-type small{font-size:8px;letter-spacing:.17em}
+.site-header .desktop-nav a{padding:23px 0}
+.site-header .desktop-nav a.active:after{bottom:16px}
+.site-header .nav-cta{min-height:41px}
+.hero-v15{position:relative;isolation:isolate;overflow:hidden;background:#f4dbc0;height:calc(100svh - var(--header-h));min-height:680px}
+.hero-v15:after{display:none!important}
+.hero-v15 .valley-photo{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-v15 .valley-fallback,.hero-v15 .valley-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero-v15 .valley-fallback{object-fit:cover;object-position:center center;filter:none}
+.hero-v15 .valley-canvas{z-index:1;opacity:0}
+.hero-v15 .valley-canvas.is-ready{opacity:1}
+/* Intentional text backdrop masks baked copy in the reference art; scenery stays sharp beyond it. */
+.hero-v15 .hero-left-veil{position:absolute;z-index:3;inset:0;pointer-events:none;background:linear-gradient(90deg,#fff8ed 0%,#fff8ed 28%,rgba(255,248,237,.97) 31%,rgba(255,248,237,.74) 35%,rgba(255,248,237,.28) 40%,rgba(255,248,237,0) 47%);mask-image:linear-gradient(180deg,#000 0%,#000 84%,rgba(0,0,0,.95) 94%,rgba(0,0,0,.30) 100%)}
+.hero-v15 .hero-inner{position:relative;z-index:7;height:100%;width:calc(100% - 28px);max-width:none;margin-inline:auto;pointer-events:none}
+.hero-v15 .hero-copy-v15{position:absolute;left:clamp(22px,5vw,86px);top:50%;transform:translateY(-49%);width:min(430px,29vw);max-width:100%;color:#401016;pointer-events:auto}
+.hero-v15 .v15-eyebrow{display:flex;gap:16px;align-items:center;color:#84191d;letter-spacing:.30em;font-family:Arial,sans-serif;font-size:11px;font-weight:700;line-height:1;margin:0 0 21px}
+.hero-v15 .v15-eyebrow:after{content:'';width:35px;height:1px;background:#ce9b62}
+.hero-v15 h1{font-family:Georgia,'Times New Roman',serif;color:#760c16;font-weight:700;letter-spacing:-.045em;font-size:clamp(3.65rem,5.0vw,5.85rem);line-height:1.03;margin:0;white-space:normal;max-width:100%;overflow-wrap:normal}
+.hero-v15 .v15-divider{display:flex;align-items:center;width:193px;color:#d5a269;font-size:22px;margin:24px 0 13px}
+.hero-v15 .v15-divider:before,.hero-v15 .v15-divider:after{content:'';height:1px;background:#d7af77;flex:1}
+.hero-v15 .v15-divider span{padding:0 8px}
+.hero-v15 .v15-promise{margin:0;color:#78151b;font-family:Georgia,serif;font-size:clamp(.72rem,.95vw,.96rem);font-weight:700;letter-spacing:.16em;white-space:nowrap}
+.hero-v15 .v15-promise b{padding:0 5px;font-weight:400;color:#c99d60}
+.hero-v15 .v15-description{max-width:405px;margin:18px 0 21px;color:#493b34;font-size:clamp(.88rem,.94vw,1.01rem);line-height:1.7}
+.hero-v15 .v15-actions{display:flex;flex-wrap:wrap;align-items:center;gap:13px}
+.hero-v15 .v15-actions .btn{display:inline-flex;align-items:center;gap:12px;min-height:46px;padding:12px 16px;border-radius:4px;background:#790d16;color:#fff8ee;font:700 .82rem Arial,sans-serif;box-shadow:0 5px 13px #50131321;white-space:nowrap}
+.hero-v15 .v15-actions .btn:hover{background:#560b11}
+.hero-v15 .v15-actions .btn svg{width:16px;height:16px}
+.hero-v15 .v15-story{display:inline-flex;align-items:center;gap:8px;color:#78131c;font:700 .8rem Arial,sans-serif;white-space:nowrap;padding:12px 0}
+.hero-v15 .v15-story:hover{text-decoration:underline}
+.hero-v15 .v15-story svg{width:16px;height:16px}
+.hero-v15 .hero-sun-wrap{display:none}
+.hero-v15 .sun-disc{position:absolute;width:var(--sun-size,51px);height:var(--sun-size,51px);left:calc(var(--sun-size,51px) / -2);top:calc(var(--sun-size,51px) / -2);border-radius:50%;background:radial-gradient(circle at 40% 35%,#fffef9,#fff7d4 60%,#ffdc8b 100%);box-shadow:0 0 12px 7px #fff3cfb0,0 0 70px 24px #ffdc8a73}
+.hero-v15 .sun-corona{position:absolute;width:calc(var(--sun-size,51px) * 4.7);height:calc(var(--sun-size,51px) * 4.7);left:calc(var(--sun-size,51px) * -2.35);top:calc(var(--sun-size,51px) * -2.35);border-radius:50%;background:radial-gradient(circle,rgba(255,240,185,.30),rgba(255,221,140,.13) 33%,transparent 68%)}
+@keyframes v15SunUp{0%{transform:translate3d(0,var(--sun-start,72px),0) scale(.82);opacity:.08}13%{opacity:1}100%{transform:translate3d(0,var(--sun-end,-82px),0) scale(1);opacity:1}}
+.hero-v15 .bird-sky{position:absolute;inset:0;z-index:5;pointer-events:none;perspective:900px;overflow:hidden}
+.hero-v15 .flying-bird{position:absolute;left:var(--bird-left,37%);top:var(--bird-top,20%);width:var(--bird-size,27px);height:calc(var(--bird-size,27px) * .62);opacity:0;animation:v15BirdTravel var(--flight-time,13s) linear var(--flight-delay,-2s) infinite;will-change:transform}
+.hero-v15 .bird-model{display:block;width:100%;height:100%;transform-style:preserve-3d;animation:v15BirdBank 4.8s ease-in-out infinite alternate}
+.hero-v15 .bird-model svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 1px 1px #30272150)}
+.hero-v15 .wing-left,.hero-v15 .wing-right{transform-box:view-box;transform-origin:center;animation:v15Wing var(--flap-time,.75s) ease-in-out infinite alternate}
+.hero-v15 .wing-right{animation-delay:calc(var(--flap-time,.75s) / -3)}
+@keyframes v15Wing{from{transform:rotateX(44deg) rotateZ(-14deg)}to{transform:rotateX(-28deg) rotateZ(15deg)}}
+@keyframes v15BirdBank{from{transform:rotateZ(-6deg) rotateY(-13deg)}to{transform:rotateZ(6deg) rotateY(12deg)}}
+/* All birds travel left -> right toward the temple; no wandering paths. */
+@keyframes v15BirdTravel{0%{opacity:0;transform:translate3d(-30vw,16px,-150px) scale(.69)}12%{opacity:.85}58%{opacity:.94}87%{opacity:.85}100%{opacity:0;transform:translate3d(var(--bird-distance,30vw),var(--bird-rise,-14px),70px) scale(1)}}
+.hero-v15 .v15-mobile-slogan{display:block;position:absolute;right:clamp(110px,12vw,180px);top:clamp(24px,10%,78px);max-width:260px;z-index:7;color:#6f1018;font:italic clamp(2.2rem,3vw,3.55rem) "Segoe Script","Brush Script MT",cursive;text-align:center;transform:rotate(-8deg);text-shadow:0 1px 10px rgba(255,236,207,.88);line-height:1.03}.hero-v15 .v15-mobile-slogan span{display:block}
+.hero-v15 .v15-controls{position:absolute;right:clamp(15px,2.7vw,48px);bottom:clamp(14px,2.5vw,28px);z-index:10;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.hero-v15 .v15-controls button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:37px;padding:8px 13px;color:#fffaf2;background:rgba(45,23,18,.78);border:1px solid #fff8e7c5;border-radius:22px;font:700 .73rem Arial,sans-serif;cursor:pointer}
+.hero-v15 .v15-controls button:hover{background:#760c16}
+.hero-v15 .v15-controls button:focus-visible,.hero-v15 a:focus-visible{outline:3px solid #d9a25d;outline-offset:3px}
+.hero-v15 .sr-only{position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.hero-v15.motion-paused .hero-sun-wrap,.hero-v15.motion-paused .flying-bird,.hero-v15.motion-paused .bird-model,.hero-v15.motion-paused .wing-left,.hero-v15.motion-paused .wing-right{animation-play-state:paused!important}
+@media(max-width:1290px){.hero-v15 .hero-copy-v15{width:min(390px,33vw);left:clamp(16px,3vw,42px)}.hero-v15 h1{font-size:clamp(3.3rem,5.2vw,4.75rem)}.hero-v15 .hero-left-veil{background:linear-gradient(90deg,#fff8ed 0%,#fff8ed 31%,rgba(255,248,237,.92) 34%,rgba(255,248,237,.34) 41%,rgba(255,248,237,0) 48%)}}
+@media(max-width:1020px){:root{--header-h:75px}.site-header{height:75px!important;min-height:75px}.site-header .mobile-nav{top:75px}.hero-v15{height:calc(100svh - 75px);min-height:730px}.hero-v15 .hero-inner{width:calc(100% - 42px)}.hero-v15 .hero-copy-v15{width:min(450px,56%);left:0;top:auto;bottom:7%;transform:none;padding:17px 19px;background:rgba(255,249,239,.92);border-radius:8px;box-shadow:0 8px 25px #2b1a1321}.hero-v15 .hero-left-veil{display:none}.hero-v15 h1{font-size:clamp(3.05rem,6.2vw,4.7rem)}.hero-v15 .v15-eyebrow{margin-bottom:13px}.hero-v15 .v15-divider{margin:12px 0 5px}.hero-v15 .v15-description{margin:10px 0 12px}.hero-v15 .v15-mobile-slogan{display:block;position:absolute;right:4%;top:6%;max-width:165px;z-index:7;color:#641119;font:italic 1.4rem 'Segoe Script','Brush Script MT',cursive;text-align:center;transform:rotate(-8deg);text-shadow:0 1px 8px #ffeccf;line-height:1.1}.hero-v15 .v15-mobile-slogan span{display:block}}
+@media(max-width:700px){:root{--header-h:70px}.site-header{height:70px!important;min-height:70px}.site-header .mobile-nav{top:70px}.hero-v15{height:calc(100svh - 70px);min-height:715px}.hero-v15 .hero-inner{width:calc(100% - 28px)}.hero-v15 .hero-copy-v15{width:100%;max-width:none;left:0;bottom:69px;padding:17px 16px;background:rgba(255,250,242,.95);border:1px solid #eedac5}.hero-v15 h1{font-size:clamp(2.5rem,9vw,3.5rem)}.hero-v15 .v15-eyebrow{font-size:9px;margin-bottom:9px}.hero-v15 .v15-divider{margin:9px 0 3px;font-size:18px;width:155px}.hero-v15 .v15-promise{font-size:clamp(.66rem,2.4vw,.79rem);letter-spacing:.08em}.hero-v15 .v15-description{font-size:.85rem;line-height:1.5;margin:9px 0 14px}.hero-v15 .v15-actions{gap:8px}.hero-v15 .v15-actions .btn{min-height:40px;font-size:.72rem;padding:10px}.hero-v15 .v15-story{font-size:.72rem}.hero-v15 .v15-mobile-slogan{top:8%;right:5%;font-size:clamp(1.06rem,4.2vw,1.35rem);max-width:125px}.hero-v15 .v15-controls{left:14px;bottom:12px;right:14px}.hero-v15 .v15-controls button{font-size:.68rem;min-height:36px;padding:7px 10px}}
+@media(max-width:390px){.hero-v15{min-height:720px}.hero-v15 .hero-copy-v15{bottom:66px;padding:13px 12px}.hero-v15 h1{font-size:2.49rem}.hero-v15 .v15-description{font-size:.8rem}}
+@media(prefers-reduced-motion:reduce){.hero-v15 .bird-sky{display:none}}
+
+/* V15 website verification: sticky global navigation, visible scroll affordance,
+   authentic photographic palms with no newly drawn fronds. */
+:root { --header-h:74px; }
+.site-header {position:sticky!important; top:0; width:100%;z-index:200!important;height:var(--header-h)!important;min-height:var(--header-h)!important;background:#fffaf5!important;box-shadow:0 1px 0 rgba(116,50,36,.12),0 3px 16px rgba(74,22,13,.045);}
+.site-header .header-wrap{max-width:1480px;width:calc(100% - 56px);}
+.site-header .brand {flex-shrink:0;}
+.site-header .desktop-nav a{padding:25px 0;}
+.site-header .desktop-nav a.active:after{bottom:18px;}
+.hero-v15 {height:calc(100svh - var(--header-h));min-height:690px;}
+.hero-v15 .valley-fallback{object-fit:cover;object-position:center 50%;filter:saturate(1.0) contrast(1.015);}
+.hero-v15 .hero-copy-v15{left:clamp(18px,4.7vw,90px);width:min(430px,31vw)}
+.hero-v15 .hero-left-veil{background:linear-gradient(90deg,#fff9f0 0%,rgba(255,249,240,.98) 24%,rgba(255,249,240,.90) 28%,rgba(255,249,240,.62) 33%,rgba(255,249,240,.16) 41%,rgba(255,249,240,0) 51%);}
+.hero-v15 .v15-mobile-slogan{right:clamp(86px,12vw,180px);top:clamp(40px,10%,80px);max-width:230px;font-family:'URW Chancery L','Segoe Script','Brush Script MT',cursive;font-style:italic;font-weight:500;font-size:clamp(1.9rem,2.8vw,3.1rem);line-height:1.04;transform:rotate(-7deg);}
+.hero-v15 .hero-sun-wrap{display:none!important;}
+.hero-scroll-cue{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);z-index:12;display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:#fff7eb;background:rgba(62,25,18,.64);border:1px solid rgba(255,250,234,.5);border-radius:30px;padding:10px 14px;font:700 .72rem Arial,sans-serif;letter-spacing:.035em;box-shadow:0 3px 10px #3f221522;backdrop-filter:blur(3px);}
+.hero-scroll-cue svg{width:17px;height:17px;animation:v15Down 1.6s ease-in-out infinite}
+.hero-scroll-cue:hover{background:#72111b;color:#fff}
+.hero-scroll-cue:focus-visible{outline:3px solid #e6c087;outline-offset:3px}
+@keyframes v15Down{0%,100%{transform:translateY(-2px)}50%{transform:translateY(3px)}}
+/* Make the page sequence explicit rather than leaving an apparent end at the hero. */
+.trust-strip {position:relative;z-index:3;background:#fff8f0;box-shadow:0 -2px 12px rgba(72,22,11,.04)}
+.product-name-card {background:#fffaf3;border-color:#eadac6;}
+.range{background:#fbf4ec}
+@media(max-width:1290px){.hero-v15 .hero-copy-v15{left:clamp(14px,3.2vw,45px);width:min(400px,34vw)}.hero-v15 .hero-left-veil{background:linear-gradient(90deg,#fff9f0 0%,rgba(255,249,240,.96) 29%,rgba(255,249,240,.83) 32%,rgba(255,249,240,.3) 43%,transparent 53%);}}
+@media(max-width:1020px){:root{--header-h:75px}.site-header .header-wrap{width:calc(100% - 40px)}.hero-v15{min-height:730px;height:calc(100svh - var(--header-h))}.hero-v15 .hero-copy-v15{left:0;width:min(450px,56%)}.hero-v15 .hero-left-veil{display:none}.hero-v15 .v15-mobile-slogan{right:4%;top:7%;font-family:'URW Chancery L','Segoe Script',cursive;font-size:1.65rem;max-width:165px}.hero-scroll-cue{left:54%;bottom:22px}}
+@media(max-width:700px){:root{--header-h:70px}.site-header .header-wrap{width:calc(100% - 28px)}.hero-v15{min-height:715px;height:calc(100svh - 70px)}.hero-v15 .hero-copy-v15{left:0;width:100%;bottom:75px;padding:16px 17px;background:rgba(255,251,245,.93)}.hero-v15 .v15-mobile-slogan{top:7%;right:4%;max-width:145px;font-size:clamp(1.16rem,4.3vw,1.45rem)}.hero-scroll-cue{left:auto;right:12px;bottom:63px;transform:none;font-size:.63rem;padding:8px 10px}.hero-v15 .v15-controls{left:13px;right:auto;bottom:12px}}
+@media(prefers-reduced-motion:reduce){.hero-scroll-cue svg{animation:none!important}}
+
+/* V16 river-only motion: transparent canvas animates exclusively the original river pixels.
+   The photograph remains untouched outside its precisely feathered water mask. */
+.hero-v15 .hero-sun-wrap{display:none!important}
+.hero-v15 .valley-canvas{display:block!important;opacity:0;pointer-events:none;contain:strict;transition:opacity .22s linear}
+.hero-v15 .valley-canvas.is-ready{opacity:1}
+.hero-v15 .valley-fallback{image-rendering:auto}
+@media(prefers-reduced-motion:reduce){.hero-v15 .valley-canvas{display:none!important}}
+
+@media(min-width:1021px){.hero-v15 .v15-mobile-slogan{right:clamp(105px,12.8vw,205px);}}
+
+/* V17: native, pre-rendered photographic motion asset. Pause displays a pixel-identical frozen frame. */
+.hero-v15 .valley-fallback{will-change:contents;image-rendering:auto}
+.hero-v15 .valley-freeze-frame{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;z-index:2;display:none;pointer-events:none}
+.hero-v15.motion-paused .valley-freeze-frame{display:block}
+.hero-v15.motion-paused .valley-fallback{visibility:hidden}
+.hero-v15 .valley-canvas{display:none!important}

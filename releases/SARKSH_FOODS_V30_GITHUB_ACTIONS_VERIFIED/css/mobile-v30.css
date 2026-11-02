@@ -1,0 +1,16 @@
+/* V30 targeted fix: keep logo, cart/account links and menu inside narrow mobile viewports.
+ * Applies only below 441px. Desktop/tablet layouts and approved scenery are unchanged.
+ */
+@media (max-width: 440px) {
+  .site-header .header-wrap { gap: 4px; }
+  .site-header .brand { min-width: 0; flex: 1 1 auto; overflow: hidden; }
+  .site-header .brand img { width: clamp(42px, 12vw, 56px); height: auto; max-height: 56px; flex-shrink: 0; }
+  .site-header .brand-type { min-width: 0; }
+  .site-header .brand-type strong { font-size: clamp(12px, 4vw, 16px); }
+  .site-header .brand-type small { font-size: clamp(5px, 1.45vw, 6.6px); letter-spacing: .12em; }
+  .site-header .header-actions { flex: 0 0 auto; gap: 0; }
+  .site-header .cc-header-links { gap: 0; margin: 0 2px; }
+  .site-header .cc-header-link { padding: 4px 1px; }
+  .site-header .cc-cart-count { min-width: 14px; height: 14px; font-size: 9px; }
+  .site-header .menu-toggle { width: 36px; height: 36px; }
+}

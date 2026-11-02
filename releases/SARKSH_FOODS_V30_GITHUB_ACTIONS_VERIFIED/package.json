@@ -1,0 +1,24 @@
+{
+  "name": "sarksh-foods-website",
+  "version": "30.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs",
+    "check": "node --check server.mjs && node --check backend/commerce-gas.mjs && node --check backend/gas-client.mjs && node --check js/app.js && node --check js/editorial-v22.js && node --check js/editorial-v26.js && node --check js/commerce-v23.js && node --check js/story-map-v23.js && node VERIFY_V21.mjs && node VERIFY_V27_PRESERVATION.mjs && node scripts/v28-preservation.mjs",
+    "verify": "node VERIFY_V21.mjs",
+    "test": "node --test tests/commerce.test.mjs tests/apps-script-bridge.test.mjs tests/apps-script-storage.test.mjs tests/security-v30.test.mjs",
+    "test:backend": "node --test tests/apps-script-bridge.test.mjs",
+    "verify:design": "node VERIFY_V27_PRESERVATION.mjs",
+    "doctor": "node scripts/v28-doctor.mjs",
+    "verify:v28": "node scripts/v28-preservation.mjs",
+    "pages:build": "node scripts/build-pages-v30.mjs",
+    "pages:verify": "node scripts/verify-pages-v30.mjs",
+    "security:verify": "node scripts/security-audit-v30.mjs",
+    "ci:v30": "npm run check && npm test && npm run security:verify && npm run pages:build && npm run pages:verify"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

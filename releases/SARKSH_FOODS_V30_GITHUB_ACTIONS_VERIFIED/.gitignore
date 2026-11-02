@@ -1,0 +1,17 @@
+data/
+node_modules/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+.clasp.json
+.clasprc.json
+apps-script/.clasp.json
+apps-script/.clasprc.json
+*.zip
+
+dist-pages/
+qa-previews/
+coverage/
+*.ps1

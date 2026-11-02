@@ -1,0 +1,151 @@
+name: Deploy SARKSH Foods to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: sarkshfoods-pages-production
+  cancel-in-progress: true
+
+env:
+  SITE_URL: https://www.sarkshfoods.in
+  BASE_PATH: /
+
+jobs:
+  build:
+    name: Build and validate production site
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
+          fi
+
+      - name: Validate production configuration
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/require-site-url.mjs
+
+      - name: Verify V14 SEO database
+        run: npm run seo:db:verify
+
+      - name: TypeScript check
+        run: npm run typecheck
+
+      - name: Check production backend health
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+        run: npm run backend:health
+
+      - name: Build production site for www.sarkshfoods.in
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+          GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+          INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY || 'd8b60c97f1da6c057f2fd80d68cd72ab' }}
+        shell: bash
+        run: |
+          export SEO_LASTMOD="$(git log -1 --format=%cI)"
+          npm run build:prod
+
+      - name: Verify SEO and production artifact
+        run: npm run verify:prod
+
+      # V30: the approved static design is published ONLY at /v30/.
+      # Production root stays on the existing Vite + Apps Script integration.
+      # GitHub Pages cannot run the V30 Node backend or collect payments.
+      - name: Validate and stage V30 static preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd releases/SARKSH_FOODS_V30_GITHUB_ACTIONS_VERIFIED
+          npm run ci:v30
+          cd ../..
+          mkdir -p dist/v30
+          cp -a releases/SARKSH_FOODS_V30_GITHUB_ACTIONS_VERIFIED/dist-pages/. dist/v30/
+          test -s dist/index.html
+          test -s dist/v30/index.html
+          test -s dist/v30/products.html
+          test -s dist/v30/V30_PREVIEW_ONLY.txt
+          test ! -e dist/v30/backend
+          test ! -e dist/v30/apps-script
+          grep -q 'noindex, nofollow, noarchive' dist/v30/index.html
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy production site
+    environment:
+      name: github-pages
+      url: https://www.sarkshfoods.in
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 10
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  notify-indexnow:
+    name: Notify IndexNow engines (not Google)
+    runs-on: ubuntu-latest
+    needs: deploy
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Submit V14 public URLs to IndexNow
+        continue-on-error: true
+        env:
+          INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY || 'd8b60c97f1da6c057f2fd80d68cd72ab' }}
+        run: node scripts/submit-indexnow.mjs
+
+  verify-live-search:
+    name: Verify public crawl endpoints
+    runs-on: ubuntu-latest
+    needs: deploy
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Wait briefly for Pages edge propagation
+        run: sleep 20
+      - name: Verify V14 pages, robots and sitemaps are publicly reachable
+        run: node scripts/check-live-search.mjs
