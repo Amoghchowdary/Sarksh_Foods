@@ -74,9 +74,9 @@ jobs:
       - name: Verify SEO and production artifact
         run: npm run verify:prod
 
-      # V30: the approved static design is published ONLY at /v30/.
-      # Production root stays on the existing Vite + Apps Script integration.
-      # GitHub Pages cannot run the V30 Node backend or collect payments.
+      # Preserve the original Vite build and private Apps Script integration.
+      # Stage the approved V26 redesign as static pages; customer/admin routes remain Vite.
+      # GitHub Pages cannot run the V26/V30 Node backend or collect payments.
       - name: Validate and stage V30 static preview
         shell: bash
         run: |
@@ -93,6 +93,46 @@ jobs:
           test ! -e dist/v30/backend
           test ! -e dist/v30/apps-script
           grep -q 'noindex, nofollow, noarchive' dist/v30/index.html
+
+      # Deploy the approved V26 design already stored byte-for-byte in V30.
+      # The original Vite build remains available for customer/admin/backend routes.
+      - name: Promote approved redesigned public pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          preview=dist/v30
+          test -s "$preview/index.html"
+          test -s "$preview/products.html"
+          test -s dist/account/index.html
+          test -s dist/admin/index.html
+          test -s dist/robots.txt
+          test -s dist/sitemap.xml
+          mkdir -p dist/assets
+          for file in "$preview"/assets/*; do
+            name="$(basename "$file")"
+            if [ -f "dist/assets/$name" ] && ! cmp -s "$file" "dist/assets/$name"; then
+              echo "Asset collision: $name" >&2
+              exit 1
+            fi
+          done
+          cp -a "$preview"/assets/. dist/assets/
+          cp -a "$preview"/css dist/
+          cp -a "$preview"/js dist/
+          for page in index story products quality recipes blog contact cart account; do
+            cp "$preview/$page.html" "dist/$page.html"
+          done
+          for page in index story products quality recipes blog contact; do
+            if [ "$page" = index ]; then canonical="https://www.sarkshfoods.in/"; else canonical="https://www.sarkshfoods.in/$page.html"; fi
+            sed -i 's/content="noindex, nofollow, noarchive"/content="index, follow"/' "dist/$page.html"
+            sed -i "s|</head>|<link rel=\"canonical\" href=\"$canonical\"></head>|" "dist/$page.html"
+          done
+          grep -q 'data-page="index"' dist/index.html
+          grep -q 'js/editorial-v26.js' dist/recipes.html
+          grep -q 'content="index, follow"' dist/index.html
+          ! grep -q 'noindex, nofollow, noarchive' dist/index.html
+          test -s dist/account/index.html
+          test -s dist/admin/index.html
+          test -s dist/v30/index.html
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
