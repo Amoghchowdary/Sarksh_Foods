@@ -14,10 +14,20 @@ const api=await read('backend/commerce-gas.mjs');
 for(const check of ['crypto.scrypt','crypto.timingSafeEqual','HttpOnly; SameSite=Lax','csrfOk','checkOrigin','Request too large'])assert(api.includes(check),`Backend check missing: ${check}`);
 assert(api.includes('if(!checkOrigin(req,res))return;'),'Enquiry origin guard missing');
 assert(api.includes('b.password.length>128'),'Authentication input bound missing');
-const gs=await read('apps-script/Code.gs');
-assert(gs.includes("getProperty('SERVICE_SECRET')"),'Apps Script service authorization missing');
-assert(gs.includes('sfCell_'),'Sheets formula protection missing');
+const gs=await read('apps-script/Code.gs').catch(error=>{
+ if(error.code==='ENOENT' && process.env.GITHUB_ACTIONS==='true'){
+  console.warn('NOTICE: Private Code.gs is ignored in this public GitHub repository; Apps Script source checks NOT performed in CI. Run npm run ci:v30 locally with the private source.');
+  return null;
+ }
+ throw error;
+});
+if(gs!==null){
+ assert(gs.includes("getProperty('SERVICE_SECRET')"),'Apps Script service authorization missing');
+ assert(gs.includes('sfCell_'),'Sheets formula protection missing');
+}
 const html=await read('index.html');
 assert(!html.includes('SARKSH_GAS_SECRET'),'Secret in frontend HTML');
 assert(!(await stat(join(root,'.env')).catch(()=>null)),'Real .env must not be included in release archive');
-console.log('V30 source security gates passed (server input controls, private GAS secret, Sheet formulas, release secrets)');
+console.log(gs!==null
+ ? 'V30 source security gates passed (server input controls, private GAS secret, Sheet formulas, release secrets)'
+ : 'V30 public CI security gates passed (backend input controls, GAS secret handling, release secrets); PRIVATE Apps Script source checks skipped');

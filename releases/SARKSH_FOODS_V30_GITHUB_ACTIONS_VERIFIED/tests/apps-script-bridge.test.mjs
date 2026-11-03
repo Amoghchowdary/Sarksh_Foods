@@ -18,8 +18,15 @@ test('V28 native filesystem paths are valid without launching a child Node proce
 async function listen(server){server.listen(0,'127.0.0.1');await once(server,'listening');return server.address().port;}
 async function stop(server){await new Promise(r=>server.close(r));}
 
-test('Apps Script Code.gs compiles using V8 JavaScript parser',async()=>{
-  const code=await readFile(new URL('../apps-script/Code.gs',import.meta.url),'utf8');
+test('Apps Script Code.gs compiles using V8 JavaScript parser',async(t)=>{
+  const code=await readFile(new URL('../apps-script/Code.gs',import.meta.url),'utf8').catch(error=>{
+    if(error.code==='ENOENT' && process.env.GITHUB_ACTIONS==='true'){
+      t.skip('Private Code.gs is excluded by the public repository gitignore; run this check locally with the private file.');
+      return null;
+    }
+    throw error;
+  });
+  if(code===null)return;
   assert.doesNotThrow(()=>new vm.Script(code,{filename:'Code.gs'}));
   for(const op of ['user.create','user.byEmail','cart.merge','cart.replace','orders.create','contact.create'])assert.ok(code.includes(op));
 });

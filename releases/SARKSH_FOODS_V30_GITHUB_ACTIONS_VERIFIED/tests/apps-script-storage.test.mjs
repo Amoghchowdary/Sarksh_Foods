@@ -26,8 +26,15 @@ class Book{
  getUrl(){return 'https://example.test/private';}
 }
 
-test('Actual Apps Script datastore operations: setup, auth, carts, order request, enquiry, protection',async()=>{
- const code=await readFile(new URL('../apps-script/Code.gs',import.meta.url),'utf8');
+test('Actual Apps Script datastore operations: setup, auth, carts, order request, enquiry, protection',async(t)=>{
+ const code=await readFile(new URL('../apps-script/Code.gs',import.meta.url),'utf8').catch(error=>{
+  if(error.code==='ENOENT' && process.env.GITHUB_ACTIONS==='true'){
+   t.skip('Private Code.gs is excluded by the public repository gitignore; run this datastore test locally with the private file.');
+   return null;
+  }
+  throw error;
+ });
+ if(code===null)return;
  const props=new Map([['SERVICE_SECRET','X'.repeat(48)]]),book=new Book();
  const ctx={console,Logger:{log(){}},Date,JSON,PropertiesService:{getScriptProperties:()=>({getProperty:k=>props.get(k),setProperty:(k,v)=>props.set(k,v)})},SpreadsheetApp:{create:()=>book,openById:()=>book},LockService:{getScriptLock:()=>({waitLock(){},releaseLock(){}})},ContentService:{MimeType:{JSON:'JSON'},createTextOutput:s=>({text:s,setMimeType(){return this;}})}};
  vm.createContext(ctx);vm.runInContext(code,ctx);
